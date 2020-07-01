@@ -64,13 +64,14 @@ public class IA_Zori : MonoBehaviour
 
     private void AddExperience(float value)
     {
-        float XP = _experience += value;
+        _experience += value;
 
-        float diffBeforeLevelUp = XP - 100;
+        float diffBeforeLevelUp = _experience - 100;
 
         if(diffBeforeLevelUp > 0)
         {
             AddLevelUp(1);
+            _experience = 0;
             AddExperience(diffBeforeLevelUp);
         }
     }
@@ -122,8 +123,12 @@ public class IA_Zori : MonoBehaviour
 
     private void OnUpdate()
     {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Experience = 70;
+        }
+
         _states[_currentState].Tick();
-        Debug.Log(_agent.destination);
     }
 
     public void ChangeCurrentState(E_ZoriStates nextState)
