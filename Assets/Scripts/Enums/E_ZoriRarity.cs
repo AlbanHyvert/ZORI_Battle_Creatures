@@ -1,4 +1,4 @@
-﻿public enum ZoriRarityEnums
+﻿public enum E_ZoriRarity
 {
     COMMON,
     UNCOMMON,

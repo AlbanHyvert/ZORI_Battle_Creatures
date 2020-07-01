@@ -8,11 +8,6 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private PlayerController _playerInstance = null;
 
-    public PlayerController PlayerInstance { get { return _playerInstance; } }
+    public PlayerController PlayerInstance { get { return _playerInstance; } set { _playerInstance = value; } }
     public string PlayerName { get { return _playerName; } set { _playerName = value; } }
-
-    public void CreateAPlayer(Vector3 pos, Quaternion rot)
-    {
-        _playerInstance = Instantiate(_playerPrefab, pos, rot);
-    }
 }

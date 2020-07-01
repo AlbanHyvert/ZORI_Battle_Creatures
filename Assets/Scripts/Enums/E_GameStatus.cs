@@ -1,4 +1,4 @@
-﻿public enum GameStatusEnum
+﻿public enum E_GameStatus
 {
     PRELOAD,
     MENU,

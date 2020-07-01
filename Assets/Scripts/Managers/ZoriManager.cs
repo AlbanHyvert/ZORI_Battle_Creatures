@@ -59,122 +59,115 @@ public class ZoriManager : Singleton<ZoriManager>
                 zoriData.Experience = experience;
                 zoriData.Speed = speed;
 
-                if (row[11] == ZoriRarityEnums.COMMON.ToString())
+                if (row[11] == E_ZoriRarity.COMMON.ToString())
                 {
-                    zoriData.Rarity = ZoriRarityEnums.COMMON;
+                    zoriData.Rarity = E_ZoriRarity.COMMON;
                 }
-                else if (row[11] == ZoriRarityEnums.UNCOMMON.ToString())
+                else if (row[11] == E_ZoriRarity.UNCOMMON.ToString())
                 {
-                    zoriData.Rarity = ZoriRarityEnums.UNCOMMON;
+                    zoriData.Rarity = E_ZoriRarity.UNCOMMON;
                 }
-                else if (row[11] == ZoriRarityEnums.RARE.ToString())
+                else if (row[11] == E_ZoriRarity.RARE.ToString())
                 {
-                    zoriData.Rarity = ZoriRarityEnums.RARE;
+                    zoriData.Rarity = E_ZoriRarity.RARE;
                 }
-                else if (row[11] == ZoriRarityEnums.VERYRARE.ToString())
+                else if (row[11] == E_ZoriRarity.VERYRARE.ToString())
                 {
-                    zoriData.Rarity = ZoriRarityEnums.VERYRARE;
+                    zoriData.Rarity = E_ZoriRarity.VERYRARE;
                 }
-                else if (row[11] == ZoriRarityEnums.SEMIRARE.ToString())
+                else if (row[11] == E_ZoriRarity.SEMIRARE.ToString())
                 {
-                    zoriData.Rarity = ZoriRarityEnums.SEMIRARE;
+                    zoriData.Rarity = E_ZoriRarity.SEMIRARE;
                 }
-                else if (row[11] == ZoriRarityEnums.LEGENDARY.ToString())
+                else if (row[11] == E_ZoriRarity.LEGENDARY.ToString())
                 {
-                    zoriData.Rarity = ZoriRarityEnums.LEGENDARY;
-                }
-
-                if (row[12] == RegionEnums.EAST.ToString())
-                {
-                    zoriData.Region = RegionEnums.EAST;
-                }
-                else if (row[12] == RegionEnums.WEST.ToString())
-                {
-                    zoriData.Region = RegionEnums.WEST;
-                }
-                else if (row[12] == RegionEnums.SOUTH.ToString())
-                {
-                    zoriData.Region = RegionEnums.SOUTH;
-                }
-                else if (row[12] == RegionEnums.NORTH.ToString())
-                {
-                    zoriData.Region = RegionEnums.NORTH;
+                    zoriData.Rarity = E_ZoriRarity.LEGENDARY;
                 }
 
-                if (row[13] == ZoriTypeEnums.AERO.ToString())
+                if (row[12] == E_Regions.EAST.ToString())
                 {
-                    zoriData.Type = ZoriTypeEnums.AERO;
+                    zoriData.Region = E_Regions.EAST;
                 }
-                else if (row[13] == ZoriTypeEnums.CRYO.ToString())
+                else if (row[12] == E_Regions.WEST.ToString())
                 {
-                    zoriData.Type = ZoriTypeEnums.CRYO;
+                    zoriData.Region = E_Regions.WEST;
                 }
-                else if (row[13] == ZoriTypeEnums.ELECTRO.ToString())
+                else if (row[12] == E_Regions.SOUTH.ToString())
                 {
-                    zoriData.Type = ZoriTypeEnums.ELECTRO;
+                    zoriData.Region = E_Regions.SOUTH;
                 }
-                else if (row[13] == ZoriTypeEnums.GEO.ToString())
+                else if (row[12] == E_Regions.NORTH.ToString())
                 {
-                    zoriData.Type = ZoriTypeEnums.GEO;
+                    zoriData.Region = E_Regions.NORTH;
                 }
-                else if (row[13] == ZoriTypeEnums.HYDRO.ToString())
+
+                if (row[13] == E_ZoriTypes.AERO.ToString())
                 {
-                    zoriData.Type = ZoriTypeEnums.HYDRO;
+                    zoriData.Type = E_ZoriTypes.AERO;
                 }
-                else if (row[13] == ZoriTypeEnums.INSECTO.ToString())
+                else if (row[13] == E_ZoriTypes.CRYO.ToString())
                 {
-                    zoriData.Type = ZoriTypeEnums.INSECTO;
+                    zoriData.Type = E_ZoriTypes.CRYO;
                 }
-                else if (row[13] == ZoriTypeEnums.LUMA.ToString())
+                else if (row[13] == E_ZoriTypes.ELECTRO.ToString())
                 {
-                    zoriData.Type = ZoriTypeEnums.LUMA;
+                    zoriData.Type = E_ZoriTypes.ELECTRO;
                 }
-                else if (row[13] == ZoriTypeEnums.UMBRA.ToString())
+                else if (row[13] == E_ZoriTypes.GEO.ToString())
                 {
-                    zoriData.Type = ZoriTypeEnums.UMBRA;
+                    zoriData.Type = E_ZoriTypes.GEO;
                 }
-                else if (row[13] == ZoriTypeEnums.MARTIAL.ToString())
+                else if (row[13] == E_ZoriTypes.HYDRO.ToString())
                 {
-                    zoriData.Type = ZoriTypeEnums.MARTIAL;
+                    zoriData.Type = E_ZoriTypes.HYDRO;
                 }
-                else if (row[13] == ZoriTypeEnums.MENTAL.ToString())
+                else if (row[13] == E_ZoriTypes.INSECTO.ToString())
                 {
-                    zoriData.Type = ZoriTypeEnums.MENTAL;
+                    zoriData.Type = E_ZoriTypes.INSECTO;
                 }
-                else if (row[13] == ZoriTypeEnums.METAL.ToString())
+                else if (row[13] == E_ZoriTypes.LUMA.ToString())
                 {
-                    zoriData.Type = ZoriTypeEnums.METAL;
+                    zoriData.Type = E_ZoriTypes.LUMA;
                 }
-                else if (row[13] == ZoriTypeEnums.SPECTRAL.ToString())
+                else if (row[13] == E_ZoriTypes.UMBRA.ToString())
                 {
-                    zoriData.Type = ZoriTypeEnums.SPECTRAL;
+                    zoriData.Type = E_ZoriTypes.UMBRA;
                 }
-                else if (row[13] == ZoriTypeEnums.PYRO.ToString())
+                else if (row[13] == E_ZoriTypes.MARTIAL.ToString())
                 {
-                    zoriData.Type = ZoriTypeEnums.PYRO;
+                    zoriData.Type = E_ZoriTypes.MARTIAL;
                 }
-                else if (row[13] == ZoriTypeEnums.PHYTO.ToString())
+                else if (row[13] == E_ZoriTypes.MENTAL.ToString())
                 {
-                    zoriData.Type = ZoriTypeEnums.PHYTO;
+                    zoriData.Type = E_ZoriTypes.MENTAL;
                 }
-                else if (row[13] == ZoriTypeEnums.NEUTRAL.ToString())
+                else if (row[13] == E_ZoriTypes.METAL.ToString())
                 {
-                    zoriData.Type = ZoriTypeEnums.NEUTRAL;
+                    zoriData.Type = E_ZoriTypes.METAL;
                 }
-                else if (row[13] == ZoriTypeEnums.VENO.ToString())
+                else if (row[13] == E_ZoriTypes.SPECTRAL.ToString())
                 {
-                    zoriData.Type = ZoriTypeEnums.VENO;
+                    zoriData.Type = E_ZoriTypes.SPECTRAL;
+                }
+                else if (row[13] == E_ZoriTypes.PYRO.ToString())
+                {
+                    zoriData.Type = E_ZoriTypes.PYRO;
+                }
+                else if (row[13] == E_ZoriTypes.PHYTO.ToString())
+                {
+                    zoriData.Type = E_ZoriTypes.PHYTO;
+                }
+                else if (row[13] == E_ZoriTypes.NEUTRAL.ToString())
+                {
+                    zoriData.Type = E_ZoriTypes.NEUTRAL;
+                }
+                else if (row[13] == E_ZoriTypes.VENO.ToString())
+                {
+                    zoriData.Type = E_ZoriTypes.VENO;
                 }
 
                 _zoriDataList.Add(zoriData);
             }
-        }
-
-        Debug.Log("zoriDataListSize : " + _zoriDataList.Count);
-
-        for (int i = 0; i < _zoriDataList.Count; i++)
-        {
-            Debug.Log("file number : " + i + " " + _zoriDataList[i].Rarity);
         }
     }
 }

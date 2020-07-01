@@ -1,4 +1,4 @@
-﻿public enum ZoriTypeEnums
+﻿public enum E_ZoriTypes
 {
     NEUTRAL,
     PYRO,

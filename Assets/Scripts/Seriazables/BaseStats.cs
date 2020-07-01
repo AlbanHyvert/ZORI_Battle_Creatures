@@ -1,8 +1,7 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
-public class ZoriStats
+public class BaseStats
 {
     [SerializeField] private int _minimum = 0;
     [SerializeField] private int _maximum = 0;

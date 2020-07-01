@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private List<BaseZori> _ownedZori = new List<BaseZori>();
-    [SerializeField] private CharacterController _characterController = null;
     [SerializeField] private AudioSource _audioSource = null;
     [SerializeField] private Camera _camera = null;
     [SerializeField] private PlayerStats _stats = null;
 
+    private NavMeshAgent _agent = null;
     private bool _isInBattleMode = false;
 
     private event Action<bool> _playerInBattle = null;
@@ -27,8 +26,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public List<BaseZori> OwnedZori { get => _ownedZori; }
-    public CharacterController CharacterController { get => _characterController; }
+    public NavMeshAgent Agen { get => _agent; }
     public AudioSource AudioSource { get => _audioSource; }
     public Camera Camera { get => _camera; }
     public bool IsInBattleMode { get => _isInBattleMode; 
@@ -37,5 +35,11 @@ public class PlayerController : MonoBehaviour
             _isInBattleMode = value;
             _playerInBattle(_isInBattleMode);
         }
+    }
+
+    private void Awake()
+    {
+        _agent = GetComponent<NavMeshAgent>();
+        PlayerManager.Instance.PlayerInstance = this;
     }
 }

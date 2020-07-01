@@ -5,29 +5,29 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private GameStatusEnum _statusToGo = GameStatusEnum.PRELOAD;
+    [SerializeField] private E_GameStatus _statusToGo = E_GameStatus.PRELOAD;
 
     private bool _isChangingState = false;
-    private GameStatusEnum _currentGameStatus = GameStatusEnum.PRELOAD;
-    private Dictionary<GameStatusEnum, IGamesStates> _states = null;
+    private E_GameStatus _currentGameStatus = E_GameStatus.PRELOAD;
+    private Dictionary<E_GameStatus, IGamesStates> _states = null;
 
     public IGamesStates CurrentStateType { get { return _states[_currentGameStatus]; } }
-    public GameStatusEnum ChoosenScene { get { return _statusToGo; } set { _statusToGo = value; } }
+    public E_GameStatus ChoosenScene { get { return _statusToGo; } set { _statusToGo = value; } }
 
     private void Start()
     {
         GameLoopManager.Instance.Managers += OnUpdate;
-        _states = new Dictionary<GameStatusEnum, IGamesStates>();
-        _states.Add(GameStatusEnum.PRELOAD, new PreloadState());
-        _states.Add(GameStatusEnum.MENU, new MainMenuState());
-        _states.Add(GameStatusEnum.LOADING, new LoadingState());
-        _states.Add(GameStatusEnum.GAME, new GameState());
-        _states.Add(GameStatusEnum.DEV, new DevState());
-        _currentGameStatus = GameStatusEnum.PRELOAD;
-        ChangeState(GameStatusEnum.GAME);
+        _states = new Dictionary<E_GameStatus, IGamesStates>();
+        _states.Add(E_GameStatus.PRELOAD, new PreloadState());
+        _states.Add(E_GameStatus.MENU, new MainMenuState());
+        _states.Add(E_GameStatus.LOADING, new LoadingState());
+        _states.Add(E_GameStatus.GAME, new GameState());
+        _states.Add(E_GameStatus.DEV, new DevState());
+        _currentGameStatus = E_GameStatus.PRELOAD;
+        ChangeState(E_GameStatus.GAME);
     }
 
-    public void ChangeState(GameStatusEnum gameStatus)
+    public void ChangeState(E_GameStatus gameStatus)
     {
         _isChangingState = true;
         _states[gameStatus].Enter();

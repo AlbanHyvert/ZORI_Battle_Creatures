@@ -1,4 +1,4 @@
-﻿public enum RegionEnums
+﻿public enum E_Regions
 {
     EAST,
     WEST,
