@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioSource _audioSource = null;
     [SerializeField] private Camera _camera = null;
     [SerializeField] private PlayerStats _stats = null;
+    [SerializeField] private BattleSettings _battleSettings = null;
 
     private NavMeshAgent _agent = null;
     private bool _isInBattleMode = false;
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public BattleSettings BattleSettings { get { return _battleSettings; } }
     public NavMeshAgent Agen { get => _agent; }
     public AudioSource AudioSource { get => _audioSource; }
     public Camera Camera { get => _camera; }
@@ -41,5 +43,20 @@ public class PlayerController : MonoBehaviour
     {
         _agent = GetComponent<NavMeshAgent>();
         PlayerManager.Instance.PlayerInstance = this;
+        PlayerInBattle += BattleMode;
+    }
+
+    private void BattleMode(bool value)
+    {
+        if(value == true)
+        {
+            _battleSettings.Camera.enabled = true;
+            _camera.enabled = false;
+        }
+        else
+        {
+            _camera.enabled = true;
+            _battleSettings.Camera.enabled = false;
+        }
     }
 }

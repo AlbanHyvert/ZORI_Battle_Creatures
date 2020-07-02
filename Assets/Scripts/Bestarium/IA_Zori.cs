@@ -7,7 +7,10 @@ public class IA_Zori : MonoBehaviour
 {
     #region SERIALIZED
     [SerializeField] private BaseZori _stats = null;
+    [Space, Header("Other Stats")]
+    [SerializeField] private E_CapacitySlot _favAttack = E_CapacitySlot.SLOT_A;
     [SerializeField] private E_ZoriStates _startingState = E_ZoriStates.WALKING;
+    [SerializeField] private E_ZoriWorldStatus _status = E_ZoriWorldStatus.WILD;
     [Space, Header("View Field")]
     [SerializeField] private float _viewField = 70;
     [Space, Header("Animatior")]
@@ -26,12 +29,15 @@ public class IA_Zori : MonoBehaviour
     private PlayerController _player = null;
     private NavMeshAgent _agent = null;
     private Dictionary<E_ZoriStates, IZoriStates> _states = null;
+    private Dictionary<E_CapacitySlot, ZoriMoves> _moves = null;
+    private ZoriMoves[] _capacities = null;
     private E_ZoriStates _currentState = E_ZoriStates.WALKING;
     private string _name = string.Empty;
     private Sprite _icon = null;
     private BaseStats _attackStats = null;
     private BaseStats _defenseStats = null;
     private BaseStats _HPStats = null;
+    private bool _isMyTurn = false;
     [Range(1, 999)] private int _level = 1;
     private float _experience = 0;
     private E_Regions _biomeFound = E_Regions.EAST;
@@ -47,12 +53,17 @@ public class IA_Zori : MonoBehaviour
     public BaseStats AttackStats { get => _attackStats; set => _attackStats = value; }
     public BaseStats DefenseStats { get => _defenseStats; set => _defenseStats = value; }
     public BaseStats HPStats { get => _HPStats; set => _HPStats = value; }
+    public ZoriMoves[] Capacities { get { return _capacities; } }
+    public Dictionary<E_CapacitySlot, ZoriMoves> Moves { get { return _moves; } }
+    public bool IsMyTurn { get { return _isMyTurn; } set { _isMyTurn = value; } }
     public float ViewField { get => _viewField; }
     public int Level { get => _level; }
     public float Experience { get => _experience; set => AddExperience(value); }
+    public E_CapacitySlot FavAttack { get => _favAttack; }
     public E_Regions BiomeFound { get => _biomeFound; set => _biomeFound = value; }
     public E_ZoriTypes Type { get => _type; set => _type = value; }
     public E_ZoriRarity Rarity { get => _rarity; set => _rarity = value; }
+    public E_ZoriWorldStatus Status { get { return _status; } set { _status = value; } }
     public LayerMask Target { get { return _target; } }
     public Animator Animator { get => _animator; }
     public AudioSource AudioSource { get => _audioSource; }
@@ -61,6 +72,22 @@ public class IA_Zori : MonoBehaviour
     public AudioClip[] BattleAudio { get => _battleAudio; }
     public AudioClip[] KoAudio { get => _koAudio; }
     #endregion PROPERTIES
+
+    private void TakeDamage(int value)
+    {
+        HPStats.Minimum -= value;
+
+        if (HPStats.Minimum < 0)
+            HPStats.Minimum = 0;
+    }
+
+    private void TakeHeal(int value)
+    {
+        HPStats.Minimum += value;
+
+        if (HPStats.Minimum > HPStats.Maximum)
+            HPStats.Minimum = HPStats.Maximum;
+    }
 
     private void AddExperience(float value)
     {
@@ -96,11 +123,13 @@ public class IA_Zori : MonoBehaviour
         _biomeFound = _stats.BiomeFound;
         _type = _stats.Type;
         _rarity = _stats.Rarity;
+        _capacities = _stats.Capacities;
     }
 
     private void Start()
     {
         _states = new Dictionary<E_ZoriStates, IZoriStates>();
+        _moves = new Dictionary<E_CapacitySlot, ZoriMoves>();
 
         _currentState = _startingState;
 
@@ -110,6 +139,11 @@ public class IA_Zori : MonoBehaviour
         _states.Add(E_ZoriStates.KO, new Z_KOState());
 
         Init();
+
+        _moves.Add(E_CapacitySlot.SLOT_A, _capacities[0]);
+        _moves.Add(E_CapacitySlot.SLOT_B, _capacities[1]);
+        _moves.Add(E_CapacitySlot.SLOT_C, _capacities[2]);
+        _moves.Add(E_CapacitySlot.SLOT_D, _capacities[3]);
 
         _states[E_ZoriStates.WALKING].Init(this);
         _states[E_ZoriStates.CHASING].Init(this);

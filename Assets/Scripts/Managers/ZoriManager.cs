@@ -16,8 +16,6 @@ public class ZoriManager : Singleton<ZoriManager>
     {
         string[] data = _zoriFile.text.Split(new char[] { '\n' });
 
-        Debug.Log(data.Length);
-
         for (int i = 1; i < data.Length -1; i++)
         {
             string[] row = data[i].Split(new char[] { ';' });

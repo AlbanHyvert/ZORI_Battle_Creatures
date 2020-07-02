@@ -8,6 +8,7 @@ public class BaseZori : ScriptableObject
     [SerializeField] private BaseStats _attackStats = null;
     [SerializeField] private BaseStats _defenseStats = null;
     [SerializeField] private BaseStats _HPStats = null;
+    [SerializeField] private ZoriMoves[] _capacities = null;
     [SerializeField, Range(1,999)] private int _level = 1;
     [SerializeField] private float _experience = 0;
     [SerializeField] private E_Regions _biomeFound = E_Regions.EAST;
@@ -19,6 +20,7 @@ public class BaseZori : ScriptableObject
     public BaseStats AttackStats { get => _attackStats; }
     public BaseStats DefenseStats { get => _defenseStats; }
     public BaseStats HPStats { get => _HPStats; }
+    public ZoriMoves[] Capacities { get { return _capacities; } }
     public int Level { get => _level; }
     public float Experience { get => _experience; }
     public E_Regions BiomeFound { get => _biomeFound; }

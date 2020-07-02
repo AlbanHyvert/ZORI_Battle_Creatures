@@ -23,6 +23,11 @@ MonoBehaviour:
   _HPStats:
     _minimum: 5
     _maximum: 50
+  _capacities:
+  - {fileID: 11400000, guid: 2f8305c476a5dab40918b2fe08fd0c3c, type: 2}
+  - {fileID: 11400000, guid: a3d96f9d2fb292d4998283a06a255e4f, type: 2}
+  - {fileID: 11400000, guid: dd90be1357561e6438574de28a1f52cb, type: 2}
+  - {fileID: 11400000, guid: fa1e2207410503b488fc9a93fe902fe9, type: 2}
   _level: 1
   _experience: 0
   _biomeFound: 0

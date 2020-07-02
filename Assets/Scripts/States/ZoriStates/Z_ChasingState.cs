@@ -30,7 +30,7 @@ public class Z_ChasingState : IZoriStates
         }
 
         _agent.speed += 5;
-        _agent.stoppingDistance = 2;
+        _agent.stoppingDistance = 4;
     }
 
     void IZoriStates.Exit()
