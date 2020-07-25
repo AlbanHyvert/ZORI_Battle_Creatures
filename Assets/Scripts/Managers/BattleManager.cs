@@ -1,10 +1,30 @@
 ﻿using Engine.Singleton;
+using UnityEngine;
 
 public class BattleManager : Singleton<BattleManager>
 {
-    private IA_Zori _playerZori = null;
-    private IA_Zori _wildZori = null;
+    private BattleSettings _battleSettings = null;
+    private IAController _zoriA = null;
+    private IAController _zoriB = null;
 
-    public IA_Zori PlayerZori { get { return _playerZori; } set { _playerZori = value; } }
-    public IA_Zori WildZori { get { return _wildZori; } set { _wildZori = value; } }
+    public BattleSettings BattleSettings { get { return _battleSettings; } set { _battleSettings = value; } }
+
+    public IAController GetZoriA { get { return _zoriA; } }
+    public IAController GetZoriB { get { return _zoriB; } }
+    
+    public IAController SetZoriA { set { _zoriA = value; } }
+    public IAController SetZoriB { set { _zoriB = value; } }
+
+    public void SetBattle(IAController controller)
+    {
+        if (controller.GetHasStartedTheBattle == false)
+            SetZoriB = controller;
+        else
+            SetZoriA = controller;
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 }
