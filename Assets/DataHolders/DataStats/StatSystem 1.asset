@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39ee50777b196c54eb3a6db576002539, type: 3}
   m_Name: StatSystem 1
   m_EditorClassIdentifier: 
-  _name: 
+  _name: SIKE
   _iD: 0
   _level: 100
   _baseHp: 200
-  _baseAttack: 200
-  _baseDefence: 200
-  _baseSpeAttack: 200
-  _baseSpeDefence: 200
-  _baseSpeed: 200
+  _baseAttack: 100
+  _baseDefence: 20
+  _baseSpeAttack: 20
+  _baseSpeDefence: 20
+  _baseSpeed: 20
   _behavior: 4
   _types: 03000000
   _baseMana: 30

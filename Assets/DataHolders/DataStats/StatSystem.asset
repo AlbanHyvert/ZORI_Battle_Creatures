@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39ee50777b196c54eb3a6db576002539, type: 3}
   m_Name: StatSystem
   m_EditorClassIdentifier: 
-  _name: 
+  _name: Depression
   _iD: 0
   _level: 100
   _baseHp: 100
-  _baseAttack: 10
-  _baseDefence: 10
-  _baseSpeAttack: 10
+  _baseAttack: 15
+  _baseDefence: 30
+  _baseSpeAttack: 5
   _baseSpeDefence: 10
   _baseSpeed: 10
   _behavior: 0
   _types: 0e00000001000000
   _baseMana: 10
-  _baseMaxExperience: 99
+  _baseMaxExperience: 100

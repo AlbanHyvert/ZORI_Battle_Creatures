@@ -17,14 +17,39 @@ public class BattleManager : Singleton<BattleManager>
 
     public void SetBattle(IAController controller)
     {
-        if (controller.GetHasStartedTheBattle == false)
-            SetZoriB = controller;
-        else
+        if (controller.GetHasStartedTheBattle == true)
+        {
             SetZoriA = controller;
+            _battleSettings.GetUIZoriA.Init(controller);
+            //_zoriA.gameObject.SetActive(false);
+        }
+        else
+        {
+            SetZoriB = controller;
+            _battleSettings.GetUIZoriB.Init(controller);
+            //_zoriA.gameObject.SetActive(true);
+        }
+    }
+
+    private void OnUpdate()
+    {
+        if(_zoriA != null && _zoriB != null)
+        {
+            if (_zoriA.GetStats.GetSpeed > _zoriB.GetStats.GetSpeed)
+            {
+                _zoriA.ChangeState(E_BattleState.ACTIONTURN);
+            }
+            else
+                _zoriB.ChangeState(E_BattleState.ACTIONTURN);
+
+            GameLoopManager.Instance.UpdateManager -= OnUpdate;
+        }
     }
 
     protected override void Awake()
     {
         base.Awake();
+
+        GameLoopManager.Instance.UpdateManager += OnUpdate;
     }
 }

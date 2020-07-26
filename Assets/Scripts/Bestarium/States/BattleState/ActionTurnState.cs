@@ -11,7 +11,9 @@ public class ActionState : IBattleState
     private bool _hasInit = false;
     private bool _fightOk = false;
     private bool _hasAlreadyAttack = false;
+    private bool _hasShownText = false;
     private int _choosenIMove = 0;
+
     void IBattleState.Enter()
     {
         _time = 0;
@@ -34,7 +36,11 @@ public class ActionState : IBattleState
         if (BattleManager.Instance.GetZoriA != null && BattleManager.Instance.GetZoriB != null)
             _fightOk = true;
         else
+        {
+            _hasInit = false;
             _fightOk = false;
+            _self.ChangeState(E_BattleState.ACTIONTURN);
+        }
 
         //Anim
         //Sound
@@ -47,6 +53,9 @@ public class ActionState : IBattleState
         _timeBeforeAttack = 0;
         _timeAfterAttack = 0;
         _hasAlreadyAttack = false;
+        _hasShownText = false;
+
+        _self.DescText = string.Empty;
 
         if (_ennemy != null)
             _ennemy.ChangeState(E_BattleState.ACTIONTURN);
@@ -73,29 +82,29 @@ public class ActionState : IBattleState
                 {
                     _timeBeforeAttack += 0.1f + Time.deltaTime;
 
-                    if(_hasAlreadyAttack == false)
+                    if(_hasShownText == false)
                     {
                         switch (_choosenIMove)
                         {
                             case 0:
-                                Debug.Log(_self.name + " " + "use" + " " + _self.GetDicMoves[E_Slots.A].GetName);
+                                _self.DescText = _self.name + " " + "use" + " " + _self.GetDicMoves[E_Slots.A].GetName;
                                 break;
                             case 1:
-                                Debug.Log(_self.name + " " + "use" + " " + _self.GetDicMoves[E_Slots.B].GetName);
+                                _self.DescText = _self.name + " " + "use" + " " + _self.GetDicMoves[E_Slots.B].GetName;
                                 break;
                             case 2:
-                                Debug.Log(_self.name + " " + "use" + " " + _self.GetDicMoves[E_Slots.C].GetName);
+                                _self.DescText = _self.name + " " + "use" + " " + _self.GetDicMoves[E_Slots.C].GetName;
                                 break;
                             case 3:
-                                Debug.Log(_self.name + " " + "use" + " " + _self.GetDicMoves[E_Slots.D].GetName);
+                                _self.DescText = _self.name + " " + "use" + " " + _self.GetDicMoves[E_Slots.D].GetName;
                                 break;
                             default:
                                 break;
                         }
+                        _hasShownText = true;
                     }
         
-
-                    if(_timeBeforeAttack > 2)
+                    if(_timeBeforeAttack > 5)
                     {
                         _timeAfterAttack += 0.1f + Time.deltaTime;
 

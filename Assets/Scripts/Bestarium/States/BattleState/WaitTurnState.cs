@@ -9,9 +9,6 @@
         {
             BattleManager.Instance.SetBattle(_self);
 
-            if (_self.GetHasStartedTheBattle == true)
-                _self.ChangeState(E_BattleState.ACTIONTURN);
-
             _hasInit = true;
         }
     }

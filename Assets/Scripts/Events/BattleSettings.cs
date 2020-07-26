@@ -2,11 +2,16 @@
 
 public class BattleSettings : MonoBehaviour
 {
+    [SerializeField] private UI_Zori _zoriA = null;
+    [SerializeField] private UI_Zori _zoriB = null;
+
     private int _damage = 0;
     private float _doubleBonus = 1;
     [Range(1,10)] private float _bonusDamage = 1;
 
     public int GetDamage { get { return _damage; } }
+    public UI_Zori GetUIZoriA { get { return _zoriA; } }
+    public UI_Zori GetUIZoriB { get { return _zoriB; } }
 
     public int CalculateDamage(IAController sender, E_Slots choosenMove, IAController receiver)
     {
@@ -14,9 +19,13 @@ public class BattleSettings : MonoBehaviour
 
         CheckBonusStats(sender, choosenMove, receiver);
 
+        Debug.Log(sender.GetStats.GetName + " " + "HTC" + " " +_damage);
+
         int dmg = (int)Mathf.Abs(_damage * _bonusDamage);
 
         _damage = dmg;
+
+        Debug.Log(sender.GetStats.GetName + " " + "TTC" + " " + _damage);
 
         _doubleBonus = 0;
         _bonusDamage = 0;
@@ -1807,8 +1816,6 @@ public class BattleSettings : MonoBehaviour
                 _bonusDamage += _doubleBonus;
             }
         }
-
-        
     }
 
     private void Start()

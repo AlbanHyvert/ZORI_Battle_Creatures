@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
 public class IAController : MonoBehaviour
 {
@@ -23,6 +23,7 @@ public class IAController : MonoBehaviour
     private S_HealthSystem _healthSystem = new S_HealthSystem();
     private S_StatSystem _stats = new S_StatSystem();
     private PlayerController _player = null;
+    private string _descText = string.Empty;
     private int _level = 1;
     private float _experience = 0;
     private float newXPValue = 0;
@@ -30,6 +31,7 @@ public class IAController : MonoBehaviour
     private int _maxExperience = 100;
     #endregion Current
 
+    #region Properties
     #region Get
     public S_StatSystem GetStats { get { return _stats; } }
     public S_HealthSystem GetHealth { get { return _healthSystem; } }
@@ -44,7 +46,32 @@ public class IAController : MonoBehaviour
 
     #region Set
     public PlayerController SetPlayer { set { _player = value; } }
+    public string DescText
+    {
+        set
+        {
+            _descText = value;
+            _actionText(_descText);
+        } 
+    }
     #endregion Set
+    #endregion Properties
+
+    #region Events
+    private event Action<string> _actionText = null;
+    public event Action<string> ActionText
+    {
+        add
+        {
+            _actionText -= value;
+            _actionText += value;
+        }
+        remove
+        {
+            _actionText -= value;
+        }
+    }
+    #endregion Events
 
     private void AddLevel(int amount)
     {
@@ -180,10 +207,15 @@ public class IAController : MonoBehaviour
     public void ChangeState(E_BattleState nextState)
     {
         _states[_currentState].Exit();
-        GameLoopManager.Instance.UpdateZori -= OnUpdate;
+
+        if(GameLoopManager.Instance != null)
+            GameLoopManager.Instance.UpdateZori -= OnUpdate;
+
         _currentState = nextState;
         _states[nextState].Enter();
-        GameLoopManager.Instance.UpdateZori += OnUpdate;
+
+        if (GameLoopManager.Instance != null)
+            GameLoopManager.Instance.UpdateZori += OnUpdate;
     }
 
     private void OnDestroy()
