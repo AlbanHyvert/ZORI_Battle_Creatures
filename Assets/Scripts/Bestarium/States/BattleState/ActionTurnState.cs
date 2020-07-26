@@ -33,6 +33,11 @@ public class ActionState : IBattleState
             _hasInit = true;
         }
 
+        if (_ennemy.GetHealth.CurrentHealth <= 0)
+        {
+            _self.ChangeState(E_BattleState.WAITTURN);
+        }
+
         if (BattleManager.Instance.GetZoriA != null && BattleManager.Instance.GetZoriB != null)
             _fightOk = true;
         else

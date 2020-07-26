@@ -33,6 +33,13 @@ public class BattleSettings : MonoBehaviour
         return _damage;
     }
 
+    public float CalculateExperienceGain(IAController beaten)
+    {
+        float gain = 1 * (beaten.GetExperience + 100) * (beaten.GetLevel / 7);
+
+        return gain;
+    }
+
     private void CheckBonusStats(IAController sender, E_Slots choosenMove, IAController receiver)
     {
         if(receiver.GetStats.GetTypes.Length < 2)
@@ -1821,11 +1828,31 @@ public class BattleSettings : MonoBehaviour
     private void Start()
     {
         BattleManager.Instance.BattleSettings = this;
+
+        GameLoopManager.Instance.UpdateManager += OnUpdate;
+    }
+
+    private void OnUpdate()
+    {
+        if(BattleManager.Instance.GetZoriA.GetHealth.CurrentHealth <= 0)
+        {
+            BattleManager.Instance.GetZoriB.SetXP(CalculateExperienceGain(BattleManager.Instance.GetZoriA));
+            GameLoopManager.Instance.UpdateManager -= OnUpdate;
+        }
+
+        if(BattleManager.Instance.GetZoriB.GetHealth.CurrentHealth <= 0)
+        {
+            BattleManager.Instance.GetZoriA.SetXP(CalculateExperienceGain(BattleManager.Instance.GetZoriB));
+            GameLoopManager.Instance.UpdateManager -= OnUpdate;
+        }
     }
 
     private void OnDestroy()
     {
         if(BattleManager.Instance != null)
             BattleManager.Instance.BattleSettings = null;
+
+        if (GameLoopManager.Instance != null)
+            GameLoopManager.Instance.UpdateManager -= OnUpdate;
     }
 }

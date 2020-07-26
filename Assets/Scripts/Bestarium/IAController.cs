@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -71,6 +72,20 @@ public class IAController : MonoBehaviour
             _actionText -= value;
         }
     }
+
+    private event Action<float> _updateExperience = null;
+    public event Action<float> UpdateExperience
+    {
+        add
+        {
+            _updateExperience -= value;
+            _updateExperience += value;
+        }
+        remove
+        {
+            _updateExperience -= value;
+        }
+    }
     #endregion Events
 
     private void AddLevel(int amount)
@@ -86,7 +101,7 @@ public class IAController : MonoBehaviour
     {
         newXPValue = (_experience + amount);
 
-        float diffBeforeLevelUp = _experience - _maxExperience;
+        float diffBeforeLevelUp = newXPValue - _maxExperience;
 
         if(diffBeforeLevelUp > 0)
         {
@@ -139,14 +154,9 @@ public class IAController : MonoBehaviour
     {
         if(health <= 0)
         {
-            if (_hasStartedTheBattle == false)
-                BattleManager.Instance.SetZoriB = null;
-            else
-                BattleManager.Instance.SetZoriA = null;
+            ChangeState(E_BattleState.WAITTURN);
 
             GameLoopManager.Instance.UpdateZori -= OnUpdate;
-
-            Destroy(gameObject);
         }
     }
 
@@ -163,7 +173,9 @@ public class IAController : MonoBehaviour
 
         _healthSystem.Init(_baseStats.GetBaseHp, _battleSystem.GetBPHp, _level);
 
-        _baseMaxExperience = _baseStats.GetBaseMaxExperience;
+        _maxExperience = Mathf.Abs((((2 * _baseMaxExperience) * _level) / 10) + _level + 100);
+
+        SetXP(300);
     }
 
     private void Start()
@@ -197,7 +209,10 @@ public class IAController : MonoBehaviour
 
         _experience = Mathf.Lerp(_experience, newXPValue, _timeXP);
 
-        if(_experience >= newXPValue - 0.2f)
+        if (_updateExperience != null)
+            _updateExperience(_experience);
+
+        if (_experience >= newXPValue - 0.2f)
         {
             _experience = newXPValue;
             _timeXP = 0;

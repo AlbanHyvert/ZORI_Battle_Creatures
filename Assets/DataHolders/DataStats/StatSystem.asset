@@ -16,10 +16,10 @@ MonoBehaviour:
   _iD: 0
   _level: 100
   _baseHp: 100
-  _baseAttack: 15
-  _baseDefence: 30
-  _baseSpeAttack: 5
-  _baseSpeDefence: 10
+  _baseAttack: 30
+  _baseDefence: 70
+  _baseSpeAttack: 25
+  _baseSpeDefence: 25
   _baseSpeed: 10
   _behavior: 0
   _types: 0e00000001000000

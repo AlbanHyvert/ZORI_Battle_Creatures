@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: SIKE
   _iD: 0
-  _level: 100
+  _level: 150
   _baseHp: 200
   _baseAttack: 20
   _baseDefence: 10
