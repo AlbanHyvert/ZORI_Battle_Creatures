@@ -27,7 +27,7 @@ public class EndTurnState : IBattleState
     void IBattleState.Exit()
     {
         _time = 0;
-
+        _self.DescText = string.Empty;
         _ennemy.ChangeState(E_BattleState.ACTIONTURN);
     }
 

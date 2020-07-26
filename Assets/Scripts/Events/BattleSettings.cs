@@ -4,6 +4,7 @@ public class BattleSettings : MonoBehaviour
 {
     [SerializeField] private UI_Zori _zoriA = null;
     [SerializeField] private UI_Zori _zoriB = null;
+    [SerializeField] private GameObject _uiPlayer = null;
 
     private int _damage = 0;
     private float _doubleBonus = 1;
@@ -12,6 +13,7 @@ public class BattleSettings : MonoBehaviour
     public int GetDamage { get { return _damage; } }
     public UI_Zori GetUIZoriA { get { return _zoriA; } }
     public UI_Zori GetUIZoriB { get { return _zoriB; } }
+    public GameObject GetUiPlayer { get { return _uiPlayer; } }
 
     public int CalculateDamage(IAController sender, E_Slots choosenMove, IAController receiver)
     {

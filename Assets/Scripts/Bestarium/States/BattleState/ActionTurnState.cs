@@ -47,6 +47,12 @@ public class ActionState : IBattleState
             _self.ChangeState(E_BattleState.ACTIONTURN);
         }
 
+        if (_self.GetPlayer != null)
+        {
+            _self.GetPlayer.ChoosenAttack += ChoosenAttack;
+            BattleManager.Instance.BattleSettings.GetUiPlayer.SetActive(true);
+        }
+
         //Anim
         //Sound
         //Visual Effect
@@ -60,7 +66,8 @@ public class ActionState : IBattleState
         _hasAlreadyAttack = false;
         _hasShownText = false;
 
-        _self.DescText = string.Empty;
+        if(_self.GetPlayer == null)
+            _self.DescText = string.Empty;
 
         //Anim
         //Sound
@@ -125,7 +132,7 @@ public class ActionState : IBattleState
         }
     }
 
-    public void DealDamage(int i_Move = 0, E_Slots e_Move = E_Slots.A)
+    public void DealDamage(int i_Move = 0)
     {
         if(_self.GetPlayer == null)
         {
@@ -145,9 +152,19 @@ public class ActionState : IBattleState
                     break;
             }
         }
-        else
-        {
-            _ennemy.GetHealth.TakeDamage(BattleManager.Instance.BattleSettings.CalculateDamage(_self, e_Move, _ennemy));
-        }
+    }
+
+    public void DealDamage(E_Slots e_Move = E_Slots.A)
+    {
+        _ennemy.GetHealth.TakeDamage(BattleManager.Instance.BattleSettings.CalculateDamage(_self, e_Move, _ennemy));
+    }
+
+    private void ChoosenAttack(E_Slots e_Move)
+    {
+        DealDamage(e_Move);
+        BattleManager.Instance.BattleSettings.GetUiPlayer.SetActive(false);
+        _self.DescText = _self.name + " " + "use" + " " + _self.GetDicMoves[e_Move].GetName;
+        _self.GetPlayer.ChoosenAttack -= ChoosenAttack;
+        _self.ChangeState(E_BattleState.ENDTURN);
     }
 }
