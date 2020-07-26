@@ -57,8 +57,6 @@ public class ActionState : IBattleState
 
         _self.DescText = string.Empty;
 
-        if (_ennemy != null)
-            _ennemy.ChangeState(E_BattleState.ACTIONTURN);
         //Anim
         //Sound
         //Visual Effect
