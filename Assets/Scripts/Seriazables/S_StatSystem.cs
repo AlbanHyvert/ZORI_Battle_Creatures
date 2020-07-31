@@ -14,6 +14,7 @@ public class S_StatSystem
 
     #region Current
     private string _name = string.Empty;
+    private int _iD = 0;
     private int _attack = 0;
     private int _defence = 0;
     private int _speAttack = 0;
@@ -31,6 +32,7 @@ public class S_StatSystem
     public void Init(D_StatSystem statSystem, E_Behavior behavior, E_Types[] types, S_BattlePointSystem s_BattlePoint, int level)
     {
         _name = statSystem.GetName;
+        statSystem.SetName = _name;
         _baseAttack = statSystem.GetBaseAttack;
         _baseDefence = statSystem.GetBaseDefence;
         _baseSpeAttack = statSystem.GetBaseSpeAttack;
@@ -39,6 +41,7 @@ public class S_StatSystem
         _behavior = behavior;
         _types = types;
         _baseMana = statSystem.GetBaseMana;
+        _iD = statSystem.GetID;
 
         CalculateStats(level, s_BattlePoint.GetBPAtk, s_BattlePoint.GetBPDef, s_BattlePoint.GetBPSpeAtk, s_BattlePoint.GetBPSpeDef, s_BattlePoint.GetBPSpeed);
     }
@@ -64,6 +67,7 @@ public class S_StatSystem
 
     #region Get Variables
     public string GetName { get { return _name; } }
+    public int GetID { get { return _iD; } }
     public int GetAttack { get { return _attack; } }
     public int GetDefence { get { return _defence; } }
     public int GetSpeAttack { get { return _speAttack; } }

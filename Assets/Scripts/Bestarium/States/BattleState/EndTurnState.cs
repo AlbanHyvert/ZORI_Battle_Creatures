@@ -28,7 +28,7 @@ public class EndTurnState : IBattleState
     {
         _time = 0;
         _self.DescText = string.Empty;
-        _ennemy.ChangeState(E_BattleState.ACTIONTURN);
+        _ennemy.ChangeBattleState(E_BattleState.ACTIONTURN);
     }
 
     void IBattleState.Init(IAController controller)
@@ -42,7 +42,7 @@ public class EndTurnState : IBattleState
 
         if(_time > 1)
         {
-            _self.ChangeState(E_BattleState.WAITTURN);
+            _self.ChangeBattleState(E_BattleState.WAITTURN);
         }
     }
 }

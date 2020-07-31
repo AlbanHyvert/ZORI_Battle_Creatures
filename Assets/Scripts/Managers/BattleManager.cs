@@ -37,10 +37,10 @@ public class BattleManager : Singleton<BattleManager>
         {
             if (_zoriA.GetStats.GetSpeed > _zoriB.GetStats.GetSpeed)
             {
-                _zoriA.ChangeState(E_BattleState.ACTIONTURN);
+                _zoriA.ChangeBattleState(E_BattleState.ACTIONTURN);
             }
             else
-                _zoriB.ChangeState(E_BattleState.ACTIONTURN);
+                _zoriB.ChangeBattleState(E_BattleState.ACTIONTURN);
 
             GameLoopManager.Instance.UpdateManager -= OnUpdate;
         }

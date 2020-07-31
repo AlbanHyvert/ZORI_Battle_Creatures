@@ -35,7 +35,7 @@ public class ActionState : IBattleState
 
         if (_ennemy.GetHealth.CurrentHealth <= 0)
         {
-            _self.ChangeState(E_BattleState.WAITTURN);
+            _self.ChangeBattleState(E_BattleState.WAITTURN);
         }
 
         if (BattleManager.Instance.GetZoriA != null && BattleManager.Instance.GetZoriB != null)
@@ -44,7 +44,7 @@ public class ActionState : IBattleState
         {
             _hasInit = false;
             _fightOk = false;
-            _self.ChangeState(E_BattleState.ACTIONTURN);
+            _self.ChangeBattleState(E_BattleState.ACTIONTURN);
         }
 
         if (_self.GetPlayer != null)
@@ -126,7 +126,7 @@ public class ActionState : IBattleState
                     }
 
                     if(_timeAfterAttack > 2)
-                        _self.ChangeState(E_BattleState.ENDTURN);
+                        _self.ChangeBattleState(E_BattleState.ENDTURN);
                 }
             }
         }
@@ -165,6 +165,6 @@ public class ActionState : IBattleState
         BattleManager.Instance.BattleSettings.GetUiPlayer.SetActive(false);
         _self.DescText = _self.name + " " + "use" + " " + _self.GetDicMoves[e_Move].GetName;
         _self.GetPlayer.ChoosenAttack -= ChoosenAttack;
-        _self.ChangeState(E_BattleState.ENDTURN);
+        _self.ChangeBattleState(E_BattleState.ENDTURN);
     }
 }

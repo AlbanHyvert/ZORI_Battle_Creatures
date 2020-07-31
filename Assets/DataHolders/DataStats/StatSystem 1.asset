@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StatSystem 1
   m_EditorClassIdentifier: 
   _name: SIKE
-  _iD: 0
+  _iD: 2
   _level: 150
   _baseHp: 200
   _baseAttack: 20

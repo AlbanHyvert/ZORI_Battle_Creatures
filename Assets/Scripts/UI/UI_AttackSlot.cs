@@ -11,7 +11,7 @@ public class UI_AttackSlot : MonoBehaviour
 
     private IAController _playerZori = null;
 
-    private void Start()
+    private void OnEnable()
     {
         _playerZori = PlayerManager.Instance.GetPlayer.GetBattlingZori;
 

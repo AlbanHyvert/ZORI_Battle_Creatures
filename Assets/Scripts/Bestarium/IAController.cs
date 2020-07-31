@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class IAController : MonoBehaviour
@@ -12,6 +13,10 @@ public class IAController : MonoBehaviour
     [SerializeField] private List<D_AttackSystem> _moveList = new List<D_AttackSystem>();
     [Space]
     [SerializeField] private bool _hasStartedTheBattle = false;
+    [Space]
+    [Header("Status")]
+    [SerializeField] private E_OwnerState _ownedStatus = E_OwnerState.WILD;
+    [SerializeField] private E_WorldState _currentWorldState = E_WorldState.PATROLLING;
 
     #region Base
     private int _baseMaxExperience = 100;
@@ -19,8 +24,9 @@ public class IAController : MonoBehaviour
 
     #region Current
     private Dictionary<E_Slots, D_AttackSystem> _dicMoves = null;
-    private Dictionary<E_BattleState, IBattleState> _states = null;
-    private E_BattleState _currentState = E_BattleState.WAITTURN;
+    private Dictionary<E_BattleState, IBattleState> _battleStates = null;
+    private Dictionary<E_WorldState, IWorldState> _worldStates = null;
+    private E_BattleState _currentBattleState = E_BattleState.WAITTURN;
     private S_HealthSystem _healthSystem = new S_HealthSystem();
     private S_StatSystem _stats = new S_StatSystem();
     private PlayerController _player = null;
@@ -29,6 +35,7 @@ public class IAController : MonoBehaviour
     private float _experience = 0;
     private float newXPValue = 0;
     private float _timeXP = 0;
+    private bool _isInBattle = false;
     private int _maxExperience = 100;
     #endregion Current
 
@@ -43,6 +50,8 @@ public class IAController : MonoBehaviour
     public Dictionary<E_Slots, D_AttackSystem> GetDicMoves { get { return _dicMoves; } }
     public bool GetHasStartedTheBattle { get { return _hasStartedTheBattle; } }
     public PlayerController GetPlayer { get { return _player; } }
+    public bool GetIsInBattle { get { return _isInBattle; } }
+    public E_OwnerState GetOwnerStatus { get { return _ownedStatus; } }
     #endregion Properties
 
     #region Set
@@ -55,6 +64,8 @@ public class IAController : MonoBehaviour
             _actionText(_descText);
         } 
     }
+    public bool SetIsInBattle { set { _isInBattle = value; } }
+    public E_OwnerState SetOwnerStatus { set { _ownedStatus = value; } }
     #endregion Set
     #endregion Properties
 
@@ -88,6 +99,7 @@ public class IAController : MonoBehaviour
     }
     #endregion Events
 
+    #region Setup Events
     private void AddLevel(int amount)
     {
         _level += amount;
@@ -103,7 +115,7 @@ public class IAController : MonoBehaviour
 
         float diffBeforeLevelUp = newXPValue - _maxExperience;
 
-        if(diffBeforeLevelUp > 0)
+        if (diffBeforeLevelUp > 0)
         {
             AddLevel(1);
             _experience = 0;
@@ -135,34 +147,42 @@ public class IAController : MonoBehaviour
         }
     }
 
-    private void SetStates()
+    private void SetBattleStates()
     {
-        _states.Add(E_BattleState.ACTIONTURN, new ActionState());
-        _states.Add(E_BattleState.WAITTURN, new WaitTurnState());
-        _states.Add(E_BattleState.ENDTURN, new EndTurnState());
+        _battleStates.Add(E_BattleState.ACTIONTURN, new ActionState());
+        _battleStates.Add(E_BattleState.WAITTURN, new WaitTurnState());
+        _battleStates.Add(E_BattleState.ENDTURN, new EndTurnState());
 
-        _currentState = E_BattleState.WAITTURN;
+        _currentBattleState = E_BattleState.WAITTURN;
 
-        _states[E_BattleState.ACTIONTURN].Init(this);
-        _states[E_BattleState.WAITTURN].Init(this);
-        _states[E_BattleState.ENDTURN].Init(this);
+        _battleStates[E_BattleState.ACTIONTURN].Init(this);
+        _battleStates[E_BattleState.WAITTURN].Init(this);
+        _battleStates[E_BattleState.ENDTURN].Init(this);
 
-        ChangeState(_currentState);
+        ChangeBattleState(_currentBattleState);
+    }
+
+    private void SetWorldStates()
+    {
+
     }
 
     private void GetCurrentHealth(int health)
     {
-        if(health <= 0)
+        if (health <= 0)
         {
-            ChangeState(E_BattleState.WAITTURN);
-
+            ChangeBattleState(E_BattleState.WAITTURN);
+            ChangeWorldState(E_WorldState.KO);
             GameLoopManager.Instance.UpdateZori -= OnUpdate;
         }
     }
+    #endregion Setup Events
 
     private void Awake()
     {
         Init();
+
+        SetIsInBattle = true;
     }
 
     private void Init()
@@ -182,23 +202,29 @@ public class IAController : MonoBehaviour
     {
         _dicMoves = new Dictionary<E_Slots, D_AttackSystem>();
 
-        _states = new Dictionary<E_BattleState, IBattleState>();
+        _battleStates = new Dictionary<E_BattleState, IBattleState>();
+
+        _worldStates = new Dictionary<E_WorldState, IWorldState>();
 
         SetMoves();
 
-        SetStates();
+        SetBattleStates();
+
+        SetWorldStates();
 
         _healthSystem.ShowCurrentHealth += GetCurrentHealth;
     }
 
     private void OnUpdate()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(_isInBattle == true)
         {
-            SetXP(30);
+            _battleStates[_currentBattleState].Tick();
         }
+        else
+        {
 
-        _states[_currentState].Tick();
+        }
 
         UIExperienceVisualised();
     }
@@ -219,15 +245,29 @@ public class IAController : MonoBehaviour
         }
     }
 
-    public void ChangeState(E_BattleState nextState)
+    public void ChangeBattleState(E_BattleState nextState)
     {
-        _states[_currentState].Exit();
+        _battleStates[_currentBattleState].Exit();
 
-        if(GameLoopManager.Instance != null)
+        if (GameLoopManager.Instance != null)
             GameLoopManager.Instance.UpdateZori -= OnUpdate;
 
-        _currentState = nextState;
-        _states[nextState].Enter();
+        _currentBattleState = nextState;
+        _battleStates[nextState].Enter();
+
+        if (GameLoopManager.Instance != null)
+            GameLoopManager.Instance.UpdateZori += OnUpdate;
+    }
+
+    public void ChangeWorldState(E_WorldState nextState)
+    {
+        _worldStates[_currentWorldState].Exit();
+
+        if (GameLoopManager.Instance != null)
+            GameLoopManager.Instance.UpdateZori -= OnUpdate;
+
+        _currentWorldState = nextState;
+        _worldStates[nextState].Enter();
 
         if (GameLoopManager.Instance != null)
             GameLoopManager.Instance.UpdateZori += OnUpdate;

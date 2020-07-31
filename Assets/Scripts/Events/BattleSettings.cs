@@ -1832,6 +1832,7 @@ public class BattleSettings : MonoBehaviour
         BattleManager.Instance.BattleSettings = this;
 
         GameLoopManager.Instance.UpdateManager += OnUpdate;
+
     }
 
     private void OnUpdate()
