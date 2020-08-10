@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 804d52c5e450ee14288bd941bdade6c7, type: 3}
-  m_Name: Capacity 3
+  m_Name: ECTOBLAST
   m_EditorClassIdentifier: 
-  _name: iiiiii
-  _type: 6
-  _style: 2
-  _power: 50
+  _name: Ectoblast
+  _type: 13
+  _style: 1
+  _power: 85
   _consomation: 10

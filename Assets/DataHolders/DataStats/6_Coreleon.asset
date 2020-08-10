@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39ee50777b196c54eb3a6db576002539, type: 3}
-  m_Name: StatSystem
+  m_Name: 6_Coreleon
   m_EditorClassIdentifier: 
-  _name: Depression
-  _iD: 0
+  _name: Coreleon
+  _iD: 6
   _level: 100
-  _baseHp: 100
-  _baseAttack: 30
+  _baseHp: 70
+  _baseAttack: 95
   _baseDefence: 70
-  _baseSpeAttack: 25
-  _baseSpeDefence: 25
-  _baseSpeed: 10
-  _behavior: 0
-  _types: 0e00000001000000
-  _baseMana: 10
+  _baseSpeAttack: 130
+  _baseSpeDefence: 80
+  _baseSpeed: 85
+  _behavior: 4
+  _types: 0100000004000000
+  _baseMana: 30
   _baseMaxExperience: 100
