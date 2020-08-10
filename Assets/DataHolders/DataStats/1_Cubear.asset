@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39ee50777b196c54eb3a6db576002539, type: 3}
-  m_Name: StatSystem 1
+  m_Name: 1_Cubear
   m_EditorClassIdentifier: 
-  _name: SIKE
-  _iD: 2
-  _level: 150
-  _baseHp: 200
-  _baseAttack: 20
-  _baseDefence: 10
-  _baseSpeAttack: 5
-  _baseSpeDefence: 5
-  _baseSpeed: 20
+  _name: Cubear
+  _iD: 1
+  _level: 5
+  _baseHp: 60
+  _baseAttack: 65
+  _baseDefence: 55
+  _baseSpeAttack: 40
+  _baseSpeDefence: 50
+  _baseSpeed: 40
   _behavior: 4
   _types: 03000000
-  _baseMana: 30
+  _baseMana: 10
   _baseMaxExperience: 100
