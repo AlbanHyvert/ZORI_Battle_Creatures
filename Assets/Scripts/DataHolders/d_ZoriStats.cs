@@ -9,6 +9,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.DataHolders
         [SerializeField] private int _index = 0;
         [SerializeField] private string _name = string.Empty;
         [SerializeField] private string _nickName = string.Empty;
+        [SerializeField] private Sprite _icon = null;
         [SerializeField] private int _level = 1;
         [SerializeField] private float _experience = 0;
         [SerializeField] private Stats _baseStats;
@@ -21,6 +22,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.DataHolders
         public int GetIndex {get {return _index; } }
         public string GetName {get {return _name; } }
         public string GetNickName {get {return _nickName; } }
+        public Sprite GetIcon {get {return _icon; } }
         public int GetLevel {get {return _level; } }
         public float GetExperience {get {return _experience; } }
         public Stats GetStats { get {return _baseStats; } }

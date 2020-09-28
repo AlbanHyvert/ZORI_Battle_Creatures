@@ -89,6 +89,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Bestarium
              public int index;
              public string name;
              public string nickName;
+             public Sprite icon;
              public Stats stats;
              public e_ZoriTypes[] types;
              public string description;
@@ -137,6 +138,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Bestarium
                 _data.nickName = _dataBaseStats.GetNickName;
             }
 
+            _data.icon = _dataBaseStats.GetIcon;
             _data.stats.level = _dataBaseStats.GetLevel;
             _data.description = _dataBaseStats.GetDescription;
             _data.types = _dataBaseStats.GetTypes;

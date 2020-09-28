@@ -15,6 +15,7 @@ MonoBehaviour:
   _index: 0
   _name: Duck
   _nickName: 
+  _icon: {fileID: 21300000, guid: a44d7e6618020b2489a1a56ccae28478, type: 3}
   _level: 1
   _experience: 100
   _baseStats:
@@ -27,4 +28,4 @@ MonoBehaviour:
     baseSpecialDef: 30
     baseSpeed: 10
   _types: 020000000c000000
-  _description: 
+  _description: Its a duck

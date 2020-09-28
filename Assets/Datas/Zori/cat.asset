@@ -15,6 +15,7 @@ MonoBehaviour:
   _index: 0
   _name: TestA
   _nickName: 
+  _icon: {fileID: 21300000, guid: 0127d178fb95d9f4aa1036b167d3ece2, type: 3}
   _level: 50
   _experience: 20
   _baseStats:
@@ -27,4 +28,4 @@ MonoBehaviour:
     baseSpecialDef: 100
     baseSpeed: 100
   _types: 04000000
-  _description: 
+  _description: Its a cat
