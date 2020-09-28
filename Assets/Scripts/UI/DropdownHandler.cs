@@ -2,7 +2,6 @@ using UnityEngine;
 using ZORI_Battle_Creatures.Assets.Scripts.Bestarium;
 using ZORI_Battle_Creatures.Assets.Scripts.Managers;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using TMPro;
 
 namespace ZORI_Battle_Creatures.Assets.Scripts.UI
@@ -29,14 +28,13 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.UI
 
             for (int i = 0; i < lenth; i++)
             {
-                
-                if(zoris[i].GetDataBaseStats.GetNickName == string.Empty)
+                if(zoris[i].GetData.nickName == string.Empty)
                 {
-                    zorisName.Add(zoris[i].GetDataBaseStats.GetName);
+                    zorisName.Add(zoris[i].GetData.name);
                 }
                 else
                 {
-                    zorisName.Add(zoris[i].GetDataBaseStats.GetNickName);
+                    zorisName.Add(zoris[i].GetData.nickName);
                 }
             }
 

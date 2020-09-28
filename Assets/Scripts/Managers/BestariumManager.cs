@@ -18,13 +18,18 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Managers
         {
             for (int i = 0; i < _zoriList.Count; i++)
             {
-                if(_zoriList[i].GetDataBaseStats.GetNickName == string.Empty)
+                _zoriList[i].Awake();
+            }
+
+            for (int i = 0; i < _zoriList.Count; i++)
+            {
+                if(_zoriList[i].GetData.nickName == string.Empty)
                 {
-                    _bestarium.Add(_zoriList[i].GetDataBaseStats.GetName, _zoriList[i]);
+                    _bestarium.Add(_zoriList[i].GetData.name, _zoriList[i]);
                 }
                 else
                 {
-                    _bestarium.Add(_zoriList[i].GetDataBaseStats.GetNickName, _zoriList[i]);
+                    _bestarium.Add(_zoriList[i].GetData.nickName, _zoriList[i]);
                 }
             }
         }

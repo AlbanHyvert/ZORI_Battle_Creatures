@@ -19,6 +19,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Bestarium
         private BaseStats _baseStats;
         private Dictionary<e_ActionSlots, d_CapacityStats> _zoriMoves = null;
         private int _currentHp = 0;
+        private int _successful = 0;
 
         private event Action<int> _updateHp = null;
         public event Action<int> UpdateHp
@@ -69,6 +70,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Bestarium
         public Dictionary<e_ActionSlots, d_CapacityStats> GetZoriMoves {get {return _zoriMoves; } }
         public BattlePoints GetBattlePoints {get {return _battlePoints; } }
         public int GetCurrentHealth {get {return _currentHp; } }
+        public int GetSuccessful {get{return _successful;}}
 
         #region Structs
         public struct BaseStats
@@ -119,8 +121,6 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Bestarium
     
         private int Init()
         {
-            int successful = 0;
-
             e_ActionSlots action = e_ActionSlots.A;
 
             _zoriMoves = new Dictionary<e_ActionSlots, d_CapacityStats>();
@@ -183,12 +183,12 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Bestarium
                 _zoriMoves[action].SetStamina = _zoriMoves[action].GetStaminaQuantity;
             }
 
-            successful = 1;
+            _successful = 1;
 
-            return successful;
+            return _successful;
         }
         
-        private void Awake()
+        public void Awake()
         {
             if(Init() == 0)
             {
