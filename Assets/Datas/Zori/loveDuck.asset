@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aba06659e33f41e4db3f62a02ee4dce7, type: 3}
-  m_Name: ZoriDevA
+  m_Name: loveDuck
   m_EditorClassIdentifier: 
   _index: 0
-  _name: TestA
+  _name: Duck
   _nickName: 
-  _level: 50
-  _experience: 20
+  _level: 1
+  _experience: 100
   _baseStats:
-    baseHp: 100
+    baseHp: 50
     baseMaxHp: 100
-    baseMaxExperience: 100
-    baseAttack: 100
-    baseDefence: 100
-    baseSpecialAtt: 100
-    baseSpecialDef: 100
-    baseSpeed: 100
-  _types: 04000000
+    baseMaxExperience: 200
+    baseAttack: 50
+    baseDefence: 200
+    baseSpecialAtt: 30
+    baseSpecialDef: 30
+    baseSpeed: 10
+  _types: 020000000c000000
   _description: 

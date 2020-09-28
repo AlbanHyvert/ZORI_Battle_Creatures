@@ -1,6 +1,7 @@
 ﻿using ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States;
 using ZORI_Battle_Creatures.Assets.Scripts.Enumerators;
 using ZORI_Battle_Creatures.Assets.Scripts.Bestarium;
+using ZORI_Battle_Creatures.Assets.Scripts.Managers;
 using ZORI_Battle_Creatures.Assets.Scripts.UI;
 using UnityEngine;
 
@@ -8,8 +9,8 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems
 {
     public class BattleSystem : StateMachine
     {
-        [SerializeField] private ZoriController _zoriPlayer = null;
-        [SerializeField] private ZoriController _zoriEnnemy = null;
+        [SerializeField] private Transform _zoriPlayerPos = null;
+        [SerializeField] private Transform _zoriEnnemyPos = null;
         [Space]
         [SerializeField] private BattleUI _playerUI = null;
         [SerializeField] private BattleUI _ennemyUI = null;
@@ -18,6 +19,8 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems
         [Space]
         [SerializeField] private GameObject _playerUiAction = null;
         
+        private ZoriController _zoriPlayer = null;
+        private ZoriController _zoriEnnemy = null;
         private bool _matchFinish = false;
         private e_ActionSlots _choosenAttack = e_ActionSlots.A;
 
@@ -43,6 +46,17 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems
 
         private void Start()
         {
+            if(BattleManager.Instance != null)
+            {
+                _zoriPlayer = Instantiate(BattleManager.Instance.GetZoriPlayer, _zoriPlayerPos.position, _zoriPlayerPos.rotation);
+                _zoriEnnemy = Instantiate(BattleManager.Instance.GetZoriEnnemy, _zoriEnnemyPos.position, _zoriEnnemyPos.rotation);
+            }
+            else
+            {
+                return;
+            }
+
+
             _playerUI.Init(_zoriPlayer);
             _ennemyUI.Init(_zoriEnnemy);
 

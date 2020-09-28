@@ -10,12 +10,14 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.UI
         [SerializeField] private TextMeshProUGUI _name = null;
         [SerializeField] private TextMeshProUGUI _level = null;
         [Space]
-        [SerializeField] private Button[] _attackButtons = null;
+        [SerializeField] private TextMeshProUGUI _description = null;
         [Space]
         [SerializeField] private Slider _lifeBar = null;
         [SerializeField] private Slider _experienceBar = null;
-        
+
         private ZoriController _zori = null;
+
+        public TextMeshProUGUI GetDescription {get{return _description;}}
 
         public void Init(ZoriController zori)
         {

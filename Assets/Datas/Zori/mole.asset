@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aba06659e33f41e4db3f62a02ee4dce7, type: 3}
-  m_Name: ZoriDevB
+  m_Name: mole
   m_EditorClassIdentifier: 
-  _index: 1
-  _name: TestB
-  _nickName: HAAHAHHA
-  _level: 50
-  _experience: 20
+  _index: 0
+  _name: Mole
+  _nickName: 
+  _level: 100
+  _experience: 0
   _baseStats:
-    baseHp: 100
-    baseMaxHp: 100
+    baseHp: 200
+    baseMaxHp: 200
     baseMaxExperience: 100
-    baseAttack: 100
-    baseDefence: 100
-    baseSpecialAtt: 100
+    baseAttack: 20
+    baseDefence: 150
+    baseSpecialAtt: 50
     baseSpecialDef: 100
-    baseSpeed: 100
-  _types: 0000000001000000
+    baseSpeed: 15
+  _types: 0000000007000000
   _description: 

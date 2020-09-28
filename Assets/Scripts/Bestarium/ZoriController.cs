@@ -64,6 +64,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Bestarium
 
         public Data GetData { get { return _data; } }
         public BaseStats GetBaseStats {get {return _baseStats; } }
+        public d_ZoriStats GetDataBaseStats {get{return _dataBaseStats;}}
         public d_CapacityStats[] GetCapacities {get {return _capacities; } }
         public Dictionary<e_ActionSlots, d_CapacityStats> GetZoriMoves {get {return _zoriMoves; } }
         public BattlePoints GetBattlePoints {get {return _battlePoints; } }

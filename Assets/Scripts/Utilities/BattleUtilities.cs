@@ -69,7 +69,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Utilities
         }
         public static float CalculateExperienceGain(ZoriController beaten)
         {
-            float gain = 1 * (beaten.GetData.stats.experience + 100) * (beaten.GetData.stats.level / 7);
+            float gain = (1 * (beaten.GetData.stats.experience + 100) * (beaten.GetData.stats.level / 7)) + 10;
 
             return gain;
         }
