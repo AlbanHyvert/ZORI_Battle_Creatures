@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using ZORI_Battle_Creatures.Assets.Scripts.Enumerators;
 
 namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems
 {
@@ -17,12 +18,12 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems
             yield break;
         }
 
-        public virtual IEnumerator Attack()
+        public virtual IEnumerator ChooseAttack()
         {
             yield break;
         }
 
-        public virtual IEnumerator Heal()
+        public virtual IEnumerator ExecuteAction(e_ActionSlots move)
         {
             yield break;
         }

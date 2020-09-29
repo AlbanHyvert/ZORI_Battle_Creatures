@@ -17,17 +17,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
 
             Debug.Log("Begin Battle");
 
-            int playerSpeed = BattleSystem.GetZoriPlayer.GetData.stats.speed;
-            int ennemySpeed = BattleSystem.GetZoriEnnemy.GetData.stats.speed;
-
-            if(playerSpeed >= ennemySpeed)
-            {
-                BattleSystem.SetState(new PlayerTurn(BattleSystem));
-            }
-            else if(playerSpeed < ennemySpeed)
-            {
-                BattleSystem.SetState(new EnnemyTurn(BattleSystem));
-            }
+            BattleSystem.SetState(new ChooseAction(BattleSystem));
 
             yield break;
         }

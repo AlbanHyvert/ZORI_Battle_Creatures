@@ -46,7 +46,18 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.UI
 
             Dictionary<string, ZoriController> _dic = BestariumManager.Instance.GetBestarium;
 
-             _zoriIcon.sprite = _dic[zorisName[_dropdown.value]].GetData.icon;
+            _zoriIcon.sprite = _dic[zorisName[_dropdown.value]].GetData.icon;
+            
+            switch(_dropdownChoice)
+            {
+                case e_Dropdown.PLAYER:
+                    BattleManager.Instance.SetZoriPlayer = _dic[zorisName[_dropdown.value]];
+                break;
+
+                case e_Dropdown.ENNEMY:
+                    BattleManager.Instance.SetZoriEnnemy = _dic[zorisName[_dropdown.value]];
+                break;
+            }
         }
     
         public void DropdownInteger()

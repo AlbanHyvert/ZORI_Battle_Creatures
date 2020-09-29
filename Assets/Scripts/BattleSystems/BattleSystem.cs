@@ -23,10 +23,14 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems
         private ZoriController _zoriEnnemy = null;
         private bool _matchFinish = false;
         private e_ActionSlots _choosenAttack = e_ActionSlots.A;
+        private e_ActionSlots _ennemyAttack = e_ActionSlots.A;
 
+        #region Properties
         public ZoriController GetZoriPlayer {get{return _zoriPlayer;}}
         public ZoriController GetZoriEnnemy {get{return _zoriEnnemy;}}
-        public e_ActionSlots GetActionSlots {get{return _choosenAttack;}}
+        public e_ActionSlots GetPlayerAttack {get{return _choosenAttack;}}
+        public e_ActionSlots GetEnnemyAttack {get{return _ennemyAttack;}}
+        public e_ActionSlots SetEnnemyAttack {set{_ennemyAttack = value;}}
         public BattleUI GetPlayerUI {get{return _playerUI;}}
         public BattleUI GetEnnemyUI {get{return _ennemyUI;}}
         public GameObject GetPlayerUiAction {get{return _playerUiAction;}}
@@ -43,6 +47,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems
                 }
             }
         }
+#endregion
 
         private void Start()
         {
@@ -55,7 +60,6 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems
             {
                 return;
             }
-
 
             _playerUI.Init(_zoriPlayer);
             _ennemyUI.Init(_zoriEnnemy);
@@ -132,8 +136,9 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems
                 _buttons[0].GetData.self.enabled = false;
             }
 
-            CheckAttack(e_ActionSlots.A);
+            StartCoroutine(State.ChooseAttack());
         }
+
         public void OnClickSlotB()
         {
             _choosenAttack = e_ActionSlots.B;
@@ -152,8 +157,9 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems
                 _buttons[1].GetData.self.enabled = false;
             }
 
-            CheckAttack(e_ActionSlots.B);
+            StartCoroutine(State.ChooseAttack());
         }
+
         public void OnClickSlotC()
         {
             _choosenAttack = e_ActionSlots.C;
@@ -172,8 +178,9 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems
                 _buttons[2].GetData.self.enabled = false;
             }
 
-            CheckAttack(e_ActionSlots.C);
+            StartCoroutine(State.ChooseAttack());
         }
+
         public void OnClickSlotD()
         {
             _choosenAttack = e_ActionSlots.D;
@@ -192,21 +199,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems
                 _buttons[3].GetData.self.enabled = false;
             }
 
-            CheckAttack(e_ActionSlots.D);
-        }
-
-        private void CheckAttack(e_ActionSlots move)
-        {
-            switch (_zoriPlayer.GetZoriMoves[move].GetTarget)
-            {
-                case e_BattleTarget.ENNEMY:
-                    StartCoroutine(State.Attack());
-                break;
-
-                case e_BattleTarget.SELF:
-                    StartCoroutine(State.Heal());
-                break;
-            }
+            StartCoroutine(State.ChooseAttack());
         }
     }
 }
