@@ -15,12 +15,11 @@ MonoBehaviour:
   _index: 10
   _name: Brawdger
   _nickName: 
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 534cabb419bb9b5408572d46727a08cf, type: 3}
   _level: 5
   _experience: 0
   _baseStats:
     baseHp: 50
-    baseMaxHp: 0
     baseMaxExperience: 0
     baseAttack: 65
     baseDefence: 40

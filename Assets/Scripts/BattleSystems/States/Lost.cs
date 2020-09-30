@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
@@ -14,7 +15,11 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
         {
             Debug.Log("You Lost");
 
+            yield return new WaitForSecondsRealtime(2);
+
             BattleSystem.SetMatchFinish = true;
+
+            SceneManager.LoadSceneAsync("MenuScene");
 
             yield break;
         }

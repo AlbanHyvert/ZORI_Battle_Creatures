@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba06659e33f41e4db3f62a02ee4dce7, type: 3}
   m_Name: 005_Felinergy
   m_EditorClassIdentifier: 
-  _index: 4
+  _index: 5
   _name: Felinergy
   _nickName: Kitty
   _icon: {fileID: 0}
@@ -20,7 +20,6 @@ MonoBehaviour:
   _experience: 0
   _baseStats:
     baseHp: 65
-    baseMaxHp: 0
     baseMaxExperience: 0
     baseAttack: 75
     baseDefence: 65

@@ -51,6 +51,8 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems
 
         private void Start()
         {
+            _matchFinish = false;
+
             if(BattleManager.Instance != null)
             {
                 _zoriPlayer = Instantiate(BattleManager.Instance.GetZoriPlayer, _zoriPlayerPos.position, _zoriPlayerPos.rotation);

@@ -12,9 +12,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
     {
         private bool _playerTurnDone = false;
         private bool _ennemyTurnDone = false;
-
         private e_ActionSlots _ennemyAttack = e_ActionSlots.A;
-
         private int _damageDone = 0;
 
         public ResolveTurn(BattleSystem battleSystem) : base(battleSystem)
@@ -34,15 +32,66 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
         public override IEnumerator ExecuteAction(e_ActionSlots moves)
         {
             BattleSystem.GetPlayerUiAction.SetActive(false);
-            
+
+            _ennemyAttack = BattleSystem.GetEnnemyAttack;
+
+            if(BattleSystem.GetPlayerAttack == e_ActionSlots.NULL)
+            {         
+                _playerTurnDone = true;
+                
+                yield return BattleSystem.StartCoroutine(EnnemyTurn());
+                
+                yield break;
+            }
+
+            e_Priority playerPriority = BattleSystem.GetZoriPlayer.GetZoriMoves[BattleSystem.GetPlayerAttack].GetPriority;
+            e_Priority ennemyPriority = BattleSystem.GetZoriEnnemy.GetZoriMoves[_ennemyAttack].GetPriority;
+
             int playerSpeed = BattleSystem.GetZoriPlayer.GetData.stats.speed;
             int ennemySpeed = BattleSystem.GetZoriEnnemy.GetData.stats.speed;
 
             _damageDone = 0;
 
-            _ennemyAttack = BattleSystem.GetEnnemyAttack;
+            switch(playerPriority)
+            {
+                case e_Priority.ABSOLUTE:             
+                    yield return BattleSystem.StartCoroutine(PlayerTurn());
 
-            MonoBehaviour behaviour  = new MonoBehaviour();
+                yield break;
+
+                case e_Priority.ABYSSAL:
+                    yield return BattleSystem.StartCoroutine(EnnemyTurn());
+
+                yield break;
+
+                case e_Priority.HIGH:
+                    playerSpeed *= 10;
+                break;
+
+                case e_Priority.NEGATIVE:
+                    playerSpeed *= -10;
+                break;
+            }
+
+            switch(ennemyPriority)
+            {
+                case e_Priority.ABSOLUTE:
+                    yield return BattleSystem.StartCoroutine(EnnemyTurn());
+                yield break;
+
+                case e_Priority.ABYSSAL:
+                    yield return BattleSystem.StartCoroutine(PlayerTurn());
+
+                yield break;
+
+                case e_Priority.HIGH:
+                ennemySpeed *= 10;
+                break;
+
+                case e_Priority.NEGATIVE:
+                ennemySpeed *= -10;
+                break;
+            }
 
             if(playerSpeed >= ennemySpeed)
             {

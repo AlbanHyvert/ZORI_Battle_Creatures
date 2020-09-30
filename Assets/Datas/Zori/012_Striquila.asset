@@ -15,12 +15,11 @@ MonoBehaviour:
   _index: 12
   _name: Striquila
   _nickName: Duck
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: a44d7e6618020b2489a1a56ccae28478, type: 3}
   _level: 5
   _experience: 0
   _baseStats:
     baseHp: 50
-    baseMaxHp: 0
     baseMaxExperience: 0
     baseAttack: 55
     baseDefence: 40

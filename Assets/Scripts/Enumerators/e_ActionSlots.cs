@@ -5,6 +5,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Enumerators
         A,
         B,
         C,
-        D
+        D,
+        NULL
     }
 }

@@ -14,6 +14,8 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Bestarium
         [SerializeField] private d_CapacityStats[] _capacities = null;
         [Space]
         [SerializeField] private BattlePoints _battlePoints;
+        [Space]
+        [SerializeField] private GivenBattlePoints _givenBattlePoints;
 
         private Data _data;
         private BaseStats _baseStats;
@@ -63,20 +65,22 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Bestarium
             }
         }
 
+        #region Properties
         public Data GetData { get { return _data; } }
         public BaseStats GetBaseStats {get {return _baseStats; } }
         public d_ZoriStats GetDataBaseStats {get{return _dataBaseStats;}}
         public d_CapacityStats[] GetCapacities {get {return _capacities; } }
         public Dictionary<e_ActionSlots, d_CapacityStats> GetZoriMoves {get {return _zoriMoves; } }
         public BattlePoints GetBattlePoints {get {return _battlePoints; } }
+        public GivenBattlePoints GetGivenBattlePoints {get {return _givenBattlePoints; } }
         public int GetCurrentHealth {get {return _currentHp; } }
         public int GetSuccessful {get{return _successful;}}
+        #endregion
 
         #region Structs
         public struct BaseStats
         {       
             public int hp;
-            public int maxHp;
             public int maxExperience;
             public int attack;
             public int defence;
@@ -118,6 +122,17 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Bestarium
             public int specialDef;
             public int speed;
         }
+        
+        [System.Serializable]
+        public struct GivenBattlePoints
+        {
+            public int hp;
+            public int attack;
+            public int defence;
+            public int specialAtt;
+            public int specialDef;
+            public int speed;
+        }
         #endregion
     
         private int Init()
@@ -144,7 +159,6 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Bestarium
             _data.types = _dataBaseStats.GetTypes;
 
             _baseStats.hp = _dataBaseStats.GetStats.baseHp;
-            _baseStats.maxHp = _dataBaseStats.GetStats.baseMaxHp;
             _data.stats.experience = _dataBaseStats.GetExperience;
             _baseStats.maxExperience = _dataBaseStats.GetStats.baseMaxExperience;
 
@@ -317,6 +331,16 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Bestarium
             {
                 _currentHp = _data.stats.maxHp;
             }
+        }
+
+        public void SetBattlePoints(GivenBattlePoints earnedBP)
+        {
+            _battlePoints.hp += earnedBP.hp;
+            _battlePoints.attack += earnedBP.attack;
+            _battlePoints.defence += earnedBP.defence;
+            _battlePoints.specialAtt += earnedBP.specialAtt;
+            _battlePoints.specialDef += earnedBP.specialDef;
+            _battlePoints.speed += earnedBP.speed;
         }
     }
  }

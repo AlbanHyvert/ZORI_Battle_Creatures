@@ -55,7 +55,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Utilities
             _bonusDamage = 0;
             _damage = 0;
 
-            _damage = ((((2 * sender.GetData.stats.level) / 5) + 2) * sender.GetZoriMoves[choosenMove].GetPower * (sender.GetData.stats.specialAtt / receiver.GetData.stats.specialDef) / 50) + 2;
+            _damage = (2 * sender.GetData.stats.level / 5 + 2) * (sender.GetZoriMoves[choosenMove].GetPower * sender.GetData.stats.specialAtt) / receiver.GetData.stats.specialDef / 50 + 2;
 
             Debug.Log(sender.GetData.nickName + " " + "Special HTC" + " " + _damage);
 

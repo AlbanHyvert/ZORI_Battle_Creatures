@@ -33,7 +33,6 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.DataHolders
         public struct Stats
         {
             public int baseHp;
-            public int baseMaxHp;
             public int baseMaxExperience;
             public int baseAttack;
             public int baseDefence;

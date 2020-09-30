@@ -19,6 +19,8 @@ MonoBehaviour:
   _type: 8
   _actionType: 1
   _target: 3
+  _statusEffect: 0
+  _capatityPriority: 0
   _power: 70
   _staminaQuantity: 20
   _staminaUsed: 1

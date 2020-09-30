@@ -1,4 +1,5 @@
 using ZORI_Battle_Creatures.Assets.Scripts.Utilities;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine;
 
@@ -17,7 +18,13 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
 
             BattleSystem.GetZoriPlayer.GainExperience(BattleUtilities.CalculateExperienceGain(BattleSystem.GetZoriEnnemy));
 
+            BattleSystem.GetZoriPlayer.SetBattlePoints(BattleSystem.GetZoriEnnemy.GetGivenBattlePoints);
+
+            yield return new WaitForSecondsRealtime(2);
+
             BattleSystem.SetMatchFinish = true;
+
+            SceneManager.LoadSceneAsync("MenuScene");
 
             yield break;
         }

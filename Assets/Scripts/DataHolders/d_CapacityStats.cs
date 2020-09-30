@@ -16,6 +16,9 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.DataHolders
         [SerializeField] private e_AttackTypes _actionType = e_AttackTypes.PHYSICAL;
         [SerializeField] private e_BattleTarget _target = e_BattleTarget.ENNEMY;
         [Space]
+        [SerializeField] private e_CapacityStatus _statusEffect = e_CapacityStatus.NEUTRAL;
+        [SerializeField] private e_Priority _capatityPriority = e_Priority.NEUTRAL;
+        [Space]
         [SerializeField] private int _power = 0;
         [SerializeField] private int _staminaQuantity = 10;
         [SerializeField] private int _staminaUsed = 0;
@@ -29,6 +32,8 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.DataHolders
         public e_ZoriTypes GetTypes {get { return _type; } }
         public e_AttackTypes GetActionType {get {return _actionType; } }
         public e_BattleTarget GetTarget {get {return _target; } }
+        public e_CapacityStatus GetStatusEffect {get {return _statusEffect; } }
+        public e_Priority GetPriority {get {return _capatityPriority; } }
         public int GetPower {get { return _power; } }
         public int GetStaminaQuantity {get { return _staminaQuantity; } }
         public int GetStaminaUsed {get { return _staminaUsed; } }
