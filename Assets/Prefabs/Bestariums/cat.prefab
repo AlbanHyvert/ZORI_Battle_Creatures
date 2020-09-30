@@ -439,19 +439,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56dae217595c7d64285dc8cc9a1f4700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dataBaseStats: {fileID: 11400000, guid: 88e804578429c0548ba6b895173340f3, type: 2}
+  _dataBaseStats: {fileID: 11400000, guid: 53e5a4b0778e25b479a378fc748705a7, type: 2}
   _capacities:
-  - {fileID: 11400000, guid: 892038d48f15fec45b0a24c8191cce17, type: 2}
-  - {fileID: 11400000, guid: a668759bd11f0a24baf079f1980a65ad, type: 2}
-  - {fileID: 11400000, guid: 4b1163cbcd038d8468b75ac764099091, type: 2}
-  - {fileID: 11400000, guid: e3b38c143511b5744a0630e271a38bd2, type: 2}
+  - {fileID: 11400000, guid: fd3145b8f12fd364a8e77cfbf84487a5, type: 2}
+  - {fileID: 11400000, guid: 17d8e9c0f5e77b04d9dbc641fd6d3d4e, type: 2}
+  - {fileID: 11400000, guid: 3a2bd044dfabf78459efe226c0d4b59f, type: 2}
+  - {fileID: 11400000, guid: 9c6496c2a681c6044b9963d642f4b0c8, type: 2}
   _battlePoints:
-    hp: 100
-    attack: 100
-    defence: 100
-    specialAtt: 100
-    specialDef: 100
-    speed: 100
+    hp: 0
+    attack: 0
+    defence: 0
+    specialAtt: 0
+    specialDef: 0
+    speed: 0
 --- !u!1 &317227789872818904
 GameObject:
   m_ObjectHideFlags: 0

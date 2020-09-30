@@ -587,16 +587,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56dae217595c7d64285dc8cc9a1f4700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dataBaseStats: {fileID: 11400000, guid: 8ad74e5a65359454682c3cabafdf771c, type: 2}
+  _dataBaseStats: {fileID: 11400000, guid: 5600d3061d2ba2b47a7f5a4f5232adfa, type: 2}
   _capacities:
-  - {fileID: 11400000, guid: 892038d48f15fec45b0a24c8191cce17, type: 2}
-  - {fileID: 11400000, guid: 4b1163cbcd038d8468b75ac764099091, type: 2}
-  - {fileID: 11400000, guid: a668759bd11f0a24baf079f1980a65ad, type: 2}
-  - {fileID: 11400000, guid: e3b38c143511b5744a0630e271a38bd2, type: 2}
+  - {fileID: 11400000, guid: 78bfcd4a22d5c204491046ed4758449a, type: 2}
+  - {fileID: 11400000, guid: 307795d5ad5775c48b39f98a97d8fd9c, type: 2}
+  - {fileID: 11400000, guid: f375a1bcb7be7e14189e583fa3d7a0ec, type: 2}
+  - {fileID: 11400000, guid: 24d37f536b95e9b47bcde1e8932e6be6, type: 2}
   _battlePoints:
-    hp: 1
-    attack: 1
-    defence: 10
+    hp: 0
+    attack: 0
+    defence: 0
     specialAtt: 0
     specialDef: 0
     speed: 0

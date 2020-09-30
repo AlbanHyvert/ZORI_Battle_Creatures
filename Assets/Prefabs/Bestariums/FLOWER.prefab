@@ -485,12 +485,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56dae217595c7d64285dc8cc9a1f4700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dataBaseStats: {fileID: 11400000, guid: 763236aad887f9345844f06ce54f502c, type: 2}
+  _dataBaseStats: {fileID: 11400000, guid: 62f98288cc6b126468938bfe64995f1c, type: 2}
   _capacities:
-  - {fileID: 11400000, guid: 892038d48f15fec45b0a24c8191cce17, type: 2}
-  - {fileID: 11400000, guid: 4b1163cbcd038d8468b75ac764099091, type: 2}
-  - {fileID: 11400000, guid: a668759bd11f0a24baf079f1980a65ad, type: 2}
-  - {fileID: 11400000, guid: e3b38c143511b5744a0630e271a38bd2, type: 2}
+  - {fileID: 11400000, guid: 1bfddb1d38228844eb02cd4e5ce01dba, type: 2}
+  - {fileID: 11400000, guid: 499f49164ac39fd4faefac3314e72c4c, type: 2}
+  - {fileID: 11400000, guid: 74d3affd4bb048e4d848c77c76417e04, type: 2}
+  - {fileID: 11400000, guid: 9e9af6acaf0c2ab489cf2846a886ff04, type: 2}
   _battlePoints:
     hp: 0
     attack: 0
