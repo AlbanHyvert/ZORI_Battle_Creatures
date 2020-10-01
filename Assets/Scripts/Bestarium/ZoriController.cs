@@ -16,13 +16,17 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Bestarium
         [SerializeField] private BattlePoints _battlePoints;
         [Space]
         [SerializeField] private GivenBattlePoints _givenBattlePoints;
+        [Space]
+        [SerializeField] private e_HealthStatus _status = e_HealthStatus.HEALTHY;
 
         private Data _data;
         private BaseStats _baseStats;
         private Dictionary<e_ActionSlots, d_CapacityStats> _zoriMoves = null;
         private int _currentHp = 0;
         private int _successful = 0;
+        private int _effectTurnLeft = 0;
 
+        #region Events
         private event Action<int> _updateHp = null;
         public event Action<int> UpdateHp
         {
@@ -65,6 +69,21 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Bestarium
             }
         }
 
+        private event Action<e_HealthStatus> _updateStatus = null;
+        public event Action<e_HealthStatus> UpdateStatus
+         {
+             add
+             {
+                 _updateStatus -= value;
+                 _updateStatus += value;
+             }
+             remove
+             {
+                 _updateStatus -= value;
+             }
+         }
+        #endregion
+
         #region Properties
         public Data GetData { get { return _data; } }
         public BaseStats GetBaseStats {get {return _baseStats; } }
@@ -73,8 +92,21 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Bestarium
         public Dictionary<e_ActionSlots, d_CapacityStats> GetZoriMoves {get {return _zoriMoves; } }
         public BattlePoints GetBattlePoints {get {return _battlePoints; } }
         public GivenBattlePoints GetGivenBattlePoints {get {return _givenBattlePoints; } }
+        public e_HealthStatus GetStatus {get{return _status;}}
+        public e_HealthStatus SetStatus 
+        {
+            set
+            {
+                _status = value;
+                
+                if(_updateStatus != null)
+                    _updateStatus(value);
+            }
+        }
         public int GetCurrentHealth {get {return _currentHp; } }
         public int GetSuccessful {get{return _successful;}}
+        public int GetEffectTurnLeft {get{return _effectTurnLeft;}}
+        public int SetEffectTurnLeft {set{_effectTurnLeft = value;}}
         #endregion
 
         #region Structs
@@ -314,6 +346,11 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Bestarium
             int newHp = _currentHp - amount;
             
             SetHealth(newHp);
+
+            if(amount > 0 && _status == e_HealthStatus.SLEEPING)
+            {
+                SetStatus = e_HealthStatus.HEALTHY;
+            }
             
             if(_currentHp < 0)
             {
@@ -341,6 +378,11 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Bestarium
             _battlePoints.specialAtt += earnedBP.specialAtt;
             _battlePoints.specialDef += earnedBP.specialDef;
             _battlePoints.speed += earnedBP.speed;
+        }
+    
+        public void RemoveEffectTurnleft(int amount)
+        {
+            _effectTurnLeft -= amount;
         }
     }
  }

@@ -14,6 +14,9 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
         private bool _ennemyTurnDone = false;
         private e_ActionSlots _ennemyAttack = e_ActionSlots.A;
         private int _damageDone = 0;
+        private int _poisoningTurn = 0;
+        private int playerSpeed = 0;
+        private int ennemySpeed = 0;
 
         public ResolveTurn(BattleSystem battleSystem) : base(battleSystem)
         {
@@ -23,6 +26,8 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
         public override IEnumerator Start()
         {
             Debug.Log("Start Execute");
+
+            BattleSystem.GetPlayerUI.GetDescription.text = string.Empty;
 
             yield return BattleSystem.StartCoroutine(ExecuteAction(BattleSystem.GetPlayerAttack));
 
@@ -35,6 +40,28 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
 
             _ennemyAttack = BattleSystem.GetEnnemyAttack;
 
+            switch(BattleSystem.GetZoriPlayer.GetStatus)
+            {
+                case e_HealthStatus.FREEZING:
+                    BattleSystem.SetPlayerAttack = e_ActionSlots.NULL;
+                break;
+
+                case e_HealthStatus.SLEEPING:
+                    BattleSystem.SetPlayerAttack = e_ActionSlots.NULL;
+                break;
+            }
+
+            switch(BattleSystem.GetZoriEnnemy.GetStatus)
+            {
+                case e_HealthStatus.FREEZING:
+                    _ennemyAttack = e_ActionSlots.NULL;
+                break;
+
+                case e_HealthStatus.SLEEPING:
+                    _ennemyAttack = e_ActionSlots.NULL;
+                break;
+            }
+
             if(BattleSystem.GetPlayerAttack == e_ActionSlots.NULL)
             {         
                 _playerTurnDone = true;
@@ -44,13 +71,28 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
                 yield break;
             }
 
+            if(_ennemyAttack == e_ActionSlots.NULL)
+            {
+                _ennemyTurnDone = true;
+                
+                yield return BattleSystem.StartCoroutine(PlayerTurn());
+                
+                yield break;
+            }
+
             e_Priority playerPriority = BattleSystem.GetZoriPlayer.GetZoriMoves[BattleSystem.GetPlayerAttack].GetPriority;
             e_Priority ennemyPriority = BattleSystem.GetZoriEnnemy.GetZoriMoves[_ennemyAttack].GetPriority;
 
-            int playerSpeed = BattleSystem.GetZoriPlayer.GetData.stats.speed;
-            int ennemySpeed = BattleSystem.GetZoriEnnemy.GetData.stats.speed;
+            playerSpeed = BattleSystem.GetZoriPlayer.GetData.stats.speed;
+            ennemySpeed = BattleSystem.GetZoriEnnemy.GetData.stats.speed;
 
             _damageDone = 0;
+
+            Debug.Log(BattleSystem.GetZoriPlayer.GetStatus);
+
+            BattleSystem.StartCoroutine(CheckStatus());
+
+            yield return new WaitForSecondsRealtime(1);
 
             switch(playerPriority)
             {
@@ -121,6 +163,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
                 case e_BattleTarget.ENNEMY:
                     DamageType(zoriPlayer, zoriEnnemy, true);
                     battleUI.GetDescription.text = string.Empty;
+
                     CheckDamage(zoriEnnemy, true);
                 break;
 
@@ -141,6 +184,8 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
 
             if(BattleSystem.GetZoriEnnemy.GetCurrentHealth <= 0)
             {
+                zoriEnnemy.SetStatus = e_HealthStatus.HEALTHY;
+
                 BattleSystem.SetState(new Won(BattleSystem));
             }
             else
@@ -153,6 +198,29 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
                 {
                     _playerTurnDone = false;
                     _ennemyTurnDone = false;
+
+                    if(zoriPlayer.GetStatus != e_HealthStatus.HEALTHY)
+                    {
+                        zoriPlayer.RemoveEffectTurnleft(1);
+
+                        if(zoriPlayer.GetEffectTurnLeft <= 0)
+                        {
+                            zoriPlayer.SetStatus = e_HealthStatus.HEALTHY;
+                            zoriPlayer.SetEffectTurnLeft = 0;
+                        }
+                    }
+
+                    if(zoriEnnemy.GetStatus != e_HealthStatus.HEALTHY)
+                    {
+                        zoriEnnemy.RemoveEffectTurnleft(1);
+
+                        if(zoriEnnemy.GetEffectTurnLeft <= 0)
+                        {
+                            zoriEnnemy.SetStatus = e_HealthStatus.HEALTHY;
+                            zoriPlayer.SetEffectTurnLeft = 0;
+                        }
+                    }
+
                     BattleSystem.SetState(new ChooseAction(BattleSystem));
                 }
                 
@@ -166,7 +234,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
             ZoriController zoriEnnemy = BattleSystem.GetZoriEnnemy;
             ZoriController zoriPlayer = BattleSystem.GetZoriPlayer;
             BattleUI battleUI = BattleSystem.GetEnnemyUI;
-            d_CapacityStats action = zoriEnnemy.GetZoriMoves[BattleSystem.GetPlayerAttack];
+            d_CapacityStats action = zoriEnnemy.GetZoriMoves[BattleSystem.GetEnnemyAttack];
 
             battleUI.GetDescription.text = zoriEnnemy.GetData.nickName + " use " + action.GetName;
 
@@ -176,6 +244,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
             {
                 case e_BattleTarget.ENNEMY:
                     DamageType(zoriPlayer, zoriEnnemy, false);
+
                     battleUI.GetDescription.text = string.Empty;
                     CheckDamage(zoriPlayer, false);
                 break;
@@ -195,6 +264,8 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
 
             if(zoriPlayer.GetCurrentHealth <= 0)
             {
+                zoriPlayer.SetStatus = e_HealthStatus.HEALTHY;
+
                 BattleSystem.SetState(new Lost(BattleSystem));
             }
             else
@@ -207,6 +278,29 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
                 {
                     _playerTurnDone = false;
                     _ennemyTurnDone = false;
+
+                    if(zoriPlayer.GetStatus != e_HealthStatus.HEALTHY)
+                    {
+                        zoriPlayer.RemoveEffectTurnleft(1);
+
+                        if(zoriPlayer.GetEffectTurnLeft <= 0)
+                        {
+                            zoriPlayer.SetStatus = e_HealthStatus.HEALTHY;
+                            zoriEnnemy.SetEffectTurnLeft = 0;
+                        }
+                    }
+
+                    if(zoriEnnemy.GetStatus != e_HealthStatus.HEALTHY)
+                    {
+                        zoriEnnemy.RemoveEffectTurnleft(1);
+
+                        if(zoriEnnemy.GetEffectTurnLeft <= 0)
+                        {
+                            zoriEnnemy.SetStatus = e_HealthStatus.HEALTHY;
+                            zoriEnnemy.SetEffectTurnLeft = 0;
+                        }
+                    }
+
                     BattleSystem.SetState(new ChooseAction(BattleSystem));
                 }
             }
@@ -296,6 +390,77 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
             {
                 battleUI.GetDescription.text = "this was a ONE HIT KO!";
                 return;
+            }
+        }
+    
+        private IEnumerator CheckStatus()
+        {
+            switch(BattleSystem.GetZoriPlayer.GetStatus)
+            {
+                case e_HealthStatus.PARALAZED:
+                    playerSpeed = playerSpeed / 2;
+                break;
+
+                case e_HealthStatus.POISONING:
+                    int poisonDmg = (int)(BattleSystem.GetZoriPlayer.GetData.stats.maxHp * 0.06f ) * 1 + _poisoningTurn;
+                    
+                    BattleSystem.GetPlayerUI.GetDescription.text = BattleSystem.GetZoriPlayer.GetData.nickName + " is taking damage from being poisonned";
+                    
+                    yield return new WaitForSecondsRealtime(3);
+
+                    BattleSystem.GetPlayerUI.GetDescription.text = string.Empty;
+
+                    BattleSystem.GetZoriPlayer.TakeDamage(poisonDmg);
+                    _poisoningTurn++;
+                break;
+
+                case e_HealthStatus.BURNING:
+                    int burnDmg = (int)(BattleSystem.GetZoriPlayer.GetData.stats.maxHp * 0.06f);
+
+                    playerSpeed = (int)(playerSpeed / 0.2f);
+                    
+                    BattleSystem.GetPlayerUI.GetDescription.text = BattleSystem.GetZoriPlayer.GetData.nickName + " is taking damage from burning and is loosing speed and attack";
+
+                    yield return new WaitForSecondsRealtime(3);
+
+                    BattleSystem.GetPlayerUI.GetDescription.text = string.Empty;
+
+                    BattleSystem.GetZoriPlayer.TakeDamage(burnDmg);
+                break;
+            }
+
+            switch(BattleSystem.GetZoriEnnemy.GetStatus)
+            {
+                case e_HealthStatus.PARALAZED:
+                    ennemySpeed = ennemySpeed / 2;
+                break;
+
+                case e_HealthStatus.POISONING:
+                    int poisonDmg = (int)(BattleSystem.GetZoriPlayer.GetData.stats.maxHp * 0.06f ) * 1 + _poisoningTurn;
+                    
+                    BattleSystem.GetEnnemyUI.GetDescription.text = BattleSystem.GetZoriEnnemy.GetData.nickName + " is taking damage from bein poisonned";
+                    
+                    yield return new WaitForSecondsRealtime(2);
+
+                    BattleSystem.GetEnnemyUI.GetDescription.text = string.Empty;
+
+                    BattleSystem.GetZoriEnnemy.TakeDamage(poisonDmg);
+                    _poisoningTurn++;
+                break;
+
+                case e_HealthStatus.BURNING:
+                    int burnDmg = (int)(BattleSystem.GetZoriPlayer.GetData.stats.maxHp * 0.06f);
+
+                    ennemySpeed = (int)(ennemySpeed / 0.2f);
+                    
+                    BattleSystem.GetEnnemyUI.GetDescription.text = BattleSystem.GetZoriEnnemy.GetData.nickName + " is taking damage from burning and is loosing speed and attack";
+
+                    yield return new WaitForSecondsRealtime(2);
+
+                    BattleSystem.GetEnnemyUI.GetDescription.text = string.Empty;
+
+                    BattleSystem.GetZoriEnnemy.TakeDamage(burnDmg);
+                break;
             }
         }
     }

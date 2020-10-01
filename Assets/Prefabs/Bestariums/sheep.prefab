@@ -592,7 +592,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 78bfcd4a22d5c204491046ed4758449a, type: 2}
   - {fileID: 11400000, guid: 307795d5ad5775c48b39f98a97d8fd9c, type: 2}
   - {fileID: 11400000, guid: f375a1bcb7be7e14189e583fa3d7a0ec, type: 2}
-  - {fileID: 11400000, guid: 24d37f536b95e9b47bcde1e8932e6be6, type: 2}
+  - {fileID: 11400000, guid: 5abc9f9e6993d01499c6a54254a13472, type: 2}
   _battlePoints:
     hp: 0
     attack: 0
@@ -600,6 +600,14 @@ MonoBehaviour:
     specialAtt: 0
     specialDef: 0
     speed: 0
+  _givenBattlePoints:
+    hp: 0
+    attack: 0
+    defence: 0
+    specialAtt: 0
+    specialDef: 0
+    speed: 0
+  _status: 0
 --- !u!1 &6442512051497941596
 GameObject:
   m_ObjectHideFlags: 0

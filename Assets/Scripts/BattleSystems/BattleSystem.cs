@@ -29,6 +29,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems
         public ZoriController GetZoriPlayer {get{return _zoriPlayer;}}
         public ZoriController GetZoriEnnemy {get{return _zoriEnnemy;}}
         public e_ActionSlots GetPlayerAttack {get{return _choosenAttack;}}
+        public e_ActionSlots SetPlayerAttack {set{_choosenAttack = value;}}
         public e_ActionSlots GetEnnemyAttack {get{return _ennemyAttack;}}
         public e_ActionSlots SetEnnemyAttack {set{_ennemyAttack = value;}}
         public BattleUI GetPlayerUI {get{return _playerUI;}}

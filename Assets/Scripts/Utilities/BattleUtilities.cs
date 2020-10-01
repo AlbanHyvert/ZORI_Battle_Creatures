@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using ZORI_Battle_Creatures.Assets.Scripts.Enumerators;
 using ZORI_Battle_Creatures.Assets.Scripts.Bestarium;
+using ZORI_Battle_Creatures.Assets.Scripts.DataHolders;
 
 namespace ZORI_Battle_Creatures.Assets.Scripts.Utilities
 {
@@ -16,6 +17,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Utilities
             switch (sender.GetZoriMoves[choosenMove].GetActionType)
             {
                 case e_AttackTypes.STATUS:
+                    AttackEffect(sender.GetZoriMoves[choosenMove], receiver);
                     break;
                 case e_AttackTypes.SPECIAL:
                     damage = CalculateSpecialDamage(sender, choosenMove, receiver);
@@ -25,13 +27,121 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Utilities
                     break;
             }
 
+            if(receiver.GetStatus == e_HealthStatus.HEALTHY)
+            {
+                CheckEffect(sender.GetZoriMoves[choosenMove], receiver);
+            }
+
+            if(sender.GetStatus == e_HealthStatus.BURNING)
+            {
+                _damage = (int)(_damage / 0.2f);
+            }
+            
+            Debug.Log(receiver.GetData.nickName + "status is " + receiver.GetStatus);
+
             return damage;
         }
+
         public static int CalculateHealValue(ZoriController sender, e_ActionSlots choosenMove)
         {
             int heal = sender.GetCurrentHealth + (sender.GetData.stats.maxHp * (sender.GetZoriMoves[choosenMove].GetPower / 100));
 
             return heal;
+        }
+        private static void AttackEffect(d_CapacityStats attack, ZoriController receiver)
+        {
+            switch (attack.GetStatusEffect)
+            {
+                case e_CapacityStatus.BURN:
+                    if(receiver.GetData.types.Length > 1)
+                    {
+                        if(receiver.GetData.types[0] != e_ZoriTypes.PYRO && receiver.GetData.types[1] != e_ZoriTypes.PYRO)
+                        {
+                            receiver.SetStatus = e_HealthStatus.BURNING;
+                        }
+                    }
+                    else
+                    {
+                        if(receiver.GetData.types[0] != e_ZoriTypes.PYRO)
+                        {
+                            receiver.SetStatus = e_HealthStatus.BURNING;
+                        }
+                    }
+                    
+                break;
+
+                case e_CapacityStatus.FREEZE:
+                    if(receiver.GetData.types.Length > 1)
+                    {
+                        if(receiver.GetData.types[0] != e_ZoriTypes.CRYO && receiver.GetData.types[1] != e_ZoriTypes.CRYO)
+                        {
+                            receiver.SetStatus = e_HealthStatus.FREEZING;
+                            receiver.SetEffectTurnLeft = 3;
+                        }
+                    }
+                    else
+                    {
+                        if(receiver.GetData.types[0] != e_ZoriTypes.CRYO)
+                        {
+                            receiver.SetStatus = e_HealthStatus.FREEZING;
+                            receiver.SetEffectTurnLeft = 3;
+                        }
+                    }
+                break;
+
+                case e_CapacityStatus.PARALYSIS:
+                    if(receiver.GetData.types.Length > 1)
+                    {
+                        if(receiver.GetData.types[0] != e_ZoriTypes.ELECTRO && receiver.GetData.types[1] != e_ZoriTypes.ELECTRO)
+                        {
+                            receiver.SetStatus = e_HealthStatus.PARALAZED;
+                        }
+                    }
+                    else
+                    {
+                        if(receiver.GetData.types[0] != e_ZoriTypes.ELECTRO)
+                        {
+                            receiver.SetStatus = e_HealthStatus.PARALAZED;
+                        }
+                    }
+                break;
+
+                case e_CapacityStatus.POISON:
+                    if(receiver.GetData.types.Length > 1)
+                    {
+                        if(receiver.GetData.types[0] != e_ZoriTypes.VENO && receiver.GetData.types[1] != e_ZoriTypes.VENO)
+                        {
+                            receiver.SetStatus = e_HealthStatus.POISONING;
+                        }
+                    }
+                    else
+                    {
+                        if(receiver.GetData.types[0] != e_ZoriTypes.VENO)
+                        {
+                            receiver.SetStatus = e_HealthStatus.POISONING;
+                        }
+                    }
+                break;
+
+                case e_CapacityStatus.SLEEP:
+                    if(receiver.GetData.types.Length > 1)
+                    {
+                        if(receiver.GetData.types[0] != e_ZoriTypes.MENTAL && receiver.GetData.types[1] != e_ZoriTypes.MENTAL)
+                        {
+                            receiver.SetStatus = e_HealthStatus.SLEEPING;
+                            receiver.SetEffectTurnLeft = 5;
+                        }
+                    }
+                    else
+                    {
+                        if(receiver.GetData.types[0] != e_ZoriTypes.MENTAL)
+                        {
+                            receiver.SetStatus = e_HealthStatus.SLEEPING;
+                            receiver.SetEffectTurnLeft = 5;
+                        }
+                    }
+                break;
+            }
         }
         private static int CalculatePhysicalDamage(ZoriController sender, e_ActionSlots choosenMove, ZoriController receiver)
         {
@@ -40,13 +150,9 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Utilities
 
             _damage = ((((2 * sender.GetData.stats.level) / 5) + 2) * sender.GetZoriMoves[choosenMove].GetPower * (sender.GetData.stats.attack / receiver.GetData.stats.defence) / 50) + 2;
 
-            Debug.Log(sender.GetData.nickName + " " + " Physical HTC" + " " + _damage);
-
             float bonusValue  = Mathf.Abs((float)CheckBonusStats(sender, choosenMove, receiver));
 
             _damage = (int)Mathf.Abs(_damage * bonusValue);
-
-            Debug.Log(sender.GetData.nickName + " " + "Physical TTC" + " " + _damage);
 
             return _damage;
         }
@@ -57,13 +163,9 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Utilities
 
             _damage = (2 * sender.GetData.stats.level / 5 + 2) * (sender.GetZoriMoves[choosenMove].GetPower * sender.GetData.stats.specialAtt) / receiver.GetData.stats.specialDef / 50 + 2;
 
-            Debug.Log(sender.GetData.nickName + " " + "Special HTC" + " " + _damage);
-
             float bonusValue = Mathf.Abs((float)CheckBonusStats(sender, choosenMove, receiver));
 
             _damage = (int)Mathf.Abs(_damage * bonusValue);
-
-            Debug.Log(sender.GetData.nickName + " " + "Special TTC" + " " + _damage);
 
             return _damage;
         }
@@ -1859,10 +1961,102 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Utilities
                     }
                 }
             }
-
-            Debug.Log("Bonus Damage: " + _bonusDamage);
-
+            
             return _bonusDamage;
+        }
+        public static void CheckEffect(d_CapacityStats attack, ZoriController receiver)
+        {
+            switch (attack.GetStatusEffect)
+            {
+                case e_CapacityStatus.BURN:
+                if(receiver.GetData.types.Length > 1)
+                {
+                    if(receiver.GetData.types[0] != e_ZoriTypes.PYRO && receiver.GetData.types[1] != e_ZoriTypes.PYRO)
+                    {
+                        receiver.SetStatus = e_HealthStatus.BURNING;
+                    }
+                }
+                else
+                {
+                    if(receiver.GetData.types[0] != e_ZoriTypes.PYRO)
+                    {
+                        receiver.SetStatus = e_HealthStatus.BURNING;
+                    }
+                }
+                break;
+
+                case e_CapacityStatus.FREEZE:
+                if(receiver.GetData.types.Length > 1)
+                {
+                    if(receiver.GetData.types[0] != e_ZoriTypes.CRYO && receiver.GetData.types[1] != e_ZoriTypes.CRYO)
+                    {
+                        receiver.SetStatus = e_HealthStatus.FREEZING;
+                        receiver.SetEffectTurnLeft = 3;
+                    }
+                }
+                else
+                {
+                    if(receiver.GetData.types[0] != e_ZoriTypes.CRYO)
+                    {
+                        receiver.SetStatus = e_HealthStatus.FREEZING;
+                        receiver.SetEffectTurnLeft = 3;
+                    }
+                }
+                break;
+
+                case e_CapacityStatus.PARALYSIS:
+                if(receiver.GetData.types.Length > 1)
+                {
+                    if(receiver.GetData.types[0] != e_ZoriTypes.ELECTRO && receiver.GetData.types[1] != e_ZoriTypes.ELECTRO)
+                    {
+                        receiver.SetStatus = e_HealthStatus.PARALAZED;
+                    }
+                }   
+                else
+                {
+                    if(receiver.GetData.types[0] != e_ZoriTypes.ELECTRO)
+                    {
+                        receiver.SetStatus = e_HealthStatus.PARALAZED;
+                    }
+                }
+                break;
+
+                case e_CapacityStatus.POISON:
+                if(receiver.GetData.types.Length > 1)
+                {
+                    if(receiver.GetData.types[0] != e_ZoriTypes.VENO && receiver.GetData.types[1] != e_ZoriTypes.VENO)
+                    {
+                        receiver.SetStatus = e_HealthStatus.POISONING;
+                    }
+                }
+                else
+                {
+                    if(receiver.GetData.types[0] != e_ZoriTypes.VENO)
+                    {
+                        receiver.SetStatus = e_HealthStatus.POISONING;
+                    }
+                }
+                break;
+
+                case e_CapacityStatus.SLEEP:
+                if(receiver.GetData.types.Length > 1)
+                {
+                    if(receiver.GetData.types[0] != e_ZoriTypes.MENTAL && receiver.GetData.types[1] != e_ZoriTypes.MENTAL)
+                    {
+                        receiver.SetStatus = e_HealthStatus.SLEEPING;
+                        receiver.SetEffectTurnLeft = 5;
+                    }
+                }
+                else
+                {
+                    if(receiver.GetData.types[0] != e_ZoriTypes.MENTAL)
+                    {
+                        receiver.SetStatus = e_HealthStatus.SLEEPING;
+                        receiver.SetEffectTurnLeft = 5;
+                    }
+                }
+                break;
+            }
         }
     }
 }

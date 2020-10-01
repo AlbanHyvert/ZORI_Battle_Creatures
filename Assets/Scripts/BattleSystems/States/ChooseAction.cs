@@ -42,7 +42,51 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
                 break;
             }
 
+            switch (BattleSystem.GetZoriEnnemy.GetStatus)
+            {
+                case e_HealthStatus.FREEZING:
+                    action = e_ActionSlots.NULL;
+                    BattleSystem.GetEnnemyUI.GetDescription.text = BattleSystem.GetZoriEnnemy.GetData.nickName + " is Frozen and can't attack.";
+
+                    yield return new WaitForSecondsRealtime(2);
+
+                    BattleSystem.GetEnnemyUI.GetDescription.text = string.Empty;
+                break;
+
+                case e_HealthStatus.SLEEPING:
+                    action = e_ActionSlots.NULL;
+                    BattleSystem.GetEnnemyUI.GetDescription.text = BattleSystem.GetZoriEnnemy.GetData.nickName + " is Sleeping and can't attack.";
+                    
+                    yield return new WaitForSecondsRealtime(2);
+
+                    BattleSystem.GetEnnemyUI.GetDescription.text = string.Empty;
+                break;
+            }
+
             BattleSystem.SetEnnemyAttack = action;
+
+            switch (BattleSystem.GetZoriPlayer.GetStatus)
+            {
+                case e_HealthStatus.FREEZING:
+                    BattleSystem.GetPlayerUiAction.SetActive(false);
+                    BattleSystem.SetPlayerAttack = e_ActionSlots.NULL;
+                    BattleSystem.GetPlayerUI.GetDescription.text = BattleSystem.GetZoriPlayer.GetData.nickName + " is Frozen and can't attack.";
+
+                    yield return new WaitForSecondsRealtime(2);
+
+                    BattleSystem.SetState(new ResolveTurn(BattleSystem));
+                break;
+
+                case e_HealthStatus.SLEEPING:
+                    BattleSystem.GetPlayerUiAction.SetActive(false);
+                    BattleSystem.SetPlayerAttack = e_ActionSlots.NULL;
+                    BattleSystem.GetPlayerUI.GetDescription.text = BattleSystem.GetZoriPlayer.GetData.nickName + " is Sleeping and can't attack.";
+                    
+                    yield return new WaitForSecondsRealtime(2);
+                    
+                    BattleSystem.SetState(new ResolveTurn(BattleSystem));
+                break;
+            }
 
             yield break;
         }

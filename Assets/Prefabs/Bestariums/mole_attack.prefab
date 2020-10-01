@@ -262,6 +262,14 @@ MonoBehaviour:
     specialAtt: 0
     specialDef: 0
     speed: 0
+  _givenBattlePoints:
+    hp: 0
+    attack: 0
+    defence: 0
+    specialAtt: 0
+    specialDef: 0
+    speed: 0
+  _status: 0
 --- !u!1 &5137050641151375866
 GameObject:
   m_ObjectHideFlags: 0

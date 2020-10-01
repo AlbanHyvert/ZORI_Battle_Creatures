@@ -443,8 +443,8 @@ MonoBehaviour:
   _capacities:
   - {fileID: 11400000, guid: fd3145b8f12fd364a8e77cfbf84487a5, type: 2}
   - {fileID: 11400000, guid: 17d8e9c0f5e77b04d9dbc641fd6d3d4e, type: 2}
-  - {fileID: 11400000, guid: 3a2bd044dfabf78459efe226c0d4b59f, type: 2}
-  - {fileID: 11400000, guid: fa6a8eb51ae8b734480f5fd9e2c7a672, type: 2}
+  - {fileID: 11400000, guid: 583463a9390ab314e868aeaf993a5c9c, type: 2}
+  - {fileID: 11400000, guid: 5abc9f9e6993d01499c6a54254a13472, type: 2}
   _battlePoints:
     hp: 0
     attack: 0
@@ -459,6 +459,7 @@ MonoBehaviour:
     specialAtt: 10
     specialDef: 0
     speed: 1
+  _status: 0
 --- !u!1 &317227789872818904
 GameObject:
   m_ObjectHideFlags: 0
