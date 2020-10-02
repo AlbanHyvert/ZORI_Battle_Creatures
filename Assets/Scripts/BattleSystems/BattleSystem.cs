@@ -24,6 +24,8 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems
         private bool _matchFinish = false;
         private e_ActionSlots _choosenAttack = e_ActionSlots.A;
         private e_ActionSlots _ennemyAttack = e_ActionSlots.A;
+        private e_HealthStatus _oldPlayerStatus = e_HealthStatus.HEALTHY;
+        private e_HealthStatus _oldEnnemyStatus = e_HealthStatus.HEALTHY;
 
         #region Properties
         public ZoriController GetZoriPlayer {get{return _zoriPlayer;}}
@@ -63,6 +65,9 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems
             {
                 return;
             }
+
+            _zoriPlayer.UpdateStatus += UpdatePlayerStatus;
+            _zoriEnnemy.UpdateStatus += UpdateEnnemyStatus;
 
             _playerUI.Init(_zoriPlayer);
             _ennemyUI.Init(_zoriEnnemy);
@@ -203,6 +208,128 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems
             }
 
             StartCoroutine(State.ChooseAttack());
+        }
+    
+        private void UpdatePlayerStatus(e_HealthStatus nextStatus)
+        {
+            switch (_oldPlayerStatus)
+            {
+                case e_HealthStatus.SLEEPING:
+                    _playerUI.GetDescription.text = _zoriPlayer.GetData.nickName + " is waking up !";
+                    _oldPlayerStatus = nextStatus;
+                break;
+
+                case e_HealthStatus.PARALAZED:
+                    _playerUI.GetDescription.text = _zoriPlayer.GetData.nickName + " isn't paralysed anymore !";
+                    _oldPlayerStatus = nextStatus;
+                break;
+
+                case e_HealthStatus.POISONING:
+                    _playerUI.GetDescription.text = _zoriPlayer.GetData.nickName + " is not poisoned anymore !";
+                    _oldPlayerStatus = nextStatus;
+                break;
+
+                case e_HealthStatus.BURNING:
+                    _playerUI.GetDescription.text = _zoriPlayer.GetData.nickName + " is not burning anymore !";
+                    _oldPlayerStatus = nextStatus;
+                break;
+
+                case e_HealthStatus.FREEZING:
+                    _playerUI.GetDescription.text = _zoriPlayer.GetData.nickName + " is not frozen anymore !";
+                    _oldPlayerStatus = nextStatus;
+                break;
+
+                case e_HealthStatus.HEALTHY:
+                    switch (nextStatus)
+                    {
+                        case e_HealthStatus.SLEEPING:
+                            _playerUI.GetDescription.text = _zoriPlayer.GetData.nickName + " is now sleeping !";
+                            _oldPlayerStatus = nextStatus;
+                        break;
+
+                        case e_HealthStatus.PARALAZED:
+                            _playerUI.GetDescription.text = _zoriPlayer.GetData.nickName + " is now paralysed !";
+                            _oldPlayerStatus = nextStatus;
+                        break;
+
+                        case e_HealthStatus.POISONING:
+                            _playerUI.GetDescription.text = _zoriPlayer.GetData.nickName + " is now poisoned !";
+                            _oldPlayerStatus = nextStatus;
+                        break;
+
+                        case e_HealthStatus.BURNING:
+                            _playerUI.GetDescription.text = _zoriPlayer.GetData.nickName + " is now burning !";
+                            _oldPlayerStatus = nextStatus;
+                        break;
+
+                        case e_HealthStatus.FREEZING:
+                            _playerUI.GetDescription.text = _zoriPlayer.GetData.nickName + " is now frozen anymore !";
+                            _oldPlayerStatus = nextStatus;
+                        break;
+                    }
+                break;
+            }
+        }
+
+        private void UpdateEnnemyStatus(e_HealthStatus nextStatus)
+        {
+            switch (_oldPlayerStatus)
+            {
+                case e_HealthStatus.SLEEPING:
+                    _ennemyUI.GetDescription.text = _zoriEnnemy.GetData.nickName + " is waking up !";
+                    _oldEnnemyStatus = nextStatus;
+                break;
+
+                case e_HealthStatus.PARALAZED:
+                    _ennemyUI.GetDescription.text = _zoriEnnemy.GetData.nickName + " isn't paralysed anymore !";
+                    _oldEnnemyStatus = nextStatus;
+                break;
+
+                case e_HealthStatus.POISONING:
+                    _ennemyUI.GetDescription.text = _zoriEnnemy.GetData.nickName + " is not poisoned anymore !";
+                    _oldEnnemyStatus = nextStatus;
+                break;
+
+                case e_HealthStatus.BURNING:
+                    _ennemyUI.GetDescription.text = _zoriEnnemy.GetData.nickName + " is not burning anymore !";
+                    _oldEnnemyStatus = nextStatus;
+                break;
+
+                case e_HealthStatus.FREEZING:
+                    _ennemyUI.GetDescription.text = _zoriEnnemy.GetData.nickName + " is not frozen anymore !";
+                    _oldEnnemyStatus = nextStatus;
+                break;
+
+                case e_HealthStatus.HEALTHY:
+                    switch (nextStatus)
+                    {
+                        case e_HealthStatus.SLEEPING:
+                            _ennemyUI.GetDescription.text = _zoriEnnemy.GetData.nickName + " is now sleeping !";
+                            _oldEnnemyStatus = nextStatus;
+                        break;
+
+                        case e_HealthStatus.PARALAZED:
+                            _ennemyUI.GetDescription.text = _zoriEnnemy.GetData.nickName + " is now paralysed !";
+                            _oldEnnemyStatus = nextStatus;
+                        break;
+
+                        case e_HealthStatus.POISONING:
+                            _ennemyUI.GetDescription.text = _zoriEnnemy.GetData.nickName + " is now poisoned !";
+                            _oldEnnemyStatus = nextStatus;
+                        break;
+
+                        case e_HealthStatus.BURNING:
+                            _ennemyUI.GetDescription.text = _zoriEnnemy.GetData.nickName + " is now burning !";
+                            _oldEnnemyStatus = nextStatus;
+                        break;
+
+                        case e_HealthStatus.FREEZING:
+                            _ennemyUI.GetDescription.text = _zoriEnnemy.GetData.nickName + " is now frozen anymore !";
+                            _oldEnnemyStatus = nextStatus;
+                        break;
+                    }
+                break;
+            }
         }
     }
 }

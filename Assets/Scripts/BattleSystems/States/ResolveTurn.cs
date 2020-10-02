@@ -199,25 +199,25 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
                     _playerTurnDone = false;
                     _ennemyTurnDone = false;
 
-                    if(zoriPlayer.GetStatus != e_HealthStatus.HEALTHY)
+                    if(zoriPlayer.GetStatus == e_HealthStatus.SLEEPING ||zoriPlayer.GetStatus == e_HealthStatus.FREEZING)
                     {
                         zoriPlayer.RemoveEffectTurnleft(1);
 
                         if(zoriPlayer.GetEffectTurnLeft <= 0)
                         {
                             zoriPlayer.SetStatus = e_HealthStatus.HEALTHY;
-                            zoriPlayer.SetEffectTurnLeft = 0;
-                        }
+                            zoriEnnemy.SetEffectTurnLeft = 0;
+                        }    
                     }
-
-                    if(zoriEnnemy.GetStatus != e_HealthStatus.HEALTHY)
+                    
+                    if(zoriEnnemy.GetStatus == e_HealthStatus.SLEEPING ||zoriEnnemy.GetStatus == e_HealthStatus.FREEZING)
                     {
                         zoriEnnemy.RemoveEffectTurnleft(1);
 
                         if(zoriEnnemy.GetEffectTurnLeft <= 0)
                         {
                             zoriEnnemy.SetStatus = e_HealthStatus.HEALTHY;
-                            zoriPlayer.SetEffectTurnLeft = 0;
+                            zoriEnnemy.SetEffectTurnLeft = 0;
                         }
                     }
 
@@ -279,7 +279,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
                     _playerTurnDone = false;
                     _ennemyTurnDone = false;
 
-                    if(zoriPlayer.GetStatus != e_HealthStatus.HEALTHY)
+                    if(zoriPlayer.GetStatus == e_HealthStatus.SLEEPING ||zoriPlayer.GetStatus == e_HealthStatus.FREEZING)
                     {
                         zoriPlayer.RemoveEffectTurnleft(1);
 
@@ -287,10 +287,10 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
                         {
                             zoriPlayer.SetStatus = e_HealthStatus.HEALTHY;
                             zoriEnnemy.SetEffectTurnLeft = 0;
-                        }
+                        }    
                     }
-
-                    if(zoriEnnemy.GetStatus != e_HealthStatus.HEALTHY)
+                    
+                    if(zoriEnnemy.GetStatus == e_HealthStatus.SLEEPING ||zoriEnnemy.GetStatus == e_HealthStatus.FREEZING)
                     {
                         zoriEnnemy.RemoveEffectTurnleft(1);
 
@@ -300,7 +300,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.BattleSystems.States
                             zoriEnnemy.SetEffectTurnLeft = 0;
                         }
                     }
-
+                    
                     BattleSystem.SetState(new ChooseAction(BattleSystem));
                 }
             }

@@ -37,7 +37,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Utilities
                 _damage = (int)(_damage / 0.2f);
             }
             
-            Debug.Log(receiver.GetData.nickName + "status is " + receiver.GetStatus);
+            Debug.Log(receiver.GetData.nickName + " status is " + receiver.GetStatus);
 
             return damage;
         }
@@ -53,6 +53,8 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Utilities
             switch (attack.GetStatusEffect)
             {
                 case e_CapacityStatus.BURN:
+                if(receiver.GetStatus != e_HealthStatus.BURNING)
+                {
                     if(receiver.GetData.types.Length > 1)
                     {
                         if(receiver.GetData.types[0] != e_ZoriTypes.PYRO && receiver.GetData.types[1] != e_ZoriTypes.PYRO)
@@ -67,10 +69,12 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Utilities
                             receiver.SetStatus = e_HealthStatus.BURNING;
                         }
                     }
-                    
+                }                 
                 break;
 
                 case e_CapacityStatus.FREEZE:
+                if(receiver.GetStatus != e_HealthStatus.FREEZING)
+                {
                     if(receiver.GetData.types.Length > 1)
                     {
                         if(receiver.GetData.types[0] != e_ZoriTypes.CRYO && receiver.GetData.types[1] != e_ZoriTypes.CRYO)
@@ -87,9 +91,12 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Utilities
                             receiver.SetEffectTurnLeft = 3;
                         }
                     }
+                } 
                 break;
 
                 case e_CapacityStatus.PARALYSIS:
+                if(receiver.GetStatus != e_HealthStatus.PARALAZED)
+                {
                     if(receiver.GetData.types.Length > 1)
                     {
                         if(receiver.GetData.types[0] != e_ZoriTypes.ELECTRO && receiver.GetData.types[1] != e_ZoriTypes.ELECTRO)
@@ -104,9 +111,12 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Utilities
                             receiver.SetStatus = e_HealthStatus.PARALAZED;
                         }
                     }
+                }
                 break;
 
                 case e_CapacityStatus.POISON:
+                if(receiver.GetStatus != e_HealthStatus.POISONING)
+                {
                     if(receiver.GetData.types.Length > 1)
                     {
                         if(receiver.GetData.types[0] != e_ZoriTypes.VENO && receiver.GetData.types[1] != e_ZoriTypes.VENO)
@@ -121,9 +131,12 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Utilities
                             receiver.SetStatus = e_HealthStatus.POISONING;
                         }
                     }
+                }
                 break;
 
                 case e_CapacityStatus.SLEEP:
+                if(receiver.GetStatus != e_HealthStatus.SLEEPING)
+                {
                     if(receiver.GetData.types.Length > 1)
                     {
                         if(receiver.GetData.types[0] != e_ZoriTypes.MENTAL && receiver.GetData.types[1] != e_ZoriTypes.MENTAL)
@@ -140,6 +153,7 @@ namespace ZORI_Battle_Creatures.Assets.Scripts.Utilities
                             receiver.SetEffectTurnLeft = 5;
                         }
                     }
+                }
                 break;
             }
         }
