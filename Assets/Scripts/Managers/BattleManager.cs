@@ -1,17 +1,19 @@
-using UnityEngine;
-using ZORI_Battle_Creatures.Assets.Scripts.Tools;
-using ZORI_Battle_Creatures.Assets.Scripts.Bestarium;
+﻿using Utilities.Singleton;
 
-namespace ZORI_Battle_Creatures.Assets.Scripts.Managers
+public class BattleManager : Singleton<BattleManager>
 {
-    public class BattleManager : Singleton<BattleManager>
-    {
-        [SerializeField] private ZoriController _zoriPlayer = null;
-        [SerializeField] private ZoriController _zoriEnnemy = null;
+    private Zori _wildZori = null;
+    private BattleSystem _currentBattleSystem = null;
 
-        public ZoriController GetZoriPlayer {get{return _zoriPlayer;}}
-        public ZoriController SetZoriPlayer {set{_zoriPlayer = value;}}
-        public ZoriController GetZoriEnnemy {get{return _zoriEnnemy;}}
-        public ZoriController SetZoriEnnemy {set{_zoriEnnemy = value;}}
-    }
+    public BattleSystem SetBattleSystem(BattleSystem system)
+        => _currentBattleSystem = system;
+
+    public BattleSystem GetBattleSystem()
+        => _currentBattleSystem;
+
+    public Zori SetWildZori(Zori zori)
+        => _wildZori = zori;
+
+    public Zori GetWildZori()
+        => _wildZori;
 }

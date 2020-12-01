@@ -1,14 +1,25 @@
+﻿using Utilities.Singleton;
 using UnityEngine;
-using ZORI_Battle_Creatures.Assets.Scripts.Tools;
 using UnityEngine.SceneManagement;
 
-namespace ZORI_Battle_Creatures.Assets.Scripts.Managers
+public class GameManager : Singleton<GameManager>
 {
-    public class GameManager : Singleton<GameManager>
+    [SerializeField] private string[] _scenesToLoad = null;
+
+    private int _index = 0;
+
+    private void Update()
     {
-        private void Start()
+        if(Input.GetKeyDown(KeyCode.Space))
         {
-            SceneManager.LoadSceneAsync("MenuScene");
+            SceneManager.LoadSceneAsync(_scenesToLoad[_index]);
+
+            if (_index < _scenesToLoad.Length)
+                _index++;
+            else
+            {
+                _index = 0;
+            }
         }
     }
 }

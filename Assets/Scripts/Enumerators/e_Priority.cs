@@ -1,11 +1,9 @@
-namespace ZORI_Battle_Creatures.Assets.Scripts.Enumerators
+﻿namespace ZORI.Enums
 {
-    public enum e_Priority
+    public enum E_Priority
     {
-        NEUTRAL,
         ABSOLUTE,
-        HIGH,
-        NEGATIVE,
-        ABYSSAL
+        NEUTRAL,
+        NEGATIVE
     }
 }
