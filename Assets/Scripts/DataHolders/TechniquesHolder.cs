@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "Technique Holder", menuName = "Zori/Techniques/Technique Holder")]
 public class TechniquesHolder : ScriptableObject
@@ -8,62 +9,72 @@ public class TechniquesHolder : ScriptableObject
     [SerializeField] private Techniques _techniqueC = null;
     [SerializeField] private Techniques _techniqueD = null;
 
-    private Techniques _currentTechniqueA = null;
-    private Techniques _currentTechniqueB = null;
-    private Techniques _currentTechniqueC = null;
-    private Techniques _currentTechniqueD = null;
+    private List<Techniques> _currentTechniques = new List<Techniques>();
 
-    public Techniques TechniqueA { get => _techniqueA; }
-    public Techniques TechniqueB { get => _techniqueB; }
-    public Techniques TechniqueC { get => _techniqueC; }
-    public Techniques TechniqueD { get => _techniqueD; }
+    public List<Techniques> CurrentTechniques { get => _currentTechniques; }
 
     public void Init()
     {
         if (_techniqueA != null)
-            _currentTechniqueA = Instantiate(_techniqueA);
+            _currentTechniques.Add(Instantiate(_techniqueA));
         if (_techniqueB != null)
-            _currentTechniqueB = Instantiate(_techniqueB);
+            _currentTechniques.Add(Instantiate(_techniqueB));
         if (_techniqueC != null)
-            _currentTechniqueC = Instantiate(_techniqueC);
+            _currentTechniques.Add(Instantiate(_techniqueC));
         if (_techniqueD != null)
-            _currentTechniqueD = Instantiate(_techniqueD);
+            _currentTechniques.Add(Instantiate(_techniqueD));
 
-        _currentTechniqueA?.Init();
-        _currentTechniqueB?.Init();
-        _currentTechniqueC?.Init();
-        _currentTechniqueD?.Init();
+        for (int i = 0; i < _currentTechniques.Count; i++)
+        {
+            if (_currentTechniques[i])
+                _currentTechniques[i].Init();
+        }
+
+        Debug.Log(CheckTechniqueQuantity());
+    }
+
+    public int CheckTechniqueQuantity()
+    {
+        int index = 0;
+
+        for (int i = 0; i < _currentTechniques.Count; i++)
+        {
+            if (_currentTechniques[i])
+                index++;
+        }
+
+        return index;
     }
 
     public Techniques UpdateTechniqueA(Techniques technique)
     {
-        _techniqueA = technique;
-        _techniqueA.Init();
+        _currentTechniques[0] = technique;
+        _currentTechniques[0].Init();
 
-        return _techniqueA;
+        return _currentTechniques[0];
     }
 
     public Techniques UpdateTechniqueB(Techniques technique)
     {
-        _techniqueB = technique;
-        _techniqueB.Init();
+        _currentTechniques[1] = technique;
+        _currentTechniques[1].Init();
 
-        return _techniqueB;
+        return _currentTechniques[1];
     }
 
     public Techniques UpdateTechniqueC(Techniques technique)
     {
-        _techniqueC = technique;
-        _techniqueC.Init();
+        _currentTechniques[2] = technique;
+        _currentTechniques[2].Init();
 
-        return _techniqueC;
+        return _currentTechniques[2];
     }
 
     public Techniques UpdateTechniqueD(Techniques technique)
     {
-        _techniqueD = technique;
-        _techniqueD.Init();
-
-        return _techniqueD;
+        _currentTechniques[3] = technique;
+        _currentTechniques[3].Init();
+        
+        return _currentTechniques[3];
     }
 }

@@ -11,6 +11,12 @@ public class BattleData
     private Zori _currentZoriA = null;
     private Zori _currentZoriB = null;
 
+    public Zori GetZoriA()
+        => _currentZoriA;
+
+    public Zori GetZoriB()
+        => _currentZoriB;
+
     public void SetZoriA(Zori zori)
     {
         _currentZoriA = zori;

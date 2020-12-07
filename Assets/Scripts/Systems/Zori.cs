@@ -9,9 +9,12 @@ public class Zori : ZoriStateMachine
     [SerializeField] private bool _isInBattle = false;
     [Space]
     [SerializeField] private E_Status _status = E_Status.WILD;
+    [Space]
+    [SerializeField] private GameObject _owner = null;
 
     public ZoriData Data { get => _data; set => _data = value; }
     public E_Status Status { get => _status; set => _status = value; }
+    public GameObject Owner { get => _owner; set => _owner = value; }
 
     private event Action<bool> _isBattling = null;
     public event Action<bool> IsBattling
@@ -29,6 +32,8 @@ public class Zori : ZoriStateMachine
 
     private void Start()
     {
+        _data.Init();
+
         if (string.IsNullOrEmpty(_data.Nickname))
             _data.Nickname = _data.Name;
 

@@ -9,15 +9,15 @@ public abstract class PlayerState
         Player = player;
     }
 
-    public void Start()
+    public virtual void Start()
     {
     }
 
-    public void Tick()
+    public virtual void Tick()
     {
     }
 
-    public void Destroy()
+    public virtual void Destroy()
     {
     }
 }
