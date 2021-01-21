@@ -18,6 +18,7 @@ public class Zori : MonoBehaviour
     public Health Health { get => m_health; }
     public CapacityHolder CapacityHolder { get => m_capacityHolder; }
     public NavMeshAgent NavMesh { get => m_navMeshAgent; }
+    public E_Types[] Types { get => m_Types; }
 
     private void Awake()
     {
@@ -52,8 +53,6 @@ public class Zori : MonoBehaviour
                 break;
             case E_Priority.ABYSSAL:
                 speed = m_stats.speed / 1000;
-                break;
-            default:
                 break;
         }
 

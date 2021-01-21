@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class ChooseActionState : BattleState
 {
@@ -6,7 +7,7 @@ public class ChooseActionState : BattleState
     {
     }
 
-    public override void Start()
+    public override IEnumerator Start()
     {
         BattleFlowState.ControlPlayerConsole(true);
         BattleFlowState.ControlUIActivation(true);
@@ -34,5 +35,7 @@ public class ChooseActionState : BattleState
                 zoriEnnemy.Health.Kill();
                 break;
         }
+
+        return null;
     }
 }

@@ -3,6 +3,10 @@ using UnityEngine.Events;
 
 public class Stats : MonoBehaviour
 {
+    [Tooltip("Name of the species of the zori.")]
+    [SerializeField] private string _name = string.Empty;
+    [Tooltip("Name given by the player, that will overwrite the name of the species.")]
+    [SerializeField] private string _nickname = string.Empty;
     [Tooltip("The current level of the zori.")]
     [SerializeField, Range(1, 1000)] private int _level = 1;
     [Tooltip("the current experience of the zori.")]
@@ -17,6 +21,7 @@ public class Stats : MonoBehaviour
 
     private BaseStats m_baseStats = null;
 
+    public string nickname { get => _nickname; set => _nickname = value; }
     public int attack { get; private set; }
     public int defence { get; private set; }
     public int speAttack { get; private set; }
@@ -51,6 +56,9 @@ public class Stats : MonoBehaviour
 
     public void Init(BaseStats baseStats = null)
     {
+        if (_nickname == string.Empty)
+            _nickname = _name;
+
         m_baseStats = baseStats;
         GainedLevel(0);
     }

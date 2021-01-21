@@ -1,4 +1,6 @@
-﻿public abstract class BattleState
+﻿using System.Collections;
+
+public abstract class BattleState
 {
     protected BattleFlowManager BattleFlowState = null;
 
@@ -7,11 +9,11 @@
         BattleFlowState = battleFlow;
     }
 
-    public virtual void Start()
+    public virtual IEnumerator Start()
     {
-
+        return null;
     }
-
+    
     public virtual void Tick()
     {
 

@@ -11,15 +11,26 @@ public class Health : MonoBehaviour
 
     public UnityAction<float> onDamaged;
     public UnityAction<float> onHealed;
+    public UnityAction<int> onCurrentHealth;
     public UnityAction onDie;
 
-    public float currentHealth { get; set; }
+    public int currentHealth { get => m_currentHealth;
+        set
+        {
+            m_currentHealth = value;
+
+            if (onCurrentHealth != null)
+                onCurrentHealth.Invoke(value);
+        }
+    }
     public bool invincible { get; set; }
     public bool canPickup() => currentHealth < _maxHealth;
+    public int maxHealth { get => _maxHealth; }
 
     public float getRatio() => currentHealth / _maxHealth;
     public bool isCritical() => getRatio() <= _criticalHealthRatio;
 
+    private int m_currentHealth = 0;
     private bool m_IsDead = false;
     private Stats m_stats = null;
 
@@ -37,11 +48,11 @@ public class Health : MonoBehaviour
         currentHealth = _maxHealth;
     }
 
-    public void Heal(float healAmount)
+    public void Heal(int healAmount)
     {
-        float healthBefore = currentHealth;
+        int healthBefore = currentHealth;
         currentHealth += healAmount;
-        currentHealth = Mathf.Clamp(currentHealth, 0f, _maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth, 0, _maxHealth);
 
         // call OnHeal action
         float trueHealAmount = currentHealth - healthBefore;
@@ -51,14 +62,14 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         if (invincible)
             return;
 
-        float healthBefore = currentHealth;
+        int healthBefore = currentHealth;
         currentHealth -= damage;
-        currentHealth = Mathf.Clamp(currentHealth, 0f, _maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth, 0, _maxHealth);
 
         // call OnDamage action
         float trueDamageAmount = healthBefore - currentHealth;
@@ -72,7 +83,7 @@ public class Health : MonoBehaviour
 
     public void Kill()
     {
-        currentHealth = 0f;
+        currentHealth = 0;
 
         // call OnDamage action
         if (onDamaged != null)

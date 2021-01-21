@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿using System.Collections;
 
 public class EndTurnState : BattleState
 {
@@ -6,14 +6,14 @@ public class EndTurnState : BattleState
     {
     }
 
-    public override void Start()
+    public override IEnumerator Start()
     {
         //Deal Bonus Damage
 
         BattleFlowState.ClearCapacity();
 
-        Debug.Log("EndTurn");
-
         BattleFlowState.SetState(new ChooseActionState(BattleFlowState));
+
+        return null;
     }
 }

@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_name: A
   m_index: 0
-  m_power: 10
+  m_power: 436
   m_maxUse: 10
   m_type: 0
-  m_priority: 2
+  m_priority: 0
+  _style: 0
+  _effects: 5

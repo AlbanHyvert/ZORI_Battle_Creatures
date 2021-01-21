@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(Effects))]
 [CreateAssetMenu(fileName = "Capacity", menuName = "Creatures/Zori/Capacity")]
 public class Capacity : ScriptableObject
 {
@@ -16,9 +17,13 @@ public class Capacity : ScriptableObject
     [SerializeField] private E_Types m_type = E_Types.NEUTRAL;
     [Tooltip("The priority of the attack.")]
     [SerializeField] private E_Priority m_priority = E_Priority.NEUTRAL;
+    [Tooltip("Attack Type")]
+    [SerializeField] private E_Style _style = E_Style.PHYSICS; 
+    [SerializeField] private Effects.E_Effects _effects = Effects.E_Effects.NONE;
 
     [Tooltip("The quantity of use left.")]
     [Range(0, 100)] private int m_currentUse = 10;
+    
 
     public UnityAction<int> onUse = null;
 
@@ -27,6 +32,8 @@ public class Capacity : ScriptableObject
     public int Power { get => m_power; }
     public E_Types Type { get => m_type; }
     public E_Priority Priority { get => m_priority; }
+    public E_Style Style { get => _style; }
+    public Effects.E_Effects Effect { get => _effects; }
     public int CurrentUse { get => m_currentUse; }
     public int MaxUse { get => m_maxUse;
         set
