@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ede97ee660c5ebf49ac012e1a9da0ca1, type: 3}
-  m_Name: Capacity A
+  m_Name: NeutralSTAB
   m_EditorClassIdentifier: 
-  m_name: A
+  m_name: Neutral
   m_index: 0
-  m_power: 436
+  m_power: 50
   m_maxUse: 10
   m_type: 0
-  m_priority: 0
+  m_priority: 2
   _style: 0
   _effects: 5
