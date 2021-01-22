@@ -115,11 +115,11 @@ public class Stats : MonoBehaviour
 
     private void CalculateNewPower()
     {
-        attack = (((2 * m_baseStats.attack + (_battlePoints.attack / 4)) + _level) / 100) + 5;
-        defence = (((2 * m_baseStats.defence + (_battlePoints.defence / 4)) + _level) / 100) + 5;
-        speAttack = (((2 * m_baseStats.speAttack + (_battlePoints.speAttack / 4)) + _level) / 100) + 5;
-        speDefence = (((2 * m_baseStats.speDefence + (_battlePoints.speDefence / 4)) + _level) / 100) + 5;
-        speed = (((2 * m_baseStats.speed + (_battlePoints.speed / 4)) + _level) / 100) + 5;
+        attack = (((2 * m_baseStats.attack + (_battlePoints.attack / 4)) * _level) / 100) + 5;
+        defence = (((2 * m_baseStats.defence + (_battlePoints.defence / 4)) * _level) / 100) + 5;
+        speAttack = (((2 * m_baseStats.speAttack + (_battlePoints.speAttack / 4)) * _level) / 100) + 5;
+        speDefence = (((2 * m_baseStats.speDefence + (_battlePoints.speDefence / 4)) * _level) / 100) + 5;
+        speed = (((2 * m_baseStats.speed + (_battlePoints.speed / 4)) * _level) / 100) + 5;
     }
 
     private void CalculateNewMaxExperience()

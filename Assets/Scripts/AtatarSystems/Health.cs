@@ -43,7 +43,7 @@ public class Health : MonoBehaviour
 
     public void CalculateNewHealth()
     {
-        _maxHealth = ((2 * _baseHealth + 5 + (m_stats.GetBP().health / 4)) * m_stats.level) / 50 + m_stats.level + 10;
+        _maxHealth = ((2 * _baseHealth + 5 + (m_stats.GetBP().health / 4)) * m_stats.level) / 50 * m_stats.level + 10;
 
         currentHealth = _maxHealth;
     }
