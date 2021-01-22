@@ -149,8 +149,6 @@ public class BattleFlowManager : BattleStateManager
         StopAllCoroutines();
         battleEnded = true;
         playerWon = false;
-        
-        SetState(new BattleEndState(this));
     }
 
     private void ZoriEnnemyIsDead()
@@ -158,8 +156,6 @@ public class BattleFlowManager : BattleStateManager
         StopAllCoroutines();
         battleEnded = true;
         playerWon = true;
-
-        SetState(new BattleEndState(this));
     }
 
     public void OnDestroy()

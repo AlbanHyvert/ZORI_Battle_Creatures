@@ -10,6 +10,8 @@ public class EndTurnState : BattleState
     {
         //Deal Bonus Damage
 
+        DisplayText.Clear();
+
         BattleFlowState.ClearCapacity();
 
         BattleFlowState.SetState(new ChooseActionState(BattleFlowState));

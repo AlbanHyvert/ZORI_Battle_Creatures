@@ -32,13 +32,6 @@ public class ExecuteState : BattleState
 
     public IEnumerator PlayerAttack()
     {
-        if (BattleFlowState.battleEnded)
-        {
-            BattleFlowState.StopCoroutine(PlayerAttack());
-            yield break;
-        }
-
-
         DisplayText.AddText(BattleFlowState.PlayerHud.descriptionText, BattleFlowState.ZoriPlayer.Zori.Stats.nickname +
                 " use " + BattleFlowState.GetPlayerCapacity().Name + '.', BattleFlowState.readingSpeed);
 
@@ -58,13 +51,7 @@ public class ExecuteState : BattleState
     }
 
     public IEnumerator EnnemyAttack()
-    {
-        if (BattleFlowState.battleEnded)
-        {
-            BattleFlowState.StopCoroutine(EnnemyAttack());
-            yield break;
-        }
-        
+    {        
         DisplayText.AddText(BattleFlowState.EnnemyHud.descriptionText, BattleFlowState.ZoriEnnemy.Zori.Stats.nickname +
                 " use " + BattleFlowState.GetEnnemyCapacity().Name + '.', BattleFlowState.readingSpeed);
 
@@ -85,6 +72,12 @@ public class ExecuteState : BattleState
 
     private void CheckEndedTurn()
     {
+        if (BattleFlowState.battleEnded)
+        {
+            BattleFlowState.StopAllCoroutines();
+            BattleFlowState.SetState(new BattleEndState(BattleFlowState));
+        }
+
         if (!m_ennemyTurnEnded || !m_playerTurnEnded)
             return;
 
@@ -107,10 +100,26 @@ public class ExecuteState : BattleState
         return 0;
     }
 
+    private int CheckBrutDefence(Capacity capacity, Zori receiver)
+    {
+        switch (capacity.Style)
+        {
+            case E_Style.EFFECT:
+                //Afflict effect
+                break;
+            case E_Style.PHYSICS:
+                return (receiver.Stats.defence * 1) * 50;
+            case E_Style.SPECIAL:
+                return (receiver.Stats.speDefence * 1) * 50;
+        }
+
+        return 0;
+    }
+
     private int DealActualDamage(int actualDamage, Capacity capacity, Zori sender, Zori receiver)
     {
         float bonusDmg = sender.Stats.level * 0.4f + 2;
-        float defenceValue = (receiver.Stats.defence * 1) * 50;
+        float defenceValue = CheckBrutDefence(capacity, receiver);
         float dmg = ((actualDamage * bonusDmg) / defenceValue) + 2;
 
         float mult = CheckMultipliers(capacity.Type, receiver);

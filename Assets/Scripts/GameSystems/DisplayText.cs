@@ -48,7 +48,7 @@ public static class DisplayText
         return m_textToWrite.Length * m_timePerCharacter + 1;
     }
 
-    private static void Clear()
+    public static void Clear()
     {
         m_uiText = null;
         m_textToWrite = string.Empty;
