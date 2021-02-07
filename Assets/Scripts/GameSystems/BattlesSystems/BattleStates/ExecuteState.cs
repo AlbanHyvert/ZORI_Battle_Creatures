@@ -19,6 +19,8 @@ public class ExecuteState : BattleState
         int playerSpeed = BattleFlowState.ZoriPlayer.Zori.GetAttackSpeed(BattleFlowState.GetPlayerCapacity());
         int ennemySpeed = BattleFlowState.ZoriEnnemy.Zori.GetAttackSpeed(BattleFlowState.GetEnnemyCapacity());
 
+        CheckStatus(ref playerSpeed, ref ennemySpeed);
+
         if (playerSpeed >= ennemySpeed)
         {
             BattleFlowState.StartCoroutine(PlayerAttack());
@@ -32,10 +34,25 @@ public class ExecuteState : BattleState
 
     public IEnumerator PlayerAttack()
     {
+        if (!BattleFlowState.GetEnnemyCapacity())
+        {
+            DisplayText.AddText(BattleFlowState.PlayerHud.descriptionText, BattleFlowState.ZoriPlayer.Zori.Stats.nickname +
+                " cannot attack this turn because he is " + BattleFlowState.ZoriPlayer.Zori.CurrentEffect.ToString()
+                , BattleFlowState.readingSpeed);
+
+            m_playerTurnEnded = true;
+
+            CheckEndedTurn();
+
+            yield break;
+        }
+
         DisplayText.AddText(BattleFlowState.PlayerHud.descriptionText, BattleFlowState.ZoriPlayer.Zori.Stats.nickname +
                 " use " + BattleFlowState.GetPlayerCapacity().Name + '.', BattleFlowState.readingSpeed);
 
         yield return new WaitForSecondsRealtime(DisplayText.GetTotalDuration());
+
+        DisplayText.Clear();
 
         int brutDmg = CheckBrutDamage(BattleFlowState.GetPlayerCapacity(), BattleFlowState.ZoriPlayer.Zori);
 
@@ -46,16 +63,31 @@ public class ExecuteState : BattleState
 
         CheckEndedTurn();
 
-        if (!m_ennemyTurnEnded)
+        if (!BattleFlowState.battleEnded && !m_ennemyTurnEnded)
             BattleFlowState.StartCoroutine(EnnemyAttack());
     }
 
     public IEnumerator EnnemyAttack()
-    {        
+    {
+        if(!BattleFlowState.GetEnnemyCapacity())
+        {
+            DisplayText.AddText(BattleFlowState.EnnemyHud.descriptionText, BattleFlowState.ZoriEnnemy.Zori.Stats.nickname +
+                " cannot attack this turn because he is " + BattleFlowState.ZoriEnnemy.Zori.CurrentEffect.ToString()
+                , BattleFlowState.readingSpeed);
+
+            m_ennemyTurnEnded = true;
+
+            CheckEndedTurn();
+
+            yield break;
+        }
+
         DisplayText.AddText(BattleFlowState.EnnemyHud.descriptionText, BattleFlowState.ZoriEnnemy.Zori.Stats.nickname +
                 " use " + BattleFlowState.GetEnnemyCapacity().Name + '.', BattleFlowState.readingSpeed);
 
         yield return new WaitForSecondsRealtime(DisplayText.GetTotalDuration());
+
+        DisplayText.Clear();
 
         int brutDmg = CheckBrutDamage(BattleFlowState.GetEnnemyCapacity(), BattleFlowState.ZoriEnnemy.Zori);
 
@@ -66,22 +98,47 @@ public class ExecuteState : BattleState
 
         CheckEndedTurn();
 
-        if (!m_playerTurnEnded)
+        if (!BattleFlowState.battleEnded && !m_playerTurnEnded)
             BattleFlowState.StartCoroutine(PlayerAttack());
     }
 
     private void CheckEndedTurn()
     {
-        if (BattleFlowState.battleEnded)
-        {
-            BattleFlowState.StopAllCoroutines();
-            BattleFlowState.SetState(new BattleEndState(BattleFlowState));
-        }
-
         if (!m_ennemyTurnEnded || !m_playerTurnEnded)
             return;
 
         BattleFlowState.SetState(new EndTurnState(BattleFlowState));
+    }
+
+    private void CheckStatus(ref int playerSpeed, ref int ennemySpeed)
+    {
+        if (BattleFlowState.ZoriPlayer.Zori.CurrentEffect != Effects.E_Effects.NONE)
+        {
+            switch (BattleFlowState.ZoriPlayer.Zori.CurrentEffect)
+            {
+                case Effects.E_Effects.PARALYSIS:
+                    playerSpeed = playerSpeed / 2;
+                    break;
+                case Effects.E_Effects.BURN:
+                    playerSpeed = (int)(playerSpeed * 0.2f);
+                    break;
+            }
+        }
+
+        if (BattleFlowState.ZoriPlayer.Zori.CurrentEffect != Effects.E_Effects.NONE)
+        {
+            switch (BattleFlowState.ZoriPlayer.Zori.CurrentEffect)
+            {
+                case Effects.E_Effects.PARALYSIS:
+                    playerSpeed = playerSpeed / 2;
+                    break;
+                case Effects.E_Effects.BURN:
+                    playerSpeed = (int)(playerSpeed * 0.2f);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private int CheckBrutDamage(Capacity capacity, Zori sender)

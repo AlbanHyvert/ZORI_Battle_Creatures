@@ -9,6 +9,8 @@ public class ChooseActionState : BattleState
 
     public override IEnumerator Start()
     {
+        CheckStatus();
+
         BattleFlowState.ControlPlayerConsole(true);
         BattleFlowState.ControlUIActivation(true);
 
@@ -37,5 +39,40 @@ public class ChooseActionState : BattleState
         }
 
         return null;
+    }
+
+    private void CheckStatus()
+    {
+        if (BattleFlowState.ZoriPlayer.Zori.CurrentEffect != Effects.E_Effects.NONE)
+        {
+            switch (BattleFlowState.ZoriPlayer.Zori.CurrentEffect)
+            {
+                case Effects.E_Effects.FREEZE:
+                    BattleFlowState.playerHasCapacity = true;
+                    break;
+                case Effects.E_Effects.SLEEP:
+                    BattleFlowState.playerHasCapacity = true;
+                    BattleFlowState.CheckEnnemySleep();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (BattleFlowState.ZoriEnnemy.Zori.CurrentEffect != Effects.E_Effects.NONE)
+        {
+            switch (BattleFlowState.ZoriEnnemy.Zori.CurrentEffect)
+            {
+                case Effects.E_Effects.FREEZE:
+                    BattleFlowState.ennemyHasCapacity = true;
+                    break;
+                case Effects.E_Effects.SLEEP:
+                    BattleFlowState.ennemyHasCapacity = true;
+                    BattleFlowState.CheckEnnemySleep();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

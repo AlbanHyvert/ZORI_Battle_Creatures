@@ -9,6 +9,8 @@ public class BattleEndState : BattleState
 
     public override IEnumerator Start()
     {
+        BattleFlowState.ControlPlayerConsole(false);
+
         BattleFlowState.StopAllCoroutines();
 
         if(BattleFlowState.playerWon)

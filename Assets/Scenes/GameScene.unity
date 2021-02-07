@@ -2665,9 +2665,10 @@ MonoBehaviour:
   _playerConsole: {fileID: 2009708390}
   _zoriPlayerHud: {fileID: 1468412766}
   _zoriEnnemyHud: {fileID: 1623936580}
-  _readingSpeed: 0.1
+  _readingSpeed: 0.2
   _itemMult: 1
   _foodMult: 1
+  m_maxSleepTurn: 5
 --- !u!4 &995797495
 Transform:
   m_ObjectHideFlags: 0
@@ -5187,6 +5188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Types: 00000000
+  m_currentEffect: 3
 --- !u!114 &2086298618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5201,7 +5203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_capacityA: {fileID: 11400000, guid: 9c012f77f2128b0438633c1b2a9cdc74, type: 2}
-  m_capacityB: {fileID: 11400000, guid: bfe266dbbc9aa5b4781045ae4a4905f8, type: 2}
+  m_capacityB: {fileID: 11400000, guid: 66cccf1b3815ef94e9ad4a0f2e4ed117, type: 2}
   m_capacityC: {fileID: 11400000, guid: a4ece1a909f1bb745852113ed22bdcd1, type: 2}
   m_capacityD: {fileID: 11400000, guid: 181aa9dba8bedbe44aff1c43fcca3171, type: 2}
 --- !u!114 &2086298619
@@ -5276,7 +5278,7 @@ MonoBehaviour:
   _defence: 100
   _speAttack: 60
   _speDefence: 100
-  _speed: 99
+  _speed: 101
 --- !u!114 &2086298622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5597,10 +5599,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3742211262109676483, guid: 2061ab28add7268438ef634ab5455050,
+    - target: {fileID: 3742211262109676484, guid: 2061ab28add7268438ef634ab5455050,
         type: 3}
-      propertyPath: _baseHealth
-      value: 100
+      propertyPath: m_Types.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3742211262109676484, guid: 2061ab28add7268438ef634ab5455050,
+        type: 3}
+      propertyPath: m_Types.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3742211262109676484, guid: 2061ab28add7268438ef634ab5455050,
+        type: 3}
+      propertyPath: m_currentEffect
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3742211262109676486, guid: 2061ab28add7268438ef634ab5455050,
+        type: 3}
+      propertyPath: _level
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3742211262109676486, guid: 2061ab28add7268438ef634ab5455050,
+        type: 3}
+      propertyPath: _nickname
+      value: Test
       objectReference: {fileID: 0}
     - target: {fileID: 3742211262109676480, guid: 2061ab28add7268438ef634ab5455050,
         type: 3}
@@ -5620,32 +5642,17 @@ PrefabInstance:
     - target: {fileID: 3742211262109676480, guid: 2061ab28add7268438ef634ab5455050,
         type: 3}
       propertyPath: _speed
-      value: 99
+      value: 101
       objectReference: {fileID: 0}
     - target: {fileID: 3742211262109676480, guid: 2061ab28add7268438ef634ab5455050,
         type: 3}
       propertyPath: _speAttack
       value: 60
       objectReference: {fileID: 0}
-    - target: {fileID: 3742211262109676486, guid: 2061ab28add7268438ef634ab5455050,
+    - target: {fileID: 3742211262109676483, guid: 2061ab28add7268438ef634ab5455050,
         type: 3}
-      propertyPath: _level
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 3742211262109676486, guid: 2061ab28add7268438ef634ab5455050,
-        type: 3}
-      propertyPath: _nickname
-      value: Test
-      objectReference: {fileID: 0}
-    - target: {fileID: 3742211262109676484, guid: 2061ab28add7268438ef634ab5455050,
-        type: 3}
-      propertyPath: m_Types.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3742211262109676484, guid: 2061ab28add7268438ef634ab5455050,
-        type: 3}
-      propertyPath: m_Types.Array.data[0]
-      value: 0
+      propertyPath: _baseHealth
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2061ab28add7268438ef634ab5455050, type: 3}
@@ -5730,6 +5737,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_capacityD
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4716119425258507560, guid: ad7805aa51c52fb48a22904c2546aa8f,
+        type: 3}
+      propertyPath: m_currentEffect
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad7805aa51c52fb48a22904c2546aa8f, type: 3}
