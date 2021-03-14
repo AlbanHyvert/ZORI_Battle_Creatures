@@ -61,6 +61,8 @@ public class ExecuteState : BattleState
 
         m_playerTurnEnded = true;
 
+        ApplyStatus(BattleFlowState.GetPlayerCapacity(), BattleFlowState.ZoriEnnemy.Zori);
+
         CheckEndedTurn();
 
         if (!BattleFlowState.battleEnded && !m_ennemyTurnEnded)
@@ -95,6 +97,8 @@ public class ExecuteState : BattleState
             BattleFlowState.GetEnnemyCapacity(), BattleFlowState.ZoriEnnemy.Zori, BattleFlowState.ZoriPlayer.Zori));
 
         m_ennemyTurnEnded = true;
+
+        ApplyStatus(BattleFlowState.GetEnnemyCapacity(), BattleFlowState.ZoriPlayer.Zori);
 
         CheckEndedTurn();
 
@@ -138,6 +142,67 @@ public class ExecuteState : BattleState
                 default:
                     break;
             }
+        }
+    }
+
+    private void ApplyStatus(Capacity senderCap, Zori receiver)
+    {
+        if (receiver.CurrentEffect != Effects.E_Effects.NONE)
+            return;
+
+        switch (senderCap.Effect)
+        {
+            case Effects.E_Effects.PARALYSIS:
+                for (int i = 0; i < receiver.Types.Length; i++)
+                {
+                    if (receiver.Types[i] == E_Types.ELECTRO)
+                        return;
+                }
+                receiver.CurrentEffect = Effects.E_Effects.PARALYSIS;
+                break;
+            case Effects.E_Effects.BURN:
+                for (int i = 0; i < receiver.Types.Length; i++)
+                {
+                    if (receiver.Types[i] == E_Types.PYRO)
+                        return;
+                }
+                receiver.CurrentEffect = Effects.E_Effects.BURN;
+                break;
+            case Effects.E_Effects.FREEZE:
+                for (int i = 0; i < receiver.Types.Length; i++)
+                {
+                    if (receiver.Types[i] == E_Types.CRYO)
+                        return;      
+                }
+
+                if (receiver.IsCold == false)
+                {
+                    receiver.IsCold = true;
+                    return;
+                }
+                else
+                {
+                    receiver.CurrentEffect = Effects.E_Effects.FREEZE;
+                }
+                break;
+            case Effects.E_Effects.POISON:
+                for (int i = 0; i < receiver.Types.Length; i++)
+                {
+                    if (receiver.Types[i] == E_Types.VENO)
+                        return;
+                }
+                receiver.CurrentEffect = Effects.E_Effects.POISON;
+                break;
+            case Effects.E_Effects.SLEEP:
+                for (int i = 0; i < receiver.Types.Length; i++)
+                {
+                    if (receiver.Types[i] == E_Types.MENTAL)
+                        return;
+                }
+                receiver.CurrentEffect = Effects.E_Effects.SLEEP;
+                break;
+            case Effects.E_Effects.NONE:
+                return;
         }
     }
 

@@ -16,6 +16,7 @@ public class Zori : MonoBehaviour
     private CapacityHolder m_capacityHolder = null;
     private NavMeshAgent m_navMeshAgent = null;
     private float m_currentPoisonDamage = 0.06f;
+    private bool m_isCold = false;
 
     public Stats Stats { get => m_stats; }
     public Health Health { get => m_health; }
@@ -24,6 +25,7 @@ public class Zori : MonoBehaviour
     public E_Types[] Types { get => m_Types; }
     public Effects.E_Effects CurrentEffect { get => m_currentEffect; set => m_currentEffect = value; }
     public float CurrentPoisonDmg { get => m_currentPoisonDamage; set => m_currentPoisonDamage = value; }
+    public bool IsCold { get => m_isCold; set => m_isCold = value; }
 
     private void Awake()
     {

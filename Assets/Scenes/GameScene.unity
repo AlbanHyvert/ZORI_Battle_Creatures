@@ -5188,7 +5188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Types: 00000000
-  m_currentEffect: 3
+  m_currentEffect: 5
 --- !u!114 &2086298618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5612,7 +5612,7 @@ PrefabInstance:
     - target: {fileID: 3742211262109676484, guid: 2061ab28add7268438ef634ab5455050,
         type: 3}
       propertyPath: m_currentEffect
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3742211262109676486, guid: 2061ab28add7268438ef634ab5455050,
         type: 3}
@@ -5741,7 +5741,7 @@ PrefabInstance:
     - target: {fileID: 4716119425258507560, guid: ad7805aa51c52fb48a22904c2546aa8f,
         type: 3}
       propertyPath: m_currentEffect
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad7805aa51c52fb48a22904c2546aa8f, type: 3}
