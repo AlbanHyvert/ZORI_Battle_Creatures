@@ -11,8 +11,13 @@ public class ChooseActionState : BattleState
     {
         CheckStatus();
 
-        BattleFlowState.ControlPlayerConsole(true);
+        if(!BattleFlowState.playerHasCapacity)
+            BattleFlowState.ControlPlayerConsole(true);
+
         BattleFlowState.ControlUIActivation(true);
+
+        if (BattleFlowState.ennemyHasCapacity)
+            return null;
 
         int capacityLenght = BattleFlowState.ZoriEnnemy.Zori.CapacityHolder.GetCapacitySize;
         int chooseAction = Random.Range(0, capacityLenght - 1);
@@ -43,36 +48,10 @@ public class ChooseActionState : BattleState
 
     private void CheckStatus()
     {
-        if (BattleFlowState.ZoriPlayer.Zori.CurrentEffect != Effects.E_Effects.NONE)
-        {
-            switch (BattleFlowState.ZoriPlayer.Zori.CurrentEffect)
-            {
-                case Effects.E_Effects.FREEZE:
-                    BattleFlowState.playerHasCapacity = true;
-                    break;
-                case Effects.E_Effects.SLEEP:
-                    BattleFlowState.playerHasCapacity = true;
-                    BattleFlowState.CheckEnnemySleep();
-                    break;
-                default:
-                    break;
-            }
-        }
+        if (BattleFlowState.ZoriEnnemy.Zori.GetStatus.CurrentStatus == Effects.E_Status.FREEZE || BattleFlowState.ZoriEnnemy.Zori.GetStatus.CurrentStatus == Effects.E_Status.SLEEP)
+            BattleFlowState.ennemyHasCapacity = true;
 
-        if (BattleFlowState.ZoriEnnemy.Zori.CurrentEffect != Effects.E_Effects.NONE)
-        {
-            switch (BattleFlowState.ZoriEnnemy.Zori.CurrentEffect)
-            {
-                case Effects.E_Effects.FREEZE:
-                    BattleFlowState.ennemyHasCapacity = true;
-                    break;
-                case Effects.E_Effects.SLEEP:
-                    BattleFlowState.ennemyHasCapacity = true;
-                    BattleFlowState.CheckEnnemySleep();
-                    break;
-                default:
-                    break;
-            }
-        }
+        if (BattleFlowState.ZoriPlayer.Zori.GetStatus.CurrentStatus == Effects.E_Status.FREEZE || BattleFlowState.ZoriPlayer.Zori.GetStatus.CurrentStatus == Effects.E_Status.SLEEP)
+            BattleFlowState.playerHasCapacity = true;
     }
 }

@@ -8,13 +8,12 @@ public class BattleFlowManager : BattleStateManager
     [SerializeField] private BattleStatsUI _zoriPlayerHud = null;
     [Tooltip("The hud of the zori ennemy.")]
     [SerializeField] private BattleStatsUI _zoriEnnemyHud = null;
-    [SerializeField] private float _readingSpeed = 0.1f;
+    [SerializeField] private float uiTextTimePerCharacter = 0.1f;
     [Header("DEBUG ONLY")]
     [Tooltip("The item hold by the zori, if value is 1 he doesnt hold anything.")]
     [SerializeField] private float _itemMult = 1f;
     [Tooltip("If the food eaten by the zori, buff its stats then it will be above 1.")]
     [SerializeField] private float _foodMult = 1f;
-    [SerializeField] private int m_maxSleepTurn = 5;
 
     private ZoriController m_zoriPlayer = null;
     private ZoriController m_zoriEnnemy = null;
@@ -22,8 +21,6 @@ public class BattleFlowManager : BattleStateManager
     private Capacity m_zoriEnnemyCapacity = null;
     private PlayerCharacterController m_player = null;
     private BattleState m_currentState = null;
-    private int m_playerSleepTurnLeft = 0;
-    private int m_ennemySleepTurnLeft = 0;
 
     public static BattleFlowManager Instance{ get; private set; }
     
@@ -33,13 +30,11 @@ public class BattleFlowManager : BattleStateManager
     public BattleStatsUI EnnemyHud { get => _zoriEnnemyHud; }
     public float ItemMult { get => _itemMult; }
     public float FoodMult { get => _foodMult; }
-    public float readingSpeed { get => _readingSpeed; }
+    public float readingSpeed { get => uiTextTimePerCharacter; }
     public bool playerWon { get; private set; }
     public bool battleEnded { get; private set; }
     public bool ennemyHasCapacity { get; set; }
     public bool playerHasCapacity { get; set; }
-    public int playerSleepTurnLeft { get => m_playerSleepTurnLeft; set => m_playerSleepTurnLeft = value; }
-    public int ennemySleepTurnLeft { get => m_ennemySleepTurnLeft; set => m_ennemySleepTurnLeft = value; }
 
     private void Awake()
     {
@@ -181,38 +176,6 @@ public class BattleFlowManager : BattleStateManager
         playerWon = true;
 
         SetState(new BattleEndState(this));
-    }
-
-    public int CheckPlayerSleep(int value = 0)
-    {
-        if (value == -1)
-            m_playerSleepTurnLeft = 0;
-
-        if (m_playerSleepTurnLeft <= 0)
-        {
-            m_zoriPlayer.Zori.CurrentEffect = Effects.E_Effects.NONE;
-            return 0;
-        }
-
-        m_playerSleepTurnLeft--;
-
-        return m_playerSleepTurnLeft;
-    }
-
-    public int CheckEnnemySleep(int value = 0)
-    {
-        if (value == -1)
-            m_ennemySleepTurnLeft = 0;
-
-        if (m_ennemySleepTurnLeft <= 0)
-        {
-            m_zoriEnnemy.Zori.CurrentEffect = Effects.E_Effects.NONE;
-            return 0;
-        }
-
-        m_ennemySleepTurnLeft--;
-
-        return m_ennemySleepTurnLeft;
     }
 
     public void OnDestroy()

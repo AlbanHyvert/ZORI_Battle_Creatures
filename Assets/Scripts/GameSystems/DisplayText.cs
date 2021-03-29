@@ -10,8 +10,6 @@ public static class DisplayText
     private static float m_timePerCharacter = 1f;
     private static float m_timer = 0;
 
-    private static MonoBehaviour m_invoke = null;
-
     public static void AddText(TextMeshProUGUI uiText, string textToWrite, float timePerCharacter)
     {
         m_oldUiText = m_uiText;

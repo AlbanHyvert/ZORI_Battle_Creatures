@@ -19,7 +19,7 @@ public class Capacity : ScriptableObject
     [SerializeField] private E_Priority m_priority = E_Priority.NEUTRAL;
     [Tooltip("Attack Type")]
     [SerializeField] private E_Style _style = E_Style.PHYSICS; 
-    [SerializeField] private Effects.E_Effects _effects = Effects.E_Effects.NONE;
+    [SerializeField] private Effects.E_Status _effects = Effects.E_Status.NONE;
 
     [Tooltip("The quantity of use left.")]
     [Range(0, 100)] private int m_currentUse = 10;
@@ -33,7 +33,7 @@ public class Capacity : ScriptableObject
     public E_Types Type { get => m_type; }
     public E_Priority Priority { get => m_priority; }
     public E_Style Style { get => _style; }
-    public Effects.E_Effects Effect { get => _effects; }
+    public Effects.E_Status Effect { get => _effects; }
     public int CurrentUse { get => m_currentUse; }
     public int MaxUse { get => m_maxUse;
         set

@@ -10,7 +10,7 @@ public class Stats : MonoBehaviour
     [Tooltip("The current level of the zori.")]
     [SerializeField, Range(1, 1000)] private int _level = 1;
     [Tooltip("the current experience of the zori.")]
-    [SerializeField, Range(0, 5000000)] private int _experience = 1;
+    [SerializeField, Range(0, 10000)] private int _experience = 1;
     [Tooltip("The current max experience to obtain to gain a level.")]
     [SerializeField] private int _maxLevelExperience = 100;
     [Space]

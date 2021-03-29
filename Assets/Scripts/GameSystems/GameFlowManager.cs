@@ -56,12 +56,6 @@ public class GameFlowManager : MonoBehaviour
                 gameIsEnding = false;
             }
         }
-        else
-        {
-            // Test if player died
-            if (m_Player.isDead)
-                EndGame(false);
-        }
     }
 
     void EndGame(bool win)

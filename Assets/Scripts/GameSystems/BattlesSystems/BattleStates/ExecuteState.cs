@@ -12,8 +12,6 @@ public class ExecuteState : BattleState
 
     public override IEnumerator Start()
     {
-        Debug.Log("ExecuteTurn");
-
         BattleFlowState.ControlPlayerConsole(false);
 
         int playerSpeed = BattleFlowState.ZoriPlayer.Zori.GetAttackSpeed(BattleFlowState.GetPlayerCapacity());
@@ -34,10 +32,10 @@ public class ExecuteState : BattleState
 
     public IEnumerator PlayerAttack()
     {
-        if (!BattleFlowState.GetEnnemyCapacity())
+        if (BattleFlowState.ZoriPlayer.Zori.GetStatus.CurrentStatus == Effects.E_Status.FREEZE || BattleFlowState.ZoriPlayer.Zori.GetStatus.CurrentStatus == Effects.E_Status.SLEEP)
         {
             DisplayText.AddText(BattleFlowState.PlayerHud.descriptionText, BattleFlowState.ZoriPlayer.Zori.Stats.nickname +
-                " cannot attack this turn because he is " + BattleFlowState.ZoriPlayer.Zori.CurrentEffect.ToString()
+                " cannot attack this turn because he is " + BattleFlowState.ZoriPlayer.Zori.GetStatus.CurrentStatus.ToString()
                 , BattleFlowState.readingSpeed);
 
             m_playerTurnEnded = true;
@@ -47,14 +45,25 @@ public class ExecuteState : BattleState
             yield break;
         }
 
-        DisplayText.AddText(BattleFlowState.PlayerHud.descriptionText, BattleFlowState.ZoriPlayer.Zori.Stats.nickname +
-                " use " + BattleFlowState.GetPlayerCapacity().Name + '.', BattleFlowState.readingSpeed);
+        if (!BattleFlowState.GetPlayerCapacity())
+        {
+            m_playerTurnEnded = true;
+
+            CheckEndedTurn();
+
+            yield break;
+        }
 
         yield return new WaitForSecondsRealtime(DisplayText.GetTotalDuration());
 
         DisplayText.Clear();
 
         int brutDmg = CheckBrutDamage(BattleFlowState.GetPlayerCapacity(), BattleFlowState.ZoriPlayer.Zori);
+
+        if (brutDmg > 0 && BattleFlowState.ZoriEnnemy.Zori.GetStatus.CurrentStatus == Effects.E_Status.SLEEP)
+        {
+            BattleFlowState.ZoriEnnemy.Zori.GetStatus.AllReset();
+        }
 
         BattleFlowState.ZoriEnnemy.Zori.Health.TakeDamage(DealActualDamage(brutDmg,
             BattleFlowState.GetPlayerCapacity(),BattleFlowState.ZoriPlayer.Zori , BattleFlowState.ZoriEnnemy.Zori));
@@ -71,12 +80,21 @@ public class ExecuteState : BattleState
 
     public IEnumerator EnnemyAttack()
     {
-        if(!BattleFlowState.GetEnnemyCapacity())
+        if (BattleFlowState.ZoriEnnemy.Zori.GetStatus.CurrentStatus == Effects.E_Status.FREEZE || BattleFlowState.ZoriEnnemy.Zori.GetStatus.CurrentStatus == Effects.E_Status.SLEEP)
         {
             DisplayText.AddText(BattleFlowState.EnnemyHud.descriptionText, BattleFlowState.ZoriEnnemy.Zori.Stats.nickname +
-                " cannot attack this turn because he is " + BattleFlowState.ZoriEnnemy.Zori.CurrentEffect.ToString()
+                " cannot attack this turn because he is " + BattleFlowState.ZoriEnnemy.Zori.GetStatus.CurrentStatus.ToString()
                 , BattleFlowState.readingSpeed);
 
+            m_ennemyTurnEnded = true;
+
+            CheckEndedTurn();
+
+            yield break;
+        }
+
+        if(!BattleFlowState.GetEnnemyCapacity())
+        {
             m_ennemyTurnEnded = true;
 
             CheckEndedTurn();
@@ -92,6 +110,11 @@ public class ExecuteState : BattleState
         DisplayText.Clear();
 
         int brutDmg = CheckBrutDamage(BattleFlowState.GetEnnemyCapacity(), BattleFlowState.ZoriEnnemy.Zori);
+
+        if(brutDmg > 0 && BattleFlowState.ZoriPlayer.Zori.GetStatus.CurrentStatus == Effects.E_Status.SLEEP)
+        {
+            BattleFlowState.ZoriPlayer.Zori.GetStatus.AllReset();
+        }
 
         BattleFlowState.ZoriPlayer.Zori.Health.TakeDamage(DealActualDamage(brutDmg, 
             BattleFlowState.GetEnnemyCapacity(), BattleFlowState.ZoriEnnemy.Zori, BattleFlowState.ZoriPlayer.Zori));
@@ -116,27 +139,27 @@ public class ExecuteState : BattleState
 
     private void CheckStatus(ref int playerSpeed, ref int ennemySpeed)
     {
-        if (BattleFlowState.ZoriPlayer.Zori.CurrentEffect != Effects.E_Effects.NONE)
+        if (BattleFlowState.ZoriPlayer.Zori.GetStatus.CurrentStatus != Effects.E_Status.NONE)
         {
-            switch (BattleFlowState.ZoriPlayer.Zori.CurrentEffect)
+            switch (BattleFlowState.ZoriPlayer.Zori.GetStatus.CurrentStatus)
             {
-                case Effects.E_Effects.PARALYSIS:
+                case Effects.E_Status.PARALYSIS:
                     playerSpeed = playerSpeed / 2;
                     break;
-                case Effects.E_Effects.BURN:
+                case Effects.E_Status.BURN:
                     playerSpeed = (int)(playerSpeed * 0.2f);
                     break;
             }
         }
 
-        if (BattleFlowState.ZoriPlayer.Zori.CurrentEffect != Effects.E_Effects.NONE)
+        if (BattleFlowState.ZoriPlayer.Zori.GetStatus.CurrentStatus != Effects.E_Status.NONE)
         {
-            switch (BattleFlowState.ZoriPlayer.Zori.CurrentEffect)
+            switch (BattleFlowState.ZoriPlayer.Zori.GetStatus.CurrentStatus)
             {
-                case Effects.E_Effects.PARALYSIS:
+                case Effects.E_Status.PARALYSIS:
                     playerSpeed = playerSpeed / 2;
                     break;
-                case Effects.E_Effects.BURN:
+                case Effects.E_Status.BURN:
                     playerSpeed = (int)(playerSpeed * 0.2f);
                     break;
                 default:
@@ -147,67 +170,17 @@ public class ExecuteState : BattleState
 
     private void ApplyStatus(Capacity senderCap, Zori receiver)
     {
-        if (receiver.CurrentEffect != Effects.E_Effects.NONE)
+        if (receiver.GetStatus.CurrentStatus != Effects.E_Status.NONE)
             return;
 
-        switch (senderCap.Effect)
-        {
-            case Effects.E_Effects.PARALYSIS:
-                for (int i = 0; i < receiver.Types.Length; i++)
-                {
-                    if (receiver.Types[i] == E_Types.ELECTRO)
-                        return;
-                }
-                receiver.CurrentEffect = Effects.E_Effects.PARALYSIS;
-                break;
-            case Effects.E_Effects.BURN:
-                for (int i = 0; i < receiver.Types.Length; i++)
-                {
-                    if (receiver.Types[i] == E_Types.PYRO)
-                        return;
-                }
-                receiver.CurrentEffect = Effects.E_Effects.BURN;
-                break;
-            case Effects.E_Effects.FREEZE:
-                for (int i = 0; i < receiver.Types.Length; i++)
-                {
-                    if (receiver.Types[i] == E_Types.CRYO)
-                        return;      
-                }
-
-                if (receiver.IsCold == false)
-                {
-                    receiver.IsCold = true;
-                    return;
-                }
-                else
-                {
-                    receiver.CurrentEffect = Effects.E_Effects.FREEZE;
-                }
-                break;
-            case Effects.E_Effects.POISON:
-                for (int i = 0; i < receiver.Types.Length; i++)
-                {
-                    if (receiver.Types[i] == E_Types.VENO)
-                        return;
-                }
-                receiver.CurrentEffect = Effects.E_Effects.POISON;
-                break;
-            case Effects.E_Effects.SLEEP:
-                for (int i = 0; i < receiver.Types.Length; i++)
-                {
-                    if (receiver.Types[i] == E_Types.MENTAL)
-                        return;
-                }
-                receiver.CurrentEffect = Effects.E_Effects.SLEEP;
-                break;
-            case Effects.E_Effects.NONE:
-                return;
-        }
+        receiver.GetStatus.ApplyEffect(senderCap);
     }
 
     private int CheckBrutDamage(Capacity capacity, Zori sender)
     {
+        if (!capacity)
+            return 0;
+
         switch (capacity.Style)
         {
             case E_Style.EFFECT:
