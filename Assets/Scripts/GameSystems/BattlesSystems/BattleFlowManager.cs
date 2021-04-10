@@ -8,6 +8,8 @@ public class BattleFlowManager : BattleStateManager
     [SerializeField] private BattleStatsUI _zoriPlayerHud = null;
     [Tooltip("The hud of the zori ennemy.")]
     [SerializeField] private BattleStatsUI _zoriEnnemyHud = null;
+    [Tooltip("The UI for the menu.")]
+    [SerializeField] private GameObject _MenuUI = null;
     [SerializeField] private float uiTextTimePerCharacter = 0.1f;
     [Header("DEBUG ONLY")]
     [Tooltip("The item hold by the zori, if value is 1 he doesnt hold anything.")]
@@ -108,11 +110,13 @@ public class BattleFlowManager : BattleStateManager
         if(value == true)
         {
             _playerConsole.SetActive(true);
+            _MenuUI.SetActive(true);
             return;
         }
         else
         {
             _playerConsole.SetActive(false);
+            _MenuUI.SetActive(false);
         }
     }
 
@@ -156,8 +160,9 @@ public class BattleFlowManager : BattleStateManager
     {
         playerHasCapacity = false;
         ennemyHasCapacity = false;
-        m_zoriEnnemyCapacity = null;
-        m_zoriPlayerCapacity = null;
+        // XXX - Lors d'un burn ou d'un poison, null reference trigger à cause de ça
+        //m_zoriEnnemyCapacity = null;
+        //m_zoriPlayerCapacity = null;
     }
 
     private void ZoriPlayerIsDead()

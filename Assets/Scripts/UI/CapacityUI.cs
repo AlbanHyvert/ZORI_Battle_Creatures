@@ -12,6 +12,7 @@ public class CapacityUI : MonoBehaviour
 
     private Capacity m_capacity = null;
     private BattleFlowManager m_battleManager = null;
+    private GameObject m_menu = null;
 
     public void Init(Capacity capacity, BattleFlowManager battleManager)
     {
@@ -38,6 +39,8 @@ public class CapacityUI : MonoBehaviour
     {
         m_capacity.UseCapacity();
         m_battleManager.SetPlayerCapacity(m_capacity);
+        this.transform.parent.gameObject.SetActive(false);
+        Debug.Log("test");
     }
 
     private void UpdateQuantity(int value)
