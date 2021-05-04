@@ -4979,6 +4979,7 @@ GameObject:
   - component: {fileID: 2086298616}
   - component: {fileID: 2086298615}
   - component: {fileID: 2086298623}
+  - component: {fileID: 2086298624}
   m_Layer: 0
   m_Name: Player Zori Test
   m_TagString: Untagged
@@ -5189,6 +5190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_types: 00000000
   m_status: {fileID: 2086298623}
+  m_bonusEffect: {fileID: 0}
 --- !u!114 &2086298618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5313,6 +5315,18 @@ MonoBehaviour:
   m_effectTurnLeft: 0
   m_outCombatDuration: 0
   m_bonusDamage: 0
+--- !u!114 &2086298624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086298610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 712f9006884e03944b8f49995277a64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2087245064
 GameObject:
   m_ObjectHideFlags: 0
@@ -5851,3 +5865,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_types: 00000000
   m_status: {fileID: 4716119424842775928}
+  m_bonusEffect: {fileID: 0}
+--- !u!114 &4716119424842775930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4716119424842775926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 712f9006884e03944b8f49995277a64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

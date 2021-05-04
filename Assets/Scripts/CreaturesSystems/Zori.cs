@@ -3,13 +3,14 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent), typeof(Health))]
 [RequireComponent(typeof(BaseStats), typeof(Stats), typeof(CapacityHolder))]
-[RequireComponent(typeof(BeastStatus))]
+[RequireComponent(typeof(BeastStatus), typeof(BeastBonusEffects))]
 public class Zori : MonoBehaviour
 {
     [Tooltip("The zori type(s) will affect battle, and where they can be found in the world. 2 types max.")]
     [SerializeField] private E_Types[] m_types = null;
     [Tooltip("In witch state the zori is at the moment")]
     [SerializeField] private BeastStatus m_status = null;
+    [SerializeField] private BeastBonusEffects m_bonusEffect = null;
 
     private Stats m_stats = null;
     private BaseStats m_baseStats = null;
@@ -23,6 +24,7 @@ public class Zori : MonoBehaviour
     public NavMeshAgent NavMesh { get => m_navMeshAgent; }
     public E_Types[] Types { get => m_types; }
     public BeastStatus GetStatus { get => m_status; }
+    public BeastBonusEffects GetBonusEffect { get => m_bonusEffect; }
 
     private void Awake()
     {
@@ -32,11 +34,13 @@ public class Zori : MonoBehaviour
         m_baseStats = GetComponent<BaseStats>();
         m_navMeshAgent = GetComponent<NavMeshAgent>();
         m_capacityHolder = GetComponent<CapacityHolder>();
+        m_bonusEffect = GetComponent<BeastBonusEffects>();
 
         m_health.Init(m_stats);
         m_stats.Init(m_baseStats);
         m_capacityHolder.Init();
         m_status.Init(m_types, m_health);
+        m_bonusEffect.Reset();
 
         m_health.onDie += OnDie;
     }

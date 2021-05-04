@@ -14,8 +14,8 @@ public class ExecuteState : BattleState
     {
         BattleFlowState.ControlPlayerConsole(false);
 
-        int playerSpeed = BattleFlowState.ZoriPlayer.Zori.GetAttackSpeed(BattleFlowState.GetPlayerCapacity());
-        int ennemySpeed = BattleFlowState.ZoriEnnemy.Zori.GetAttackSpeed(BattleFlowState.GetEnnemyCapacity());
+        int playerSpeed = (int)(BattleFlowState.ZoriPlayer.Zori.GetAttackSpeed(BattleFlowState.GetPlayerCapacity()) * BattleFlowState.ZoriPlayer.Zori.GetBonusEffect.speedBonus);
+        int ennemySpeed = (int)(BattleFlowState.ZoriEnnemy.Zori.GetAttackSpeed(BattleFlowState.GetEnnemyCapacity()) * BattleFlowState.ZoriEnnemy.Zori.GetBonusEffect.speedBonus);
 
         CheckStatus(ref playerSpeed, ref ennemySpeed);
 
@@ -162,8 +162,6 @@ public class ExecuteState : BattleState
                 case Effects.E_Status.BURN:
                     playerSpeed = (int)(playerSpeed * 0.2f);
                     break;
-                default:
-                    break;
             }
         }
     }
@@ -187,9 +185,9 @@ public class ExecuteState : BattleState
                 //Afflict effect
                 break;
             case E_Style.PHYSICS:
-                return capacity.Power * (sender.Stats.attack * 1);
+                return capacity.Power * (int)(sender.Stats.attack * sender.GetBonusEffect.atkBonus);
             case E_Style.SPECIAL:
-                return capacity.Power * (sender.Stats.speAttack * 1);
+                return capacity.Power * (int)(sender.Stats.speAttack * sender.GetBonusEffect.speAtkBonus);
         }
 
         return 0;
@@ -203,9 +201,9 @@ public class ExecuteState : BattleState
                 //Afflict effect
                 break;
             case E_Style.PHYSICS:
-                return (receiver.Stats.defence * 1) * 50;
+                return (int)(receiver.Stats.defence * receiver.GetBonusEffect.defBonus) * 50;
             case E_Style.SPECIAL:
-                return (receiver.Stats.speDefence * 1) * 50;
+                return (int)(receiver.Stats.speDefence * receiver.GetBonusEffect.speDefBonus) * 50;
         }
 
         return 0;
