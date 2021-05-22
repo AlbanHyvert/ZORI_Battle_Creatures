@@ -40,7 +40,6 @@ public class CapacityUI : MonoBehaviour
         m_capacity.UseCapacity();
         m_battleManager.SetPlayerCapacity(m_capacity);
         this.transform.parent.gameObject.SetActive(false);
-        Debug.Log("test");
     }
 
     private void UpdateQuantity(int value)

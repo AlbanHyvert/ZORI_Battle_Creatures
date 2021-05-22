@@ -12,6 +12,5 @@ public class MenuUI : MonoBehaviour
     {
         _holder.SetActive(true);
         this.transform.parent.gameObject.SetActive(false);
-        Debug.Log("SNCF");
     }
 }

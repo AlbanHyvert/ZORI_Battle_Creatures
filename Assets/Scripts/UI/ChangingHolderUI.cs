@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChangingHolderUI : MonoBehaviour
 {
     [SerializeField] private ChangingUI[] _changingsUI = null;
     [Space]
     [SerializeField] private BattleFlowManager _battleManager = null;
+    [SerializeField] private ZoriController[] _listZori = null;
 
     private ZoriController m_changingHolder = null;
 
@@ -17,33 +19,21 @@ public class ChangingHolderUI : MonoBehaviour
 
         m_changingHolder = _battleManager.ZoriPlayer;
 
-        if (_changingsUI.Length < 1)
+        if (_listZori.Length < 2)
             return;
 
-        for (int i = 0; i < _changingsUI.Length; i++)
+        for (int i = 0; i < _listZori.Length; i++)
         {
-            switch (i)
+            _changingsUI[i].Init(_listZori[i], _battleManager);
+            if (_listZori[i] == _battleManager.ZoriPlayer)
             {
-                case 0:
-                    _changingsUI[i].Init(m_changingHolder, _battleManager);
-                    break;
-                case 1:
-                    _changingsUI[i].Init(m_changingHolder, _battleManager);
-                    break;
-                case 2:
-                    _changingsUI[i].Init(m_changingHolder, _battleManager);
-                    break;
-                case 3:
-                    _changingsUI[i].Init(m_changingHolder, _battleManager);
-                    break;
-                case 4:
-                    _changingsUI[i].Init(m_changingHolder, _battleManager);
-                    break;
-                case 5:
-                    _changingsUI[i].Init(m_changingHolder, _battleManager);
-                    break;
-                default:
-                    break;
+                _changingsUI[i].transform.GetComponent<Image>().color = Color.green;
+                _changingsUI[i].transform.GetComponent<Button>().interactable = false;
+            }
+            else
+            {
+                _changingsUI[i].transform.GetComponent<Image>().color = Color.white;
+                _changingsUI[i].transform.GetComponent<Button>().interactable = true;
             }
         }
     }

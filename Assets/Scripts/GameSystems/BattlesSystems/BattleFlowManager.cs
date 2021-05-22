@@ -23,6 +23,8 @@ public class BattleFlowManager : BattleStateManager
     private Capacity m_zoriEnnemyCapacity = null;
     private PlayerCharacterController m_player = null;
     private BattleState m_currentState = null;
+    private bool m_playerChangeZori = false;
+    private bool m_ennemyChangeZori = false;
 
     public static BattleFlowManager Instance{ get; private set; }
     
@@ -76,7 +78,7 @@ public class BattleFlowManager : BattleStateManager
 
     private void CheckAsBothAttack()
     {
-        if (!ennemyHasCapacity || !playerHasCapacity)
+        if ((!ennemyHasCapacity || !playerHasCapacity))
             return;
 
         StopAllCoroutines();
@@ -90,7 +92,6 @@ public class BattleFlowManager : BattleStateManager
     public void SetZoriPlayer(ZoriController zori)
     {
         m_zoriPlayer = zori;
-
         zori.Zori.Health.onDie += ZoriPlayerIsDead;
 
         CheckAsBothZori();
@@ -103,6 +104,29 @@ public class BattleFlowManager : BattleStateManager
         zori.Zori.Health.onDie += ZoriEnnemyIsDead;
 
         CheckAsBothZori();
+    }
+
+    public void ChangeZoriPlayer(ZoriController zori)
+    {
+        m_zoriPlayer = zori;
+        zori.Zori.Health.onDie += ZoriPlayerIsDead;
+        m_zoriPlayerCapacity = null;
+        m_playerChangeZori = true;
+        CheckAsBothZori();
+        StopAllCoroutines();
+
+        m_currentState = SetState(new ExecuteState(this));
+
+    }
+
+    public void ChangeZoriEnnemy(ZoriController zori)
+    {
+        m_zoriEnnemy = zori;
+        zori.Zori.Health.onDie += ZoriEnnemyIsDead;
+        m_zoriEnnemyCapacity = null;
+        m_ennemyChangeZori = true;
+        CheckAsBothZori();
+
     }
 
     public void ControlPlayerConsole(bool value)
@@ -142,6 +166,12 @@ public class BattleFlowManager : BattleStateManager
     public Capacity GetEnnemyCapacity()
         => m_zoriEnnemyCapacity;
 
+    public bool GetPlayerChangeZori()
+            => m_playerChangeZori;
+
+    public bool GetEnnemyChangeZori()
+            => m_ennemyChangeZori;
+
     public void SetPlayerCapacity(Capacity capacity)
     {
         m_zoriPlayerCapacity = capacity;
@@ -163,6 +193,12 @@ public class BattleFlowManager : BattleStateManager
         // XXX - Lors d'un burn ou d'un poison, null reference trigger à cause de ça
         //m_zoriEnnemyCapacity = null;
         //m_zoriPlayerCapacity = null;
+    }
+
+    public void ClearChange()
+    {
+        m_playerChangeZori = false;
+        m_ennemyChangeZori = false;
     }
 
     private void ZoriPlayerIsDead()

@@ -11,6 +11,7 @@ public class EndTurnState : BattleState
         CheckStatus();
 
         BattleFlowState.ClearCapacity();
+        BattleFlowState.ClearChange();
 
         BattleFlowState.SetState(new ChooseActionState(BattleFlowState));
 

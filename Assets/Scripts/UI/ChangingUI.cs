@@ -20,15 +20,12 @@ public class ChangingUI : MonoBehaviour
 
         _textName.text = m_zori.name;
 
-        //m_zori.onUse += UpdateQuantity;
     }
 
     public void OnButtonPress()
     {
-        // Changing method
-        //m_capacity.UseCapacity();
-        m_battleManager.SetZoriPlayer(m_zori);
-        //m_battleManager.SetPlayerCapacity(m_capacity);
+        m_battleManager.ChangeZoriPlayer(m_zori);
+        this.transform.parent.gameObject.SetActive(false);
     }
 
 
