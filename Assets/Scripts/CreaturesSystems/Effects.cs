@@ -11,19 +11,38 @@
         DEAD
     }
 
-    public static bool CanBeAffected(E_Types[] zoriTypes, E_Types capacityType)
+    public static bool CanBeAffected(E_Types[] zoriTypes, Capacity capacity)
     {
         int index = 0;
 
         for (int i = 0; i < zoriTypes.Length; i++)
         {
-            if(zoriTypes[i] != capacityType)
+            switch (capacity.Effect)
             {
-                index++;
+                case E_Status.PARALYSIS:
+                    if (zoriTypes[i] == E_Types.ELECTRO)
+                        index++;
+                    break;
+                case E_Status.BURN:
+                    if (zoriTypes[i] == E_Types.PYRO)
+                        index++;
+                    break;
+                case E_Status.FREEZE:
+                    if (zoriTypes[i] == E_Types.CRYO)
+                        index++;
+                    break;
+                case E_Status.POISON:
+                    if (zoriTypes[i] == E_Types.VENO)
+                        index++;
+                    break;
+                case E_Status.SLEEP:
+                    if (zoriTypes[i] == E_Types.MENTAL)
+                        index++;
+                    break;
             }
         }
 
-        return index > 0 ? true : false;
+        return index == 0 ? true : false;
     }
 
     public static E_Status TryStatus(E_Types[] zoriTypes, Capacity capacity)
@@ -32,12 +51,31 @@
 
         for (int i = 0; i < zoriTypes.Length; i++)
         {
-            if (zoriTypes[i] != capacity.Type)
+            switch (capacity.Effect)
             {
-                index++;
+                case E_Status.PARALYSIS:
+                    if (zoriTypes[i] == E_Types.ELECTRO)
+                        index++;
+                    break;
+                case E_Status.BURN:
+                    if (zoriTypes[i] == E_Types.PYRO)
+                        index++;
+                    break;
+                case E_Status.FREEZE:
+                    if (zoriTypes[i] == E_Types.CRYO)
+                        index++;
+                    break;
+                case E_Status.POISON:
+                    if (zoriTypes[i] == E_Types.VENO)
+                        index++;
+                    break;
+                case E_Status.SLEEP:
+                    if (zoriTypes[i] == E_Types.MENTAL)
+                        index++;
+                    break;
             }
         }
 
-        return index > 0 ? capacity.Effect : E_Status.NONE;
+        return index == 0 ? capacity.Effect : E_Status.NONE;
     }
 }

@@ -6,7 +6,6 @@ public class BeastStatus : MonoBehaviour
     [SerializeField] private float m_currentAfflictedDamage = 0f;
     [SerializeField] private bool m_isCold = false;
     [SerializeField] private int m_effectTurnLeft = 0;
-    [SerializeField] private float m_outCombatDuration = 0f;
     [SerializeField] private float m_bonusDamage = 0f;
 
     private E_Types[] m_types = null;
@@ -47,9 +46,15 @@ public class BeastStatus : MonoBehaviour
                 break;
             case Effects.E_Status.BURN:
                 m_currentStatus = Effects.TryStatus(m_types, capacity);
+
+                if (m_currentStatus == Effects.E_Status.NONE)
+                    break;
+
+                m_currentAfflictedDamage = 0.06f;
+
                 break;
             case Effects.E_Status.FREEZE:
-                if (!Effects.CanBeAffected(m_types, capacity.Type))
+                if (!Effects.CanBeAffected(m_types, capacity))
                     break;
 
                 if(m_isCold == true)
@@ -65,6 +70,13 @@ public class BeastStatus : MonoBehaviour
                 break;
             case Effects.E_Status.POISON:
                 m_currentStatus = Effects.TryStatus(m_types, capacity);
+
+                if (m_currentStatus == Effects.E_Status.NONE)
+                    break;
+
+                m_bonusDamage = 1f;
+                m_currentAfflictedDamage = 0.06f;
+                
                 break;
             case Effects.E_Status.SLEEP:
                 m_currentStatus = Effects.TryStatus(m_types, capacity);
@@ -72,16 +84,25 @@ public class BeastStatus : MonoBehaviour
         }
     }
 
-    public void ApplyDamage(Capacity capacity)
+    public void ApplyDamage()
     {
-        switch (capacity.Effect)
+        if (m_currentStatus == Effects.E_Status.NONE)
+            return;
+
+        switch (m_currentStatus)
         {
             case Effects.E_Status.BURN:
-                m_health.TakeDamage((int)(m_health.maxHealth * (m_currentAfflictedDamage + m_bonusDamage)));
+                m_health.TakeDamage((int)(m_health.maxHealth * (m_currentAfflictedDamage)));
                 break;
             case Effects.E_Status.POISON:
-                m_health.TakeDamage((int)(m_health.maxHealth * (m_currentAfflictedDamage + m_bonusDamage)));
-                m_bonusDamage += 0.01f;
+                m_health.TakeDamage((int)(m_health.maxHealth * (m_currentAfflictedDamage * m_bonusDamage)));
+                m_bonusDamage += 1f;
+                break;
+            case Effects.E_Status.FREEZE:
+                m_effectTurnLeft--;
+
+                if (m_effectTurnLeft <= 0)
+                    AllReset();
                 break;
         }
     }
@@ -91,7 +112,6 @@ public class BeastStatus : MonoBehaviour
         m_currentAfflictedDamage = 0f;
         m_isCold = false;
         m_effectTurnLeft = 0;
-        m_outCombatDuration = 0f;
         m_bonusDamage = 0;
     }
 
@@ -104,10 +124,6 @@ public class BeastStatus : MonoBehaviour
     public void AllReset()
     {
         m_currentStatus = Effects.E_Status.NONE;
-        m_currentAfflictedDamage = 0f;
-        m_isCold = false;
-        m_effectTurnLeft = 0;
-        m_outCombatDuration = 0f;
-        m_bonusDamage = 0;
+        OnReset();
     }
 }

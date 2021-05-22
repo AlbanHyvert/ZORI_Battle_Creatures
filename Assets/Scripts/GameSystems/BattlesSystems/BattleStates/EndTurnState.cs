@@ -21,15 +21,8 @@ public class EndTurnState : BattleState
     {
         Zori playerZori = BattleFlowState.ZoriPlayer.Zori;
         Zori ennemyZori = BattleFlowState.ZoriEnnemy.Zori;
-
-        if (BattleFlowState.ZoriPlayer.Zori.GetStatus.CurrentStatus != Effects.E_Status.NONE)
-        {
-            playerZori.GetStatus.ApplyDamage(BattleFlowState.GetEnnemyCapacity());
-        }
-
-        if (BattleFlowState.ZoriEnnemy.Zori.GetStatus.CurrentStatus != Effects.E_Status.NONE)
-        {
-            ennemyZori.GetStatus.ApplyDamage(BattleFlowState.GetPlayerCapacity());
-        }
+        
+        playerZori.GetStatus.ApplyDamage();
+        ennemyZori.GetStatus.ApplyDamage();
     }
 }

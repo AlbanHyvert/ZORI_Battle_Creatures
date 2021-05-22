@@ -42,6 +42,9 @@ public class ExecuteState : BattleState
 
             CheckEndedTurn();
 
+            if (!BattleFlowState.battleEnded && !m_ennemyTurnEnded)
+                BattleFlowState.StartCoroutine(EnnemyAttack());
+
             yield break;
         }
 
@@ -54,9 +57,23 @@ public class ExecuteState : BattleState
             yield break;
         }
 
-        yield return new WaitForSecondsRealtime(DisplayText.GetTotalDuration());
+        yield return new WaitForSecondsRealtime(0);
 
         DisplayText.Clear();
+
+        if (BattleFlowState.GetPlayerCapacity().Style == E_Style.EFFECT)
+        {
+            CheckBrutDamage(BattleFlowState.GetPlayerCapacity(), null, BattleFlowState.ZoriEnnemy.Zori);
+
+            m_playerTurnEnded = true;
+
+            CheckEndedTurn();
+
+            if (!BattleFlowState.battleEnded && !m_ennemyTurnEnded)
+                BattleFlowState.StartCoroutine(EnnemyAttack());
+
+            yield break;
+        }
 
         int brutDmg = CheckBrutDamage(BattleFlowState.GetPlayerCapacity(), BattleFlowState.ZoriPlayer.Zori);
 
@@ -65,8 +82,9 @@ public class ExecuteState : BattleState
             BattleFlowState.ZoriEnnemy.Zori.GetStatus.AllReset();
         }
 
-        BattleFlowState.ZoriEnnemy.Zori.Health.TakeDamage(DealActualDamage(brutDmg,
-            BattleFlowState.GetPlayerCapacity(),BattleFlowState.ZoriPlayer.Zori , BattleFlowState.ZoriEnnemy.Zori));
+        if(brutDmg > 0)
+            BattleFlowState.ZoriEnnemy.Zori.Health.TakeDamage(DealActualDamage(brutDmg,
+                BattleFlowState.GetPlayerCapacity(),BattleFlowState.ZoriPlayer.Zori , BattleFlowState.ZoriEnnemy.Zori));
 
         m_playerTurnEnded = true;
 
@@ -88,8 +106,13 @@ public class ExecuteState : BattleState
 
             m_ennemyTurnEnded = true;
 
+            yield return new WaitForSecondsRealtime(DisplayText.GetTotalDuration());
+
             CheckEndedTurn();
 
+            if (!BattleFlowState.battleEnded && !m_playerTurnEnded)
+                BattleFlowState.StartCoroutine(PlayerAttack());
+            
             yield break;
         }
 
@@ -109,6 +132,20 @@ public class ExecuteState : BattleState
 
         DisplayText.Clear();
 
+        if(BattleFlowState.GetEnnemyCapacity().Style == E_Style.EFFECT)
+        {
+            CheckBrutDamage(BattleFlowState.GetEnnemyCapacity(), null ,BattleFlowState.ZoriPlayer.Zori);
+
+            m_ennemyTurnEnded = true;
+
+            CheckEndedTurn();
+
+            if (!BattleFlowState.battleEnded && !m_playerTurnEnded)
+                BattleFlowState.StartCoroutine(PlayerAttack());
+
+            yield break;
+        }
+
         int brutDmg = CheckBrutDamage(BattleFlowState.GetEnnemyCapacity(), BattleFlowState.ZoriEnnemy.Zori);
 
         if(brutDmg > 0 && BattleFlowState.ZoriPlayer.Zori.GetStatus.CurrentStatus == Effects.E_Status.SLEEP)
@@ -116,8 +153,9 @@ public class ExecuteState : BattleState
             BattleFlowState.ZoriPlayer.Zori.GetStatus.AllReset();
         }
 
-        BattleFlowState.ZoriPlayer.Zori.Health.TakeDamage(DealActualDamage(brutDmg, 
-            BattleFlowState.GetEnnemyCapacity(), BattleFlowState.ZoriEnnemy.Zori, BattleFlowState.ZoriPlayer.Zori));
+        if(brutDmg > 0)
+            BattleFlowState.ZoriPlayer.Zori.Health.TakeDamage(DealActualDamage(brutDmg, 
+                BattleFlowState.GetEnnemyCapacity(), BattleFlowState.ZoriEnnemy.Zori, BattleFlowState.ZoriPlayer.Zori));
 
         m_ennemyTurnEnded = true;
 
@@ -146,21 +184,15 @@ public class ExecuteState : BattleState
                 case Effects.E_Status.PARALYSIS:
                     playerSpeed = playerSpeed / 2;
                     break;
-                case Effects.E_Status.BURN:
-                    playerSpeed = (int)(playerSpeed * 0.2f);
-                    break;
             }
         }
 
-        if (BattleFlowState.ZoriPlayer.Zori.GetStatus.CurrentStatus != Effects.E_Status.NONE)
+        if (BattleFlowState.ZoriEnnemy.Zori.GetStatus.CurrentStatus != Effects.E_Status.NONE)
         {
-            switch (BattleFlowState.ZoriPlayer.Zori.GetStatus.CurrentStatus)
+            switch (BattleFlowState.ZoriEnnemy.Zori.GetStatus.CurrentStatus)
             {
                 case Effects.E_Status.PARALYSIS:
-                    playerSpeed = playerSpeed / 2;
-                    break;
-                case Effects.E_Status.BURN:
-                    playerSpeed = (int)(playerSpeed * 0.2f);
+                    ennemySpeed = ennemySpeed / 2;
                     break;
             }
         }
@@ -174,7 +206,7 @@ public class ExecuteState : BattleState
         receiver.GetStatus.ApplyEffect(senderCap);
     }
 
-    private int CheckBrutDamage(Capacity capacity, Zori sender)
+    private int CheckBrutDamage(Capacity capacity, Zori sender = null, Zori receiver = null)
     {
         if (!capacity)
             return 0;
@@ -182,7 +214,10 @@ public class ExecuteState : BattleState
         switch (capacity.Style)
         {
             case E_Style.EFFECT:
-                //Afflict effect
+                if (receiver.GetStatus.CurrentStatus != Effects.E_Status.NONE)
+                    break;
+
+                ApplyStatus(capacity, receiver);
                 break;
             case E_Style.PHYSICS:
                 return capacity.Power * (int)(sender.Stats.attack * sender.GetBonusEffect.atkBonus);
