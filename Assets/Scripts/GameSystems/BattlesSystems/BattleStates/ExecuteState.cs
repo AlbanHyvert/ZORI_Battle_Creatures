@@ -14,17 +14,21 @@ public class ExecuteState : BattleState
     public override IEnumerator Start()
     {
         BattleFlowState.ControlPlayerConsole(false);
+        m_playerTurnEnded = true ? BattleFlowState.GetPlayerChangeZori() : false;
+        m_ennemyTurnEnded = true ? BattleFlowState.GetEnnemyChangeZori() : false;
 
         int playerSpeed = (int)(BattleFlowState.ZoriPlayer.Zori.GetAttackSpeed(BattleFlowState.GetPlayerCapacity()) * BattleFlowState.ZoriPlayer.Zori.GetBonusEffect.speedBonus);
         int ennemySpeed = (int)(BattleFlowState.ZoriEnnemy.Zori.GetAttackSpeed(BattleFlowState.GetEnnemyCapacity()) * BattleFlowState.ZoriEnnemy.Zori.GetBonusEffect.speedBonus);
 
+        ennemySpeed = 2;
         CheckStatus(ref playerSpeed, ref ennemySpeed);
 
-        if (playerSpeed >= ennemySpeed)
+
+        if (playerSpeed >= ennemySpeed && !BattleFlowState.GetPlayerChangeZori())
         {
             BattleFlowState.StartCoroutine(PlayerAttack());
         }
-        else
+        else if (!BattleFlowState.GetEnnemyChangeZori())
         {
             BattleFlowState.StartCoroutine(EnnemyAttack());
         }
@@ -33,6 +37,7 @@ public class ExecuteState : BattleState
 
     public IEnumerator PlayerAttack()
     {
+        Debug.Log("Player turn");
         if (BattleFlowState.ZoriPlayer.Zori.GetStatus.CurrentStatus == Effects.E_Status.FREEZE || BattleFlowState.ZoriPlayer.Zori.GetStatus.CurrentStatus == Effects.E_Status.SLEEP)
         {
             DisplayText.AddText(BattleFlowState.PlayerHud.descriptionText, BattleFlowState.ZoriPlayer.Zori.Stats.nickname +
@@ -126,6 +131,7 @@ public class ExecuteState : BattleState
 
     public IEnumerator EnnemyAttack()
     {
+        Debug.Log("Ennemy turn");
         if (BattleFlowState.ZoriEnnemy.Zori.GetStatus.CurrentStatus == Effects.E_Status.FREEZE || BattleFlowState.ZoriEnnemy.Zori.GetStatus.CurrentStatus == Effects.E_Status.SLEEP)
         {
             DisplayText.AddText(BattleFlowState.EnnemyHud.descriptionText, BattleFlowState.ZoriEnnemy.Zori.Stats.nickname +
@@ -201,7 +207,10 @@ public class ExecuteState : BattleState
         CheckEndedTurn();
 
         if (!BattleFlowState.battleEnded && !m_playerTurnEnded)
+        {
+
             BattleFlowState.StartCoroutine(PlayerAttack());
+        }
     }
 
     private void CheckEndedTurn()
@@ -209,6 +218,7 @@ public class ExecuteState : BattleState
         if (!m_ennemyTurnEnded || !m_playerTurnEnded)
             return;
 
+        Debug.Log("Turn ended");
         BattleFlowState.SetState(new EndTurnState(BattleFlowState));
     }
 
