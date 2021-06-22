@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class ExecuteState : BattleState
 {
@@ -63,7 +64,16 @@ public class ExecuteState : BattleState
 
         if (BattleFlowState.GetPlayerCapacity().Style == E_Style.EFFECT)
         {
-            CheckBrutDamage(BattleFlowState.GetPlayerCapacity(), null, BattleFlowState.ZoriEnnemy.Zori);
+            switch (BattleFlowState.GetPlayerCapacity().Target)
+            {
+                case E_Target.SELF:
+                    CheckSelfBonus(BattleFlowState.GetPlayerCapacity(), BattleFlowState.ZoriPlayer.Zori);
+                    break;
+                case E_Target.ENNEMY:
+                    CheckSelfDebuff(BattleFlowState.GetPlayerCapacity(), BattleFlowState.ZoriEnnemy.Zori);
+                    CheckBrutDamage(BattleFlowState.GetPlayerCapacity(), null, BattleFlowState.ZoriEnnemy.Zori);
+                    break;
+            }
 
             m_playerTurnEnded = true;
 
@@ -94,6 +104,24 @@ public class ExecuteState : BattleState
 
         if (!BattleFlowState.battleEnded && !m_ennemyTurnEnded)
             BattleFlowState.StartCoroutine(EnnemyAttack());
+    }
+
+    private void CheckSelfBonus(Capacity capacity, Zori zori)
+    {
+        zori.GetBonusEffect.SetAtkBonus(capacity.BonusStats.attack);
+        zori.GetBonusEffect.SetDefBonus(capacity.BonusStats.def);
+        zori.GetBonusEffect.SetSpeedBonus(capacity.BonusStats.speed);
+        zori.GetBonusEffect.SetSpeAtkBonus(capacity.BonusStats.speAtk);
+        zori.GetBonusEffect.SetSpeDefBonus(capacity.BonusStats.speDef);
+    }
+
+    private void CheckSelfDebuff(Capacity capacity, Zori zori)
+    {
+        zori.GetBonusEffect.SetAtkBonus(capacity.BonusStats.attack);
+        zori.GetBonusEffect.SetDefBonus(capacity.BonusStats.def);
+        zori.GetBonusEffect.SetSpeedBonus(capacity.BonusStats.speed);
+        zori.GetBonusEffect.SetSpeAtkBonus(capacity.BonusStats.speAtk);
+        zori.GetBonusEffect.SetSpeDefBonus(capacity.BonusStats.speDef);
     }
 
     public IEnumerator EnnemyAttack()
@@ -134,7 +162,16 @@ public class ExecuteState : BattleState
 
         if(BattleFlowState.GetEnnemyCapacity().Style == E_Style.EFFECT)
         {
-            CheckBrutDamage(BattleFlowState.GetEnnemyCapacity(), null ,BattleFlowState.ZoriPlayer.Zori);
+           
+            switch (BattleFlowState.GetPlayerCapacity().Target)
+            {
+                case E_Target.SELF:
+                    CheckSelfBonus(BattleFlowState.GetEnnemyCapacity(), BattleFlowState.ZoriEnnemy.Zori);
+                    break;
+                case E_Target.ENNEMY:
+                    CheckBrutDamage(BattleFlowState.GetEnnemyCapacity(), null, BattleFlowState.ZoriPlayer.Zori);
+                    break;
+            }
 
             m_ennemyTurnEnded = true;
 

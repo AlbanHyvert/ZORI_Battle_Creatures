@@ -20,12 +20,25 @@ public class Capacity : ScriptableObject
     [Tooltip("Attack Type")]
     [SerializeField] private E_Style _style = E_Style.PHYSICS; 
     [SerializeField] private Effects.E_Status _effects = Effects.E_Status.NONE;
-
+    [SerializeField] private BonusStat m_bonusStat = new BonusStat();
+    [Space]
+    [SerializeField] private E_Target e_Target = E_Target.ENNEMY;
+    [Space]
     [Tooltip("The quantity of use left.")]
     [Range(0, 100)] private int m_currentUse = 10;
     
 
     public UnityAction<int> onUse = null;
+
+    [System.Serializable]
+    public struct BonusStat
+    {
+        public float speed;
+        public float attack;
+        public float def;
+        public float speAtk;
+        public float speDef;
+    }
 
     public string Name { get => m_name; }
     public int Index { get => m_index; }
@@ -35,6 +48,8 @@ public class Capacity : ScriptableObject
     public E_Style Style { get => _style; }
     public Effects.E_Status Effect { get => _effects; }
     public int CurrentUse { get => m_currentUse; }
+    public BonusStat BonusStats { get => m_bonusStat; }
+    public E_Target Target { get => e_Target; }
     public int MaxUse { get => m_maxUse;
         set
         {

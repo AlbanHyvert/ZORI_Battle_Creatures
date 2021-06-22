@@ -5205,9 +5205,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_capacityA: {fileID: 11400000, guid: bfe266dbbc9aa5b4781045ae4a4905f8, type: 2}
-  m_capacityB: {fileID: 11400000, guid: 42bdf1cfd10486b45b2ece162b7e3af4, type: 2}
-  m_capacityC: {fileID: 11400000, guid: 39ff660e5522e57438190e5700812d97, type: 2}
-  m_capacityD: {fileID: 11400000, guid: 191ee46fd6dc2c44c91ffa2a6731f116, type: 2}
+  m_capacityB: {fileID: 11400000, guid: 181aa9dba8bedbe44aff1c43fcca3171, type: 2}
+  m_capacityC: {fileID: 11400000, guid: 408a8162aedb1eb409e2540ed39499d8, type: 2}
+  m_capacityD: {fileID: 11400000, guid: 7451f9dd90f0c024a88c8a30d2334d36, type: 2}
 --- !u!114 &2086298619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5326,6 +5326,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 712f9006884e03944b8f49995277a64e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_speedBonus: 1
+  m_atkBonus: 1
+  m_defBonus: 1
+  m_speAtkBonus: 1
+  m_speDefBonus: 1
 --- !u!1 &2087245064
 GameObject:
   m_ObjectHideFlags: 0
@@ -5808,7 +5813,7 @@ PrefabInstance:
     - target: {fileID: 4716119425258507541, guid: ad7805aa51c52fb48a22904c2546aa8f,
         type: 3}
       propertyPath: _speed
-      value: 200
+      value: 105
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4716119425258507560, guid: ad7805aa51c52fb48a22904c2546aa8f, type: 3}
@@ -5878,3 +5883,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 712f9006884e03944b8f49995277a64e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_speedBonus: 1
+  m_atkBonus: 1
+  m_defBonus: 1
+  m_speAtkBonus: 1
+  m_speDefBonus: 1
