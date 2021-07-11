@@ -1453,9 +1453,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 222645405}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e7d0de63a51ed547b594b0524c5402a, type: 3}
+  m_Script: {fileID: 11500000, guid: a60ebe0b1b8241e49ad3a19063406f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _button: {fileID: 222645408}
+  _textName: {fileID: 9153032}
+  _textLevel: {fileID: 1805441547}
+  _textType: {fileID: 960585129}
 --- !u!114 &222645408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5728,9 +5732,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1073500783}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e7d0de63a51ed547b594b0524c5402a, type: 3}
+  m_Script: {fileID: 11500000, guid: a60ebe0b1b8241e49ad3a19063406f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _button: {fileID: 1073500786}
+  _textName: {fileID: 740595206}
+  _textLevel: {fileID: 1130120446}
+  _textType: {fileID: 1089139577}
 --- !u!114 &1073500786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6613,7 +6621,6 @@ GameObject:
   - component: {fileID: 1173767613}
   - component: {fileID: 1173767612}
   - component: {fileID: 1173767611}
-  - component: {fileID: 1173767610}
   m_Layer: 5
   m_Name: Attack.btn
   m_TagString: Untagged
@@ -6641,20 +6648,6 @@ RectTransform:
   m_AnchoredPosition: {x: -330, y: 55}
   m_SizeDelta: {x: 250, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1173767610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1173767608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 180b941374060bd47b6415d0c99ee562, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _button: {fileID: 1173767611}
-  _holder: {fileID: 1114304893}
 --- !u!114 &1173767611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6695,9 +6688,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1173767610}
-        m_MethodName: OnButtonPress
-        m_Mode: 1
+      - m_Target: {fileID: 1114304893}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 560946148}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6792,9 +6796,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1208634036}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e7d0de63a51ed547b594b0524c5402a, type: 3}
+  m_Script: {fileID: 11500000, guid: a60ebe0b1b8241e49ad3a19063406f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _button: {fileID: 1208634039}
+  _textName: {fileID: 133081533}
+  _textLevel: {fileID: 1855963425}
+  _textType: {fileID: 433506034}
 --- !u!114 &1208634039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7242,9 +7250,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1239332688}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e7d0de63a51ed547b594b0524c5402a, type: 3}
+  m_Script: {fileID: 11500000, guid: a60ebe0b1b8241e49ad3a19063406f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _button: {fileID: 1239332691}
+  _textName: {fileID: 737355835}
+  _textLevel: {fileID: 738957081}
+  _textType: {fileID: 877923871}
 --- !u!114 &1239332691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8849,9 +8861,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1651925014}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d731a5efb7f232478f16dbd3cf35de7, type: 3}
+  m_Script: {fileID: 11500000, guid: c5086ce5e149ac840bc16a6b6e454437, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _changingsUI:
+  - {fileID: 2044351847}
+  - {fileID: 1239332690}
+  - {fileID: 1957576436}
+  - {fileID: 1208634038}
+  - {fileID: 1073500785}
+  - {fileID: 222645407}
+  _battleManager: {fileID: 995797494}
+  _listZori:
+  - {fileID: 2086298615}
+  - {fileID: 386669358}
 --- !u!1 &1683943248
 GameObject:
   m_ObjectHideFlags: 0
@@ -9673,9 +9696,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1957576434}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e7d0de63a51ed547b594b0524c5402a, type: 3}
+  m_Script: {fileID: 11500000, guid: a60ebe0b1b8241e49ad3a19063406f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _button: {fileID: 1957576437}
+  _textName: {fileID: 1129542672}
+  _textLevel: {fileID: 1065915390}
+  _textType: {fileID: 311142080}
 --- !u!114 &1957576437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9774,7 +9801,6 @@ GameObject:
   - component: {fileID: 1961540291}
   - component: {fileID: 1961540290}
   - component: {fileID: 1961540289}
-  - component: {fileID: 1961540288}
   m_Layer: 5
   m_Name: ChangeZori.btn
   m_TagString: Untagged
@@ -9802,20 +9828,6 @@ RectTransform:
   m_AnchoredPosition: {x: -40, y: 55}
   m_SizeDelta: {x: 250, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1961540288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1961540286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 180b941374060bd47b6415d0c99ee562, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _button: {fileID: 1961540289}
-  _holder: {fileID: 1651925014}
 --- !u!114 &1961540289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9856,9 +9868,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1961540288}
-        m_MethodName: OnButtonPress
-        m_Mode: 1
+      - m_Target: {fileID: 1651925014}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 560946148}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -10149,9 +10172,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2044351845}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e7d0de63a51ed547b594b0524c5402a, type: 3}
+  m_Script: {fileID: 11500000, guid: a60ebe0b1b8241e49ad3a19063406f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _button: {fileID: 2044351848}
+  _textName: {fileID: 124524030}
+  _textLevel: {fileID: 925054036}
+  _textType: {fileID: 1532261921}
 --- !u!114 &2044351848
 MonoBehaviour:
   m_ObjectHideFlags: 0
