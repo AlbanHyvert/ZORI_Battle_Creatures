@@ -1456,10 +1456,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e7d0de63a51ed547b594b0524c5402a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _button: {fileID: 222645408}
-  _textName: {fileID: 9153032}
-  _textLevel: {fileID: 1805441547}
-  _textType: {fileID: 960585129}
 --- !u!114 &222645408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5735,10 +5731,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e7d0de63a51ed547b594b0524c5402a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _button: {fileID: 1073500786}
-  _textName: {fileID: 740595206}
-  _textLevel: {fileID: 1130120446}
-  _textType: {fileID: 1089139577}
 --- !u!114 &1073500786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6658,7 +6650,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1173767608}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec33f4b836add1e4bb4b55b729f25913, type: 3}
+  m_Script: {fileID: 11500000, guid: 180b941374060bd47b6415d0c99ee562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1173767611}
@@ -6803,10 +6795,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e7d0de63a51ed547b594b0524c5402a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _button: {fileID: 1208634039}
-  _textName: {fileID: 133081533}
-  _textLevel: {fileID: 1855963425}
-  _textType: {fileID: 433506034}
 --- !u!114 &1208634039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7257,10 +7245,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e7d0de63a51ed547b594b0524c5402a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _button: {fileID: 1239332691}
-  _textName: {fileID: 737355835}
-  _textLevel: {fileID: 738957081}
-  _textType: {fileID: 877923871}
 --- !u!114 &1239332691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8868,17 +8852,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d731a5efb7f232478f16dbd3cf35de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _changingsUI:
-  - {fileID: 2044351847}
-  - {fileID: 1239332690}
-  - {fileID: 1957576436}
-  - {fileID: 1208634038}
-  - {fileID: 1073500785}
-  - {fileID: 222645407}
-  _battleManager: {fileID: 995797494}
-  _listZori:
-  - {fileID: 2086298615}
-  - {fileID: 386669358}
 --- !u!1 &1683943248
 GameObject:
   m_ObjectHideFlags: 0
@@ -9703,10 +9676,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e7d0de63a51ed547b594b0524c5402a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _button: {fileID: 1957576437}
-  _textName: {fileID: 1129542672}
-  _textLevel: {fileID: 1065915390}
-  _textType: {fileID: 311142080}
 --- !u!114 &1957576437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9842,7 +9811,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1961540286}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec33f4b836add1e4bb4b55b729f25913, type: 3}
+  m_Script: {fileID: 11500000, guid: 180b941374060bd47b6415d0c99ee562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1961540289}
@@ -10183,10 +10152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e7d0de63a51ed547b594b0524c5402a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _button: {fileID: 2044351848}
-  _textName: {fileID: 124524030}
-  _textLevel: {fileID: 925054036}
-  _textType: {fileID: 1532261921}
 --- !u!114 &2044351848
 MonoBehaviour:
   m_ObjectHideFlags: 0
