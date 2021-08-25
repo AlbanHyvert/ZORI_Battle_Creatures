@@ -1,0 +1,19 @@
+﻿public enum E_ObjectType
+{
+    ESCAPE = 0,
+    EVOLUTION,
+    VALUABLE_EXCHANGE,
+    HELD,
+    CRYSTAURA,
+    HP_RESTORING,
+    AFFLICATION,
+    REVIVING,
+    STAMINA,
+    STAT_INCREASING,
+    ABILITY,
+    TECHNIQUE_LEARNING,
+    STORY_RELATED,
+    SYNERGY,
+    CAPTURE,
+    UNKNOWN,
+}
